@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 226175971}
   - component: {fileID: 226175970}
   - component: {fileID: 226175969}
+  - component: {fileID: 226175973}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 226175968}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 68a57a8e4406d3c41b4745820d63de6c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -172,7 +173,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5ed3ee5ec4f78d34f8672a1e0767474d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -215,6 +216,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &226175973
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226175968}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &526725403
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +246,7 @@ GameObject:
   - component: {fileID: 526725405}
   - component: {fileID: 526725404}
   - component: {fileID: 526725409}
+  - component: {fileID: 526725410}
   m_Layer: 0
   m_Name: BaseVehicle
   m_TagString: Player
@@ -246,7 +264,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -338,6 +356,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BaseTopSpeed: 10
+  BaseAcceleration: 10
+  BaseTurn: 10
+  BaseBoost: 10
+  BaseWeight: 10
+  BaseOffense: 10
+  BaseDefense: 10
+  ModTopSpeed: 0
+  ModAcceleration: 0
+  ModTurn: 0
+  ModBoost: 0
+  ModWeight: 0
+  ModOffense: 0
+  ModDefense: 0
+  controls: {fileID: 526725410}
+--- !u!114 &526725410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526725403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7c02b13fd36df2d4d95c5d033812a5cb,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
