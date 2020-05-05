@@ -107,7 +107,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 100
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -132,6 +132,8 @@ MonoBehaviour:
   BaseArmor: 10
   BaseOffense: 10
   BaseAir: 10
+  ChargeBar: {fileID: 0}
+  Speedometer: {fileID: 0}
   ModTopSpeed: 0
   ModAcceleration: 0
   ModTurn: 0

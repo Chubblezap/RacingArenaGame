@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class BaseVehicle : MonoBehaviour
 {
-    //Base vehicle stats, defined in prefab
+    // Base vehicle stats, defined in prefab
     public float BaseTopSpeed;
     public float BaseAcceleration;
     public float BaseTurn;
@@ -15,17 +15,19 @@ public class BaseVehicle : MonoBehaviour
     public float BaseOffense;
     public float BaseAir;
 
-    //UI Elements
+    // UI Elements
     public GameObject ChargeBar;
     public GameObject Speedometer;
 
-    //Stat modifiers
+    // Stat modifiers
     [HideInInspector]
     public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir;
 
+    // Utilities
     public PlayerInput controls;
     private float isHolding;
     private float currentCharge;
+    private Collider myCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +73,7 @@ public class BaseVehicle : MonoBehaviour
         isHolding = 0;
         currentCharge = 0;
         controls = GetComponent<PlayerInput>();
+        myCollider = GetComponent<SphereCollider>();
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -98,7 +101,7 @@ public class BaseVehicle : MonoBehaviour
     {
         Rigidbody body = GetComponent<Rigidbody>();
         body.velocity *= (1f - (0.003f*(bArmor + mArmor)));
-        currentCharge += 0.001f * (bBoost + mBoost);
+        currentCharge += 0.0015f * (bBoost + mBoost);
     }
 
     void DoDrag(float bArmor, float mArmor)
@@ -107,5 +110,40 @@ public class BaseVehicle : MonoBehaviour
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
         localVelocity.x *= 1f - (0.001f*(bArmor + mArmor)); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if(collidedObject.GetComponent<BaseItem>().itemType == "Stat Pickup")
+        {
+            switch (collidedObject.GetComponent<StatPickup>().statType)
+            {
+                case "Top Speed":
+                    ModTopSpeed += 1;
+                    break;
+                case "Acceleration":
+                    ModAcceleration += 1;
+                    break;
+                case "Turn":
+                    ModTurn += 1;
+                    break;
+                case "Boost":
+                    ModBoost += 1;
+                    break;
+                case "Armor":
+                    ModArmor += 1;
+                    break;
+                case "Offense":
+                    ModOffense += 1;
+                    break;
+                case "Air":
+                    ModAir += 1;
+                    break;
+                default:
+                    Debug.Log("Got an invalid item! Yay!");
+                    break;
+            }
+        }
     }
 }
