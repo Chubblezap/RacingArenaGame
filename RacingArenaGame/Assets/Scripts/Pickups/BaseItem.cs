@@ -5,14 +5,18 @@ using UnityEngine;
 public class BaseItem : MonoBehaviour
 {
     public string itemType;
-    private float despawnTimer = 60f;
+    public float despawnTimer = 60f;
+    public bool doingTimer = true;
 
     private void Update()
     {
-        despawnTimer -= Time.deltaTime;
-        if(despawnTimer <= 0)
+        if (doingTimer == true)
         {
-            Destroy(this.gameObject);
+            despawnTimer -= Time.deltaTime;
+            if (despawnTimer <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

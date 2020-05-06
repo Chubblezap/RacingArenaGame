@@ -28,6 +28,8 @@ public class BaseVehicle : MonoBehaviour
     private float isHolding;
     private float currentCharge;
     private Collider myCollider;
+    private GameObject carriedGun;
+    public GameObject carriedGunObject;
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +76,7 @@ public class BaseVehicle : MonoBehaviour
         currentCharge = 0;
         controls = GetComponent<PlayerInput>();
         myCollider = GetComponent<SphereCollider>();
+        carriedGun = null;
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -144,6 +147,29 @@ public class BaseVehicle : MonoBehaviour
                     Debug.Log("Got an invalid item! Yay!");
                     break;
             }
+            Destroy(collidedObject);
+        }
+        else if (collidedObject.GetComponent<BaseItem>().itemType == "Power Pickup")
+        {
+            switch (collidedObject.GetComponent<PowerPickup>().powerType)
+            {
+                default:
+                    Debug.Log("Picked up a power");
+                    break;
+            }
+            Destroy(collidedObject);
+        }
+        else if (collidedObject.GetComponent<BaseItem>().itemType == "Gun Pickup")
+        {
+            if(carriedGun != null)
+            {
+                Destroy(carriedGun);
+                carriedGun = null;
+            }
+            carriedGun = Instantiate(carriedGunObject, collidedObject.transform.position, Quaternion.identity);
+            carriedGun.GetComponent<HeldGun>().gunType = collidedObject.GetComponent<GunPickup>().gunType;
+            carriedGun.GetComponent<HeldGun>().owner = transform;
+            Destroy(collidedObject);
         }
     }
 }

@@ -143,6 +143,8 @@ MonoBehaviour:
   ModDefense: 0
   ModAir: 0
   controls: {fileID: 844173187424776324}
+  carriedGunObject: {fileID: 8230410031731389514, guid: 2e2f85958c01c88499279960f752cc83,
+    type: 3}
 --- !u!114 &844173187424776324
 MonoBehaviour:
   m_ObjectHideFlags: 0
