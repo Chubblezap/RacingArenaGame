@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class BaseVehicle : MonoBehaviour
 {
@@ -14,6 +13,14 @@ public class BaseVehicle : MonoBehaviour
     public float BaseArmor;
     public float BaseOffense;
     public float BaseAir;
+    public float MaxHP;
+    public float PercentTopSpeedPerMod;
+    public float PercentAccelerationPerMod;
+    public float PercentTurnPerMod;
+    public float PercentBoostPerMod; 
+    public float PercentArmorPerMod;
+    public float PercentOffensePerMod;
+    public float PercentAirPerMod;
 
     // UI Elements
     public GameObject ChargeBar;
@@ -21,15 +28,17 @@ public class BaseVehicle : MonoBehaviour
 
     // Stat modifiers
     [HideInInspector]
-    public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir;
+    public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir, curHP;
+    private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
 
     // Utilities
-    public PlayerInput controls;
+    private GameObject gameMaster;
     private float isHolding;
     private float currentCharge;
     private Collider myCollider;
-    private GameObject carriedGun;
-    public GameObject carriedGunObject;
+    Rigidbody body;
+    private GunHandler gunScript;
+    public bool flying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,13 +49,13 @@ public class BaseVehicle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isHolding = controls.actions["Hold"].ReadValue<float>();
+        isHolding = Input.GetAxis("p1Charge");
         ChargeBar.GetComponent<Image>().fillAmount = currentCharge;
     }
 
     void FixedUpdate() //put movement/physics stuff here
     {
-        Turn(controls.actions["Move"].ReadValue<Vector2>().x, BaseTurn, ModTurn);
+        Turn(Input.GetAxis("p1Horizontal"), BaseTurn, ModTurn);
         if (isHolding == 1) // player is holding Space or A
         {
             Charge(BaseArmor, ModArmor, BaseBoost, ModBoost);
@@ -61,10 +70,20 @@ public class BaseVehicle : MonoBehaviour
             Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
         }
         DoDrag(BaseArmor, ModArmor);
+        if(!flying)
+        {
+            CheckFlight();
+        }
+        else
+        {
+            Aim(Input.GetAxis("p1Vertical"));
+        }
     }
 
     void Init()
     {
+        gameMaster = GameObject.Find("GameController");
+        //stats
         ModTopSpeed = 0;
         ModAcceleration = 0;
         ModTurn = 0;
@@ -72,23 +91,58 @@ public class BaseVehicle : MonoBehaviour
         ModArmor = 0;
         ModOffense = 0;
         ModAir = 0;
+        // stat modifiers
+        TopSpeedMultiplier = BaseTopSpeed * PercentTopSpeedPerMod;
+        AccelerationMultiplier = BaseAcceleration * PercentAccelerationPerMod;
+        TurnMultiplier = BaseTurn * PercentTurnPerMod;
+        BoostMultiplier = BaseBoost * PercentBoostPerMod;
+        ArmorMultiplier = BaseArmor * PercentArmorPerMod;
+        OffenseMultiplier = BaseOffense * PercentOffensePerMod;
+        AirMultiplier = BaseAir * PercentAirPerMod;
+        curHP = MaxHP;
+        // utility
         isHolding = 0;
         currentCharge = 0;
-        controls = GetComponent<PlayerInput>();
         myCollider = GetComponent<SphereCollider>();
-        carriedGun = null;
+        body = GetComponent<Rigidbody>();
+        gunScript = GetComponent<GunHandler>();
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
     {
-        transform.Rotate(0, direction * 0.25f * (bTurn + mTurn), 0, Space.Self);
+        body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction);
+    }
+
+    void Aim(float direction)
+    {
+        float rotationmax;
+        if(direction > 0)
+        {
+            rotationmax = 45;
+        }
+        else if(direction < 0)
+        {
+            rotationmax = 315;
+        }
+        else
+        {
+            rotationmax = 0;
+        }
+        Vector3 currentRotation = transform.localRotation.eulerAngles;
+        Debug.Log(currentRotation);
+        //currentRotation.z = Mathf.Clamp(currentRotation.z, -30, 30);
+        //transform.localRotation = Quaternion.Euler(currentRotation);
+        if(!(Mathf.Abs(currentRotation.x - rotationmax) < 5))
+        {
+            body.AddRelativeTorque(Vector3.right * direction * 5);
+        }
     }
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        Rigidbody body = GetComponent<Rigidbody>();
-        body.AddForce(transform.forward * (bAcceleration + mAcceleration));
-        if(body.velocity.magnitude > (bTopSpeed + mTopSpeed))
+
+        body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
+        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)))
         {
             body.velocity *= .96f;
         }
@@ -96,31 +150,35 @@ public class BaseVehicle : MonoBehaviour
 
     void Boost(float bBoost, float mBoost)
     {
-        Rigidbody body = GetComponent<Rigidbody>();
-        body.AddForce(transform.forward * 50 * (bBoost + mBoost));
+        body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
     }
 
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost)
     {
-        Rigidbody body = GetComponent<Rigidbody>();
-        body.velocity *= (1f - (0.003f*(bArmor + mArmor)));
-        currentCharge += 0.0015f * (bBoost + mBoost);
+        body.velocity *= (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor))));
+        currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
     }
 
     void DoDrag(float bArmor, float mArmor)
     {
-        Rigidbody body = GetComponent<Rigidbody>();
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 1f - (0.001f*(bArmor + mArmor)); // lower sideways speed
+        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
-    private void OnTriggerEnter(Collider collision)
+    void CheckFlight()
     {
-        GameObject collidedObject = collision.gameObject;
-        if(collidedObject.GetComponent<BaseItem>().itemType == "Stat Pickup")
+        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
         {
-            switch (collidedObject.GetComponent<StatPickup>().statType)
+            flying = true;
+        }
+    }
+
+    void PickupItem(GameObject item)
+    {
+        if (item.GetComponent<BaseItem>().itemType == "Stat Pickup")
+        {
+            switch (item.GetComponent<StatPickup>().statType)
             {
                 case "Top Speed":
                     ModTopSpeed += 1;
@@ -144,32 +202,53 @@ public class BaseVehicle : MonoBehaviour
                     ModAir += 1;
                     break;
                 default:
-                    Debug.Log("Got an invalid item! Yay!");
+                    Debug.Log("Got an invalid stat! Yay!");
                     break;
             }
-            Destroy(collidedObject);
         }
-        else if (collidedObject.GetComponent<BaseItem>().itemType == "Power Pickup")
+        else if (item.GetComponent<BaseItem>().itemType == "Power Pickup")
         {
-            switch (collidedObject.GetComponent<PowerPickup>().powerType)
+            switch (item.GetComponent<PowerPickup>().powerType)
             {
                 default:
                     Debug.Log("Picked up a power");
                     break;
             }
-            Destroy(collidedObject);
         }
-        else if (collidedObject.GetComponent<BaseItem>().itemType == "Gun Pickup")
+        else if (item.GetComponent<BaseItem>().itemType == "Gun Pickup")
         {
-            if(carriedGun != null)
-            {
-                Destroy(carriedGun);
-                carriedGun = null;
-            }
-            carriedGun = Instantiate(carriedGunObject, collidedObject.transform.position, Quaternion.identity);
-            carriedGun.GetComponent<HeldGun>().gunType = collidedObject.GetComponent<GunPickup>().gunType;
-            carriedGun.GetComponent<HeldGun>().owner = transform;
-            Destroy(collidedObject);
+            gunScript.PickupGun(item);
+        }
+        Destroy(item);
+    }
+
+    void takeForceHit(float force, float damage, Vector3 forceposition)
+    {
+        body.AddForce(Vector3.Normalize(transform.position - forceposition) * force);
+        curHP -= damage;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if(collidedObject.GetComponent<BaseItem>() != null) // trigger collision is an item
+        {
+            PickupItem(collidedObject);
+        }
+        if (collidedObject.GetComponent<BasicProjectile>() != null && collidedObject.GetComponent<BasicProjectile>().owner != transform) // trigger collision is an enemy projectile
+        {
+            takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.position);
+            collidedObject.GetComponent<BasicProjectile>().Detonate();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if(flying && collidedObject.tag == "Environment")
+        {
+            flying = false;
+            transform.rotation = Quaternion.Euler(new Vector3 (0, transform.rotation.eulerAngles.y, 0));
         }
     }
 }

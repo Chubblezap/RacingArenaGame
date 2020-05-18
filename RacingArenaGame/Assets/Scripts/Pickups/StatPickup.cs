@@ -6,12 +6,14 @@ public class StatPickup : BaseItem
 {
     public string statType;
     public Color pickupColor;
+    public Sprite[] statsprites;
 
     // Start is called before the first frame update
     void Start()
     {
         itemType = "Stat Pickup";
         int typeDecider = Random.Range(1, 8);
+        GetComponent<SpriteRenderer>().sprite = statsprites[typeDecider - 1];
         switch (typeDecider)
         {
             case 1:

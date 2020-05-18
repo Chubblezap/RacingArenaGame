@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 844173187424776326}
+  - component: {fileID: 844173187424776327}
+  - component: {fileID: 6715662540332003690}
   - component: {fileID: 844173187424776377}
   - component: {fileID: 844173187424776376}
   - component: {fileID: 844173187424776325}
   - component: {fileID: 844173187424776378}
-  - component: {fileID: 844173187424776327}
-  - component: {fileID: 844173187424776324}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BaseVehicle
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30,13 +30,70 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844173187424776381}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0.329, y: 1, z: 0.05}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 844173187927305426}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844173187424776327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844173187424776381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaseTopSpeed: 10
+  BaseAcceleration: 15
+  BaseTurn: 10
+  BaseBoost: 10
+  BaseArmor: 10
+  BaseOffense: 10
+  BaseAir: 10
+  MaxHP: 50
+  PercentTopSpeedPerMod: 0.1
+  PercentAccelerationPerMod: 0.1
+  PercentTurnPerMod: 0.1
+  PercentBoostPerMod: 0.1
+  PercentArmorPerMod: 0.1
+  PercentOffensePerMod: 0.1
+  PercentAirPerMod: 0.1
+  ChargeBar: {fileID: 0}
+  Speedometer: {fileID: 0}
+  ModTopSpeed: 0
+  ModAcceleration: 0
+  ModTurn: 0
+  ModBoost: 0
+  ModArmor: 0
+  ModOffense: 0
+  ModDefense: 0
+  ModAir: 0
+  curHP: 0
+--- !u!114 &6715662540332003690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844173187424776381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041018a718eec6a489aa6641a5d98a7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carriedGun: {fileID: 0}
+  carriedGunObject: {fileID: 8230410031731389514, guid: 2e2f85958c01c88499279960f752cc83,
+    type: 3}
+  leftGun: {fileID: 0}
+  rightGun: {fileID: 0}
+  leftGunPosition: {x: -0.4, y: 0.2, z: 0}
+  rightGunPosition: {x: 0.4, y: 0.2, z: 0}
 --- !u!33 &844173187424776377
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,75 +164,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 0.5
   m_Drag: 0
-  m_AngularDrag: 100
+  m_AngularDrag: 30
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &844173187424776327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844173187424776381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BaseTopSpeed: 10
-  BaseAcceleration: 15
-  BaseTurn: 10
-  BaseBoost: 10
-  BaseArmor: 10
-  BaseOffense: 10
-  BaseAir: 10
-  ChargeBar: {fileID: 0}
-  Speedometer: {fileID: 0}
-  ModTopSpeed: 0
-  ModAcceleration: 0
-  ModTurn: 0
-  ModBoost: 0
-  ModArmor: 0
-  ModOffense: 0
-  ModDefense: 0
-  ModAir: 0
-  controls: {fileID: 844173187424776324}
-  carriedGunObject: {fileID: 8230410031731389514, guid: 2e2f85958c01c88499279960f752cc83,
-    type: 3}
---- !u!114 &844173187424776324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844173187424776381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 7c02b13fd36df2d4d95c5d033812a5cb,
-    type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &844173187927305431
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +181,7 @@ GameObject:
   - component: {fileID: 844173187927305426}
   - component: {fileID: 844173187927305429}
   - component: {fileID: 844173187927305428}
+  - component: {fileID: 1251353773920928530}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -259,3 +254,34 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844173187927305431}
   m_Enabled: 1
+--- !u!114 &1251353773920928530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844173187927305431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_CameraOutput: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
