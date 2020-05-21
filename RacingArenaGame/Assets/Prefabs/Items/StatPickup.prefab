@@ -97,12 +97,12 @@ MonoBehaviour:
   statType: 
   pickupColor: {r: 0, g: 0, b: 0, a: 0}
   statsprites:
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
+  - {fileID: 21300000, guid: c15f0e21e0ff3a349b5dd637f4174de0, type: 3}
+  - {fileID: 21300000, guid: 5cf8ff052e13bab4a9967cd0faf26a75, type: 3}
   - {fileID: 21300000, guid: 0e2bc55e8948b724c99428f774e455ae, type: 3}
   - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
+  - {fileID: 21300000, guid: 9d262bc1711c6ef468e0e8e0f9f5ac8e, type: 3}
+  - {fileID: 21300000, guid: 928dbcde6bb8f4c40ac9b4c2313792d0, type: 3}
   - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
 --- !u!135 &392078205998959206
 SphereCollider:

@@ -30,6 +30,7 @@ public class BaseVehicle : MonoBehaviour
     [HideInInspector]
     public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir, curHP;
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
+    private float flightSpeedMultiplier;
 
     // Utilities
     private GameObject gameMaster;
@@ -72,7 +73,7 @@ public class BaseVehicle : MonoBehaviour
         DoDrag(BaseArmor, ModArmor);
         if(!flying)
         {
-            CheckFlight();
+            CheckFlight(BaseAir, ModAir);
         }
         else
         {
@@ -100,6 +101,7 @@ public class BaseVehicle : MonoBehaviour
         OffenseMultiplier = BaseOffense * PercentOffensePerMod;
         AirMultiplier = BaseAir * PercentAirPerMod;
         curHP = MaxHP;
+        flightSpeedMultiplier = 1;
         // utility
         isHolding = 0;
         currentCharge = 0;
@@ -115,34 +117,50 @@ public class BaseVehicle : MonoBehaviour
 
     void Aim(float direction)
     {
-        float rotationmax;
-        if(direction > 0)
+        float rotationUpperBound = -45;
+        float rotationLowerBound = 45;
+        Vector3 currentRotation = transform.localRotation.eulerAngles;
+        Debug.Log(direction);
+
+        float normalizedRotation;
+        if(currentRotation.x > 180)
         {
-            rotationmax = 45;
-        }
-        else if(direction < 0)
-        {
-            rotationmax = 315;
+            normalizedRotation = -360 + currentRotation.x;
         }
         else
         {
-            rotationmax = 0;
+            normalizedRotation = currentRotation.x;
         }
-        Vector3 currentRotation = transform.localRotation.eulerAngles;
-        Debug.Log(currentRotation);
-        //currentRotation.z = Mathf.Clamp(currentRotation.z, -30, 30);
-        //transform.localRotation = Quaternion.Euler(currentRotation);
-        if(!(Mathf.Abs(currentRotation.x - rotationmax) < 5))
+        Debug.Log(normalizedRotation);
+
+        //if(!(Mathf.Abs(currentRotation.x - rotationmax) < 5))
+        //{
+        //    body.AddRelativeTorque(Vector3.right * direction * 5);
+        //}
+
+        if ((direction < 0 && normalizedRotation > rotationUpperBound) || (direction > 0 && normalizedRotation < rotationLowerBound))
         {
             body.AddRelativeTorque(Vector3.right * direction * 5);
+        }
+
+        if (normalizedRotation < 0) // vehicle is pointing up
+        {
+            flightSpeedMultiplier = 1.5f - (Mathf.Abs(normalizedRotation / 45) * 0.5f);
+        }
+        else if (normalizedRotation > 0) // vehicle is pointing down
+        {
+            flightSpeedMultiplier = 1.5f + (Mathf.Abs(normalizedRotation / 45) * 1.5f);
+        }
+        else
+        {
+            flightSpeedMultiplier = 1.5f;
         }
     }
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-
         body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
-        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)))
+        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
             body.velocity *= .96f;
         }
@@ -166,11 +184,13 @@ public class BaseVehicle : MonoBehaviour
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
-    void CheckFlight()
+    void CheckFlight(float bAir, float mAir)
     {
         if(!Physics.Raycast(transform.position, Vector3.up*-1, 1f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
         {
             flying = true;
+            body.AddForce(transform.up * (bAir + (AirMultiplier * mAir))/3, ForceMode.Impulse);
+            body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 3, ForceMode.Impulse);
         }
     }
 
@@ -248,6 +268,7 @@ public class BaseVehicle : MonoBehaviour
         if(flying && collidedObject.tag == "Environment")
         {
             flying = false;
+            flightSpeedMultiplier = 1f;
             transform.rotation = Quaternion.Euler(new Vector3 (0, transform.rotation.eulerAngles.y, 0));
         }
     }

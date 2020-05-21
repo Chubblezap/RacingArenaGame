@@ -644,7 +644,8 @@ MonoBehaviour:
     type: 3}
   PowerPickup: {fileID: 7851871318008185708, guid: f07cfbb0fe290dd4abedd407c13cac48,
     type: 3}
-  PartPickup: {fileID: 0}
+  PartPickup: {fileID: 2711669298056708860, guid: a7abdf7706a2a5648b46704077d39ac8,
+    type: 3}
   GunPickup: {fileID: 2711669298056708860, guid: c78b192f556daac42afa4bad1fbfd12d,
     type: 3}
   Crate: {fileID: 9213086292227709212, guid: c48c6521bb64e2e499c619e5a22dd5bd, type: 3}

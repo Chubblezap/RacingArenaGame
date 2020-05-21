@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2711669298056708739}
-  - component: {fileID: 2711669298056708851}
+  - component: {fileID: -5923235017372559062}
   - component: {fileID: 1811298346590183374}
   - component: {fileID: 2711669298056708737}
   - component: {fileID: 2711669298056708850}
   - component: {fileID: 2711669298056708861}
   m_Layer: 8
-  m_Name: GunPickup
+  m_Name: PartPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2711669298056708851
+--- !u!114 &-5923235017372559062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,13 +45,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2711669298056708860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0732daca829cb2c4bb80e8b82ef4e67e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d9405a3eb20e0f408b3eaf5b2f35416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 
   despawnTimer: 60
   doingTimer: 1
-  gunType: 
+  partType: 
 --- !u!135 &1811298346590183374
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fa57918c49320b54eaff70e6a09f61b5, type: 2}
+  - {fileID: 2100000, guid: ccb5a565f7e2c5c448f1aaf1d8f722fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
