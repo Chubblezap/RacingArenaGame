@@ -5,7 +5,7 @@ using UnityEngine;
 public class HeldGun : MonoBehaviour
 {
     public Transform owner;
-    public Vector3 moveTarget;
+    public GameObject moveTarget;
     public string gunType;
     public Mesh gunMesh;
     private float curSpeed = 0;
@@ -42,10 +42,10 @@ public class HeldGun : MonoBehaviour
         }
         if(flag == "Slotted") // gun moving to slot
         {
-            transform.position = Vector3.MoveTowards(transform.position, owner.position + owner.TransformDirection(moveTarget), curSpeed*3 * Time.deltaTime);
-            if (Vector3.Distance(transform.position, owner.position + owner.TransformDirection(moveTarget)) < 0.001f)
+            transform.position = Vector3.MoveTowards(transform.position, moveTarget.transform.position, curSpeed*3 * Time.deltaTime);
+            if (Vector3.Distance(transform.position, moveTarget.transform.position) < 0.001f)
             {
-                if(side == "Right")
+                if (side == "Right")
                 {
                     if(owner.GetComponent<GunHandler>().rightGun != null) { Destroy(owner.GetComponent<GunHandler>().rightGun); }
                     owner.GetComponent<GunHandler>().rightGun = this.gameObject;

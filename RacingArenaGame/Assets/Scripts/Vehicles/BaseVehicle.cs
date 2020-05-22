@@ -136,7 +136,7 @@ public class BaseVehicle : MonoBehaviour
 
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost)
     {
-        body.velocity = new Vector3 ( body.velocity.x * (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor)))), -20f, body.velocity.z * (1f - (0.003f * (bArmor + (ArmorMultiplier * mArmor)))) );
+        body.velocity = new Vector3 ( body.velocity.x * (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor)))), -20f * (flying ? 1 : 0), body.velocity.z * (1f - (0.003f * (bArmor + (ArmorMultiplier * mArmor)))) );
         currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
     }
 
@@ -163,7 +163,6 @@ public class BaseVehicle : MonoBehaviour
         float rotationUpperBound = -45;
         float rotationLowerBound = 45;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
-        Debug.Log(direction);
 
         float normalizedRotation;
         if (currentRotation.x > 180)
@@ -174,7 +173,6 @@ public class BaseVehicle : MonoBehaviour
         {
             normalizedRotation = currentRotation.x;
         }
-        Debug.Log(normalizedRotation);
 
         if ((direction < 0 && normalizedRotation > rotationUpperBound) || (direction > 0 && normalizedRotation < rotationLowerBound))
         {

@@ -10,8 +10,8 @@ public class GunHandler : MonoBehaviour
     public GameObject carriedGunObject;
     public GameObject leftGun;
     public GameObject rightGun;
-    public Vector3 leftGunPosition;
-    public Vector3 rightGunPosition;
+    public GameObject leftGunPosition;
+    public GameObject rightGunPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +36,7 @@ public class GunHandler : MonoBehaviour
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
+                    Debug.Log(rightGunPosition.transform.localPosition);
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
