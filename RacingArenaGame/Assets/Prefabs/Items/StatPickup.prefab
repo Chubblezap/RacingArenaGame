@@ -56,7 +56,8 @@ GameObject:
   - component: {fileID: 4175470100146542423}
   - component: {fileID: 392078205998959206}
   - component: {fileID: 4175470100146542377}
-  - component: {fileID: 3461072696708831064}
+  - component: {fileID: 5981462642718037456}
+  - component: {fileID: 7965774063534782303}
   m_Layer: 8
   m_Name: StatPickup
   m_TagString: Untagged
@@ -97,13 +98,13 @@ MonoBehaviour:
   statType: 
   pickupColor: {r: 0, g: 0, b: 0, a: 0}
   statsprites:
-  - {fileID: 21300000, guid: c15f0e21e0ff3a349b5dd637f4174de0, type: 3}
-  - {fileID: 21300000, guid: 5cf8ff052e13bab4a9967cd0faf26a75, type: 3}
-  - {fileID: 21300000, guid: 0e2bc55e8948b724c99428f774e455ae, type: 3}
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
-  - {fileID: 21300000, guid: 9d262bc1711c6ef468e0e8e0f9f5ac8e, type: 3}
-  - {fileID: 21300000, guid: 928dbcde6bb8f4c40ac9b4c2313792d0, type: 3}
-  - {fileID: 21300000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
+  - {fileID: 2800000, guid: c15f0e21e0ff3a349b5dd637f4174de0, type: 3}
+  - {fileID: 2800000, guid: 5cf8ff052e13bab4a9967cd0faf26a75, type: 3}
+  - {fileID: 2800000, guid: 0e2bc55e8948b724c99428f774e455ae, type: 3}
+  - {fileID: 2800000, guid: 08b50b62114636f40bf583e567116087, type: 3}
+  - {fileID: 2800000, guid: 9d262bc1711c6ef468e0e8e0f9f5ac8e, type: 3}
+  - {fileID: 2800000, guid: 928dbcde6bb8f4c40ac9b4c2313792d0, type: 3}
+  - {fileID: 2800000, guid: 26028b9d848292345988bd8a35dc00bb, type: 3}
 --- !u!135 &392078205998959206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -133,25 +134,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!212 &3461072696708831064
-SpriteRenderer:
+--- !u!23 &5981462642718037456
+MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4175470100146542420}
   m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 58a3b0e491c07104fb2e061578094ac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -164,7 +165,7 @@ SpriteRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -172,14 +173,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+--- !u!33 &7965774063534782303
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175470100146542420}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}

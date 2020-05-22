@@ -39,7 +39,9 @@ public class BaseVehicle : MonoBehaviour
     private Collider myCollider;
     Rigidbody body;
     private GunHandler gunScript;
-    public bool flying = false;
+    private bool flying = false;
+    private float totalFlightTime;
+    private float flightTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +80,7 @@ public class BaseVehicle : MonoBehaviour
         else
         {
             Aim(Input.GetAxis("p1Vertical"));
+            DoFlightGravity();
         }
     }
 
@@ -102,6 +105,8 @@ public class BaseVehicle : MonoBehaviour
         AirMultiplier = BaseAir * PercentAirPerMod;
         curHP = MaxHP;
         flightSpeedMultiplier = 1;
+        flightTimer = 0;
+        totalFlightTime = 0;
         // utility
         isHolding = 0;
         currentCharge = 0;
@@ -115,6 +120,44 @@ public class BaseVehicle : MonoBehaviour
         body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction);
     }
 
+    void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
+    {
+        body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
+        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
+        {
+            body.velocity *= .96f;
+        }
+    }
+
+    void Boost(float bBoost, float mBoost)
+    {
+        body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
+    }
+
+    void Charge(float bArmor, float mArmor, float bBoost, float mBoost)
+    {
+        body.velocity = new Vector3 ( body.velocity.x * (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor)))), -20f, body.velocity.z * (1f - (0.003f * (bArmor + (ArmorMultiplier * mArmor)))) );
+        currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
+    }
+
+    void DoDrag(float bArmor, float mArmor)
+    {
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))); // lower sideways speed
+        body.velocity =  body.transform.TransformDirection(localVelocity);
+    }
+
+    void CheckFlight(float bAir, float mAir)
+    {
+        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
+        {
+            flying = true;
+            body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
+            flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
+            totalFlightTime = flightTimer;
+        }
+    }
+
     void Aim(float direction)
     {
         float rotationUpperBound = -45;
@@ -123,7 +166,7 @@ public class BaseVehicle : MonoBehaviour
         Debug.Log(direction);
 
         float normalizedRotation;
-        if(currentRotation.x > 180)
+        if (currentRotation.x > 180)
         {
             normalizedRotation = -360 + currentRotation.x;
         }
@@ -132,11 +175,6 @@ public class BaseVehicle : MonoBehaviour
             normalizedRotation = currentRotation.x;
         }
         Debug.Log(normalizedRotation);
-
-        //if(!(Mathf.Abs(currentRotation.x - rotationmax) < 5))
-        //{
-        //    body.AddRelativeTorque(Vector3.right * direction * 5);
-        //}
 
         if ((direction < 0 && normalizedRotation > rotationUpperBound) || (direction > 0 && normalizedRotation < rotationLowerBound))
         {
@@ -157,41 +195,10 @@ public class BaseVehicle : MonoBehaviour
         }
     }
 
-    void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
+    void DoFlightGravity()
     {
-        body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
-        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
-        {
-            body.velocity *= .96f;
-        }
-    }
-
-    void Boost(float bBoost, float mBoost)
-    {
-        body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
-    }
-
-    void Charge(float bArmor, float mArmor, float bBoost, float mBoost)
-    {
-        body.velocity *= (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor))));
-        currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
-    }
-
-    void DoDrag(float bArmor, float mArmor)
-    {
-        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))); // lower sideways speed
-        body.velocity =  body.transform.TransformDirection(localVelocity);
-    }
-
-    void CheckFlight(float bAir, float mAir)
-    {
-        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
-        {
-            flying = true;
-            body.AddForce(transform.up * (bAir + (AirMultiplier * mAir))/3, ForceMode.Impulse);
-            body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 3, ForceMode.Impulse);
-        }
+        body.AddForce(9.81f * Vector3.up * (flightTimer / totalFlightTime));
+        flightTimer -= Time.deltaTime;
     }
 
     void PickupItem(GameObject item)
