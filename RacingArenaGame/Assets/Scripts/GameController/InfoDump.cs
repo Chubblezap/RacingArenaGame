@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class InfoDump : MonoBehaviour
 {
+    // gun info
     public Mesh[] gunMeshes;
     public GameObject[] gunProjectiles;
     public float[] gunFireRates;
     public int[] gunMaxAmmo;
     public float[] gunReloadSpeed;
     public float[] gunChargeTime;
+
+    // part info
+    public Mesh[] partMeshes;
 
     // Start is called before the first frame update
     void Start()
@@ -158,6 +162,33 @@ public class InfoDump : MonoBehaviour
                 return gunReloadSpeed[6];
             default:
                 return 0;
+        }
+    }
+
+    public Mesh GetPartMesh(string partName)
+    {
+        switch (partName)
+        {
+            case "Allgear Material":
+                return partMeshes[0];
+            case "Slicing Edge Material":
+                return partMeshes[1];
+            case "Macrotech Material":
+                return partMeshes[2];
+            case "Neurolink Material":
+                return partMeshes[3];
+            case "Mundanium Chunk":
+                return partMeshes[4];
+            case "Hardite Alloy":
+                return partMeshes[5];
+            case "Billionvolt Capacitor":
+                return partMeshes[6];
+            case "Flex Drive":
+                return partMeshes[7];
+            case "Antimatter Shard":
+                return partMeshes[8];
+            default:
+                return null;
         }
     }
 }

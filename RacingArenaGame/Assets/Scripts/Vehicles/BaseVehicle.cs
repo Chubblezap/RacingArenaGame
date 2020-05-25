@@ -39,6 +39,7 @@ public class BaseVehicle : MonoBehaviour
     private Collider myCollider;
     Rigidbody body;
     private GunHandler gunScript;
+    private PartHandler partScript;
     private bool flying = false;
     private float totalFlightTime;
     private float flightTimer;
@@ -113,6 +114,7 @@ public class BaseVehicle : MonoBehaviour
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
+        partScript = GetComponent<PartHandler>();
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -243,6 +245,10 @@ public class BaseVehicle : MonoBehaviour
         else if (item.GetComponent<BaseItem>().itemType == "Gun Pickup")
         {
             gunScript.PickupGun(item);
+        }
+        else if (item.GetComponent<BaseItem>().itemType == "Part Pickup")
+        {
+            partScript.PickupPart(item);
         }
         Destroy(item);
     }

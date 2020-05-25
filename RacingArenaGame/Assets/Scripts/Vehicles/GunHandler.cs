@@ -7,11 +7,12 @@ public class GunHandler : MonoBehaviour
     private GameObject gameMaster;
     // Guns
     public GameObject carriedGun;
-    public GameObject carriedGunObject;
     public GameObject leftGun;
     public GameObject rightGun;
     public GameObject leftGunPosition;
     public GameObject rightGunPosition;
+    // the object that is spawned when a gun is picked up
+    public GameObject carriedGunObject;
 
     // Start is called before the first frame update
     void Start()

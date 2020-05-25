@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PartPickup : BaseItem
 {
+    public string partName;
     public string partType;
     // Start is called before the first frame update
     void Start()
@@ -13,31 +14,40 @@ public class PartPickup : BaseItem
         switch (typeDecider)
         {
             case 1:
-                partType = "Allgear Material";
+                partName = "Allgear Material";
+                partType = "Company";
                 break;
             case 2:
-                partType = "Slicing Edge Material";
+                partName = "Slicing Edge Material";
+                partType = "Company";
                 break;
             case 3:
-                partType = "Macrotech Material";
+                partName = "Macrotech Material";
+                partType = "Company";
                 break;
             case 4:
-                partType = "Nerolink Material";
+                partName = "Neurolink Material";
+                partType = "Company";
                 break;
             case 5:
-                partType = "Mundanium Chunk";
+                partName = "Mundanium Chunk";
+                partType = "Material";
                 break;
             case 6:
-                partType = "Hardite Alloy";
+                partName = "Hardite Alloy";
+                partType = "Material";
                 break;
             case 7:
-                partType = "Billionvolt Capacitor";
+                partName = "Billionvolt Capacitor";
+                partType = "Material";
                 break;
             case 8:
-                partType = "Flex Drive";
+                partName = "Flex Drive";
+                partType = "Material";
                 break;
             case 9:
-                partType = "Antimatter Shard";
+                partName = "Antimatter Shard";
+                partType = "Material";
                 break;
             default:
                 Debug.Log("Wacky case");
