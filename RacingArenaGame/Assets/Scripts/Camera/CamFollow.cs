@@ -18,7 +18,7 @@ public class CamFollow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        moveTo = targetTransform.position + (targetTransform.up * 1.5f + targetTransform.forward * -3.5f);
+        moveTo = targetTransform.position + (targetTransform.up * 1.5f + targetTransform.forward * -2.5f);
         speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 10f;
         transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
         transform.LookAt(targetTransform.position + new Vector3(0f,0.5f,0f));
