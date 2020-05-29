@@ -16,8 +16,7 @@ public class ThrusterParticles : MonoBehaviour
             for (int i=0; i < systems.Length; i++)
             {
                 var main = systems[i].main;
-                main.startSpeed = 1 + vehicle.GetComponent<Rigidbody>().velocity.magnitude
-                    / (stats.BaseTopSpeed + ((stats.BaseTopSpeed * stats.PercentTopSpeedPerMod) * stats.ModTopSpeed));
+                main.startSpeed = 2 + (-vehicle.GetComponent<Rigidbody>().velocity.magnitude/2);
             }
         }
     }
