@@ -39,7 +39,8 @@ public class Crate : BaseItem
 
     void DoHit(Vector3 force, float damage)
     {
-        GetComponent<Rigidbody>().AddForce(force);
+        GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(transform.up, ForceMode.Impulse);
         curHP -= damage;
         if(curHP <= 0)
         {
@@ -82,7 +83,7 @@ public class Crate : BaseItem
         GameObject collidedObject = collision.gameObject;
         if(collidedObject.tag == "Projectile")
         {
-            DoHit(20 * collidedObject.GetComponent<BasicProjectile>().force * Vector3.Normalize(collidedObject.transform.position - transform.position), collidedObject.GetComponent<BasicProjectile>().damage);
+            DoHit(collidedObject.GetComponent<BasicProjectile>().force * Vector3.Normalize(collidedObject.transform.forward), collidedObject.GetComponent<BasicProjectile>().damage);
             collidedObject.GetComponent<BasicProjectile>().Detonate();
         }
     }
