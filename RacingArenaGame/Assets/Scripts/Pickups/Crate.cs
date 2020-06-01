@@ -9,6 +9,8 @@ public class Crate : BaseItem
     public GameObject[] items;
     public float maxHP;
     public float curHP;
+    public GameObject breakLayer;
+    public Texture2D[] cracks;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,18 @@ public class Crate : BaseItem
         if(curHP <= 0)
         {
             Pop();
+        }
+        if(curHP > maxHP/2 && curHP <= maxHP*0.75)
+        {
+            breakLayer.GetComponent<MeshRenderer>().material.SetTexture("_AlphaTex", cracks[0]);
+        }
+        else if(curHP > maxHP/4 && curHP <= maxHP/2)
+        {
+            breakLayer.GetComponent<MeshRenderer>().material.SetTexture("_AlphaTex", cracks[1]);
+        }
+        else if (curHP > 0 && curHP <= maxHP/4)
+        {
+            breakLayer.GetComponent<MeshRenderer>().material.SetTexture("_AlphaTex", cracks[2]);
         }
     }
 

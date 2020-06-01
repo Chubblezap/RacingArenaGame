@@ -34,6 +34,7 @@ public class BaseVehicle : MonoBehaviour
 
     // Utilities
     private GameObject gameMaster;
+    private int player;
     private float isHolding;
     private float currentCharge;
     private Collider myCollider;
@@ -43,6 +44,9 @@ public class BaseVehicle : MonoBehaviour
     private bool flying = false;
     private float totalFlightTime;
     private float flightTimer;
+    private float ejectTimer;
+    public GameObject playerCharacter;
+    public GameObject cam;
 
     // Start is called before the first frame update
     void Start()
@@ -53,35 +57,52 @@ public class BaseVehicle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isHolding = Input.GetAxis("p1Charge");
-        ChargeBar.GetComponent<Image>().fillAmount = currentCharge;
+        if(player != 0)
+        {
+            isHolding = Input.GetAxis("p1Charge");
+            ChargeBar.GetComponent<Image>().fillAmount = currentCharge;
+        }
     }
 
     void FixedUpdate() //put movement/physics stuff here
-    {
-        Turn(Input.GetAxis("p1Horizontal"), BaseTurn, ModTurn);
-        if (isHolding == 1) // player is holding Space or A
+    {if(player != 0)
         {
-            Charge(BaseArmor, ModArmor, BaseBoost, ModBoost);
-        }
-        else
-        {
-            if(currentCharge >= 1)
+            Turn(Input.GetAxis("p1Horizontal"), BaseTurn, ModTurn);
+            if (isHolding == 1) // player is holding Space or A
             {
-                Boost(BaseBoost, ModBoost);
+                Charge(BaseArmor, ModArmor, BaseBoost, ModBoost);
+                if (Input.GetAxis("p1Vertical") <= -0.75)
+                {
+                    ejectTimer += Time.deltaTime;
+                    if (ejectTimer >= 1)
+                    {
+                        Eject();
+                    }
+                }
+                else
+                {
+                    ejectTimer = 0;
+                }
             }
-            currentCharge = 0;
-            Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
-        }
-        DoDrag(BaseArmor, ModArmor);
-        if(!flying)
-        {
-            CheckFlight(BaseAir, ModAir);
-        }
-        else
-        {
-            Aim(Input.GetAxis("p1Vertical"));
-            DoFlightGravity();
+            else
+            {
+                if (currentCharge >= 1)
+                {
+                    Boost(BaseBoost, ModBoost);
+                }
+                currentCharge = 0;
+                Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
+            }
+            DoDrag(BaseArmor, ModArmor);
+            if (!flying)
+            {
+                CheckFlight(BaseAir, ModAir);
+            }
+            else
+            {
+                Aim(Input.GetAxis("p1Vertical"));
+                DoFlightGravity();
+            }
         }
     }
 
@@ -109,8 +130,10 @@ public class BaseVehicle : MonoBehaviour
         flightTimer = 0;
         totalFlightTime = 0;
         // utility
+        player = 1;
         isHolding = 0;
         currentCharge = 0;
+        ejectTimer = 0;
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
@@ -166,28 +189,20 @@ public class BaseVehicle : MonoBehaviour
         float rotationLowerBound = 45;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
 
-        float normalizedRotation;
-        if (currentRotation.x > 180)
-        {
-            normalizedRotation = -360 + currentRotation.x;
-        }
-        else
-        {
-            normalizedRotation = currentRotation.x;
-        }
+        float NR = GetNormalizedRotation();
 
-        if ((direction < 0 && normalizedRotation > rotationUpperBound) || (direction > 0 && normalizedRotation < rotationLowerBound))
+        if ((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound))
         {
             body.AddRelativeTorque(Vector3.right * direction * 5);
         }
 
-        if (normalizedRotation < 0) // vehicle is pointing up
+        if (NR < 0) // vehicle is pointing up
         {
-            flightSpeedMultiplier = 1.5f - (Mathf.Abs(normalizedRotation / 45) * 0.5f);
+            flightSpeedMultiplier = 1.5f - (Mathf.Abs(NR / 45) * 0.5f);
         }
-        else if (normalizedRotation > 0) // vehicle is pointing down
+        else if (NR > 0) // vehicle is pointing down
         {
-            flightSpeedMultiplier = 1.5f + (Mathf.Abs(normalizedRotation / 45) * 1.5f);
+            flightSpeedMultiplier = 1.5f + (Mathf.Abs(NR / 45) * 1.5f);
         }
         else
         {
@@ -197,8 +212,40 @@ public class BaseVehicle : MonoBehaviour
 
     void DoFlightGravity()
     {
-        body.AddForce(9.81f * Vector3.up * (flightTimer / totalFlightTime));
+        float NR = GetNormalizedRotation();
+        float grav = 9.81f;
+        if(NR < 0)
+        {
+            grav += 9.81f * Mathf.Abs(NR / 45);
+        }
+        body.AddForce(grav * Vector3.up * (flightTimer / totalFlightTime));
         flightTimer -= Time.deltaTime;
+    }
+
+    void Eject()
+    {
+        player = 0;
+        GameObject newplayerobject = Instantiate(playerCharacter, transform.position, transform.rotation);
+        newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
+        cam.GetComponent<CamFollow>().target = newplayerobject;
+        cam.GetComponent<CamFollow>().targetTransform = newplayerobject.transform;
+        cam = null;
+    }
+
+    private float GetNormalizedRotation()
+    {
+        Vector3 currentRotation = transform.localRotation.eulerAngles;
+
+        float normalizedRotation;
+        if (currentRotation.x > 180)
+        {
+            normalizedRotation = -360 + currentRotation.x;
+        }
+        else
+        {
+            normalizedRotation = currentRotation.x;
+        }
+        return normalizedRotation;
     }
 
     void PickupItem(GameObject item)
