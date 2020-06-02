@@ -229,6 +229,7 @@ public class BaseVehicle : MonoBehaviour
         newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
         cam.GetComponent<CamFollow>().target = newplayerobject;
         cam.GetComponent<CamFollow>().targetTransform = newplayerobject.transform;
+        cam.GetComponent<CamFollow>().mode = "Player";
         cam = null;
     }
 

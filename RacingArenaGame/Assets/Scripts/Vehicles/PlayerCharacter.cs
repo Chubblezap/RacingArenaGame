@@ -23,7 +23,10 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Move(Input.GetAxis("p1Horizontal"), Input.GetAxis("p1Vertical"));
+        if(Input.GetAxisRaw("p1Horizontal") != 0 || Input.GetAxisRaw("p1Vertical") != 0)
+        {
+            Move(Input.GetAxisRaw("p1Horizontal"), Input.GetAxisRaw("p1Vertical"));
+        }
     }
     
     void Init()
@@ -45,9 +48,10 @@ public class PlayerCharacter : MonoBehaviour
         right.Normalize();
 
         // the direction in world space to move
-        var desiredMoveDirection = forward * vertical + right * horizontal;
+        Vector3 desiredMoveDirection = forward * vertical + right * horizontal;
 
         // apply the movement
-        body.AddForce(desiredMoveDirection * 10 * Time.deltaTime);
+        body.rotation = Quaternion.Slerp(body.rotation, Quaternion.LookRotation(desiredMoveDirection, Vector3.up), 10 * Time.deltaTime);
+        body.AddForce(Vector3.Normalize(desiredMoveDirection) * 7 * Time.deltaTime, ForceMode.VelocityChange);
     }
 }
