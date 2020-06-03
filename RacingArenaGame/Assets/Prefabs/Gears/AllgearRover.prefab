@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 571505989316952879}
   - component: {fileID: 844173187424776325}
   - component: {fileID: 844173187424776378}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: AllgearRover
-  m_TagString: Player
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8408693111055227425}
   - component: {fileID: 3151780668724895669}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: PartPlacementMat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2825227766745706055}
   - component: {fileID: 1352741110281923131}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: PartPlacementComp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3731487433388282893}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: GunPlacementRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7229253730697140344}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: GunPlacementLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 3164186098277356248}
   - component: {fileID: 972415674302331055}
   - component: {fileID: 4059171878684675409}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: RightThrusterParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5061,7 +5061,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2965916885057550775}
   - component: {fileID: 541135853037932504}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5111,7 +5111,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 697378620950532075}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: HoverThrustArray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5159,7 +5159,7 @@ GameObject:
   - component: {fileID: 504960138987201803}
   - component: {fileID: 7292407506904039567}
   - component: {fileID: 1600445529356036938}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: LeftThrusterParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9985,6 +9985,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust7
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &5520042274948320278 stripped
@@ -10074,6 +10079,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -10165,6 +10175,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust9
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &5269630406442343340 stripped
@@ -10254,6 +10269,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AllgearRover
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: c6795bb8e61c5734e8b44373f2c2b57b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6795bb8e61c5734e8b44373f2c2b57b, type: 3}
@@ -10345,6 +10365,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust15
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &6574659728344558429 stripped
@@ -10434,6 +10459,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust3
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -10525,6 +10555,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust6
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &7596003534363515124 stripped
@@ -10614,6 +10649,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust8
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -10710,6 +10750,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SquareThrust
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &8106193402049987306 stripped
@@ -10799,6 +10844,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -10890,6 +10940,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust11
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &9061942329003100190 stripped
@@ -10980,6 +11035,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust10
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &388047979726236352 stripped
@@ -11069,6 +11129,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust5
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -11165,6 +11230,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SquareThrust
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &481079917935420494 stripped
@@ -11254,6 +11324,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust14
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -11345,6 +11420,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust4
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &1518131159285153399 stripped
@@ -11434,6 +11514,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust13
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
@@ -11525,6 +11610,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HoverThrust12
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}
 --- !u!4 &1730254662612355364 stripped
@@ -11614,6 +11704,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HoverThrust16
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: af565c1de8049bf44823da68fd8fbedc,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af565c1de8049bf44823da68fd8fbedc, type: 3}

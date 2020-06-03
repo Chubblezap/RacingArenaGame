@@ -185,11 +185,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 844173187424776327, guid: f995a9314430f7945b5898d0a2971ed6,
         type: 3}
-      propertyPath: ChargeBar
-      value: 
-      objectReference: {fileID: 540115364}
-    - target: {fileID: 844173187424776327, guid: f995a9314430f7945b5898d0a2971ed6,
-        type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 743348017}
@@ -663,6 +658,7 @@ MonoBehaviour:
   target: {fileID: 1411348346}
   targetTransform: {fileID: 1411348354}
   moveTo: {x: 0, y: 0, z: 0}
+  mode: 
 --- !u!1001 &758661373
 PrefabInstance:
   m_ObjectHideFlags: 0

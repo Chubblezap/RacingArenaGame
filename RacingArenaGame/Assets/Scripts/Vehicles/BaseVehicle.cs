@@ -23,8 +23,10 @@ public class BaseVehicle : MonoBehaviour
     public float PercentAirPerMod;
 
     // UI Elements
-    public GameObject ChargeBar;
-    public GameObject Speedometer;
+    public GameObject UI;
+    private GameObject ChargeBar;
+    private GameObject ChargeBarFill;
+    private GameObject Speedometer;
 
     // Stat modifiers
     [HideInInspector]
@@ -34,7 +36,6 @@ public class BaseVehicle : MonoBehaviour
 
     // Utilities
     private GameObject gameMaster;
-    private int player;
     private float isHolding;
     private float currentCharge;
     private Collider myCollider;
@@ -45,6 +46,7 @@ public class BaseVehicle : MonoBehaviour
     private float totalFlightTime;
     private float flightTimer;
     private float ejectTimer;
+    public int player;
     public GameObject playerCharacter;
     public GameObject cam;
 
@@ -60,12 +62,13 @@ public class BaseVehicle : MonoBehaviour
         if(player != 0)
         {
             isHolding = Input.GetAxis("p1Charge");
-            ChargeBar.GetComponent<Image>().fillAmount = currentCharge;
+            ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
         }
     }
 
     void FixedUpdate() //put movement/physics stuff here
-    {if(player != 0)
+    {
+        if (player != 0)
         {
             Turn(Input.GetAxis("p1Horizontal"), BaseTurn, ModTurn);
             if (isHolding == 1) // player is holding Space or A
@@ -76,6 +79,7 @@ public class BaseVehicle : MonoBehaviour
                     ejectTimer += Time.deltaTime;
                     if (ejectTimer >= 1)
                     {
+                        currentCharge = 0;
                         Eject();
                     }
                 }
@@ -90,6 +94,7 @@ public class BaseVehicle : MonoBehaviour
                 {
                     Boost(BaseBoost, ModBoost);
                 }
+                ejectTimer = 0;
                 currentCharge = 0;
                 Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
             }
@@ -104,11 +109,18 @@ public class BaseVehicle : MonoBehaviour
                 DoFlightGravity();
             }
         }
+        else
+        {
+            body.velocity *= 0.9f;
+        }
     }
 
     void Init()
     {
         gameMaster = GameObject.Find("GameController");
+        UI = GameObject.Find("PlayerUI");
+        ChargeBar = UI.transform.GetChild(0).gameObject;
+        ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
         //stats
         ModTopSpeed = 0;
         ModAcceleration = 0;
@@ -138,6 +150,14 @@ public class BaseVehicle : MonoBehaviour
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
         partScript = GetComponent<PartHandler>();
+    }
+
+    public void UIIinit(GameObject newui) // Called when a new UI needs to be assigned (piloting new vehicle)
+    {
+        UI = newui;
+        UI.transform.GetChild(0).gameObject.SetActive(true);
+        ChargeBar = UI.transform.GetChild(0).gameObject;
+        ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -225,12 +245,19 @@ public class BaseVehicle : MonoBehaviour
     void Eject()
     {
         player = 0;
-        GameObject newplayerobject = Instantiate(playerCharacter, transform.position, transform.rotation);
+        GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
+
         newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
         cam.GetComponent<CamFollow>().target = newplayerobject;
         cam.GetComponent<CamFollow>().targetTransform = newplayerobject.transform;
         cam.GetComponent<CamFollow>().mode = "Player";
         cam = null;
+
+        newplayerobject.GetComponent<PlayerCharacter>().UI = UI;
+        ChargeBar.SetActive(false);
+        UI = null;
+        ChargeBar = null;
+        ChargeBarFill = null;
     }
 
     private float GetNormalizedRotation()
