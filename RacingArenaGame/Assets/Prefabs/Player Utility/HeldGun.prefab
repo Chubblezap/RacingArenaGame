@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  moveTarget: {x: 0, y: 0, z: 0}
+  moveTarget: {fileID: 0}
   gunType: 
   gunMesh: {fileID: 0}
   flag: Picked Up
@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65d83ef03e7085641aee6be9d9750eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileType: {fileID: 0}
   active: 0
 --- !u!96 &7477488739036696335
 TrailRenderer:

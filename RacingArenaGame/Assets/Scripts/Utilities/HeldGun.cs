@@ -8,6 +8,7 @@ public class HeldGun : MonoBehaviour
     public GameObject moveTarget;
     public string gunType;
     public Mesh gunMesh;
+    public int matSize;
     private float curSpeed = 0;
     private bool movingToPlayer = true;
 
@@ -31,9 +32,17 @@ public class HeldGun : MonoBehaviour
             if(Vector3.Distance(transform.position, owner.position + new Vector3(0f,0.5f,0f)) < 0.001f)
             {
                 movingToPlayer = false;
+                flag = "Hovering";
+
+                // rendering hovering gun
                 GetComponent<TrailRenderer>().enabled = false;
                 GetComponent<MeshFilter>().mesh = gunMesh;
-                flag = "Hovering";
+                Material[] newmats = new Material[matSize];
+                for(int i = 0; i < matSize; i++)
+                {
+                    newmats[i] = GetComponent<MeshRenderer>().material;
+                }
+                GetComponent<MeshRenderer>().materials = newmats;
             }
         }
         if(movingToPlayer == false && flag != "Slotted" && flag != "Equipped") // gun hovering over player

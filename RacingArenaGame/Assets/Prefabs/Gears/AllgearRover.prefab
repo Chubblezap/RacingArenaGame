@@ -68,8 +68,7 @@ MonoBehaviour:
   PercentArmorPerMod: 0.1
   PercentOffensePerMod: 0.1
   PercentAirPerMod: 0.1
-  ChargeBar: {fileID: 0}
-  Speedometer: {fileID: 0}
+  UI: {fileID: 0}
   ModTopSpeed: 0
   ModAcceleration: 0
   ModTurn: 0
@@ -79,6 +78,7 @@ MonoBehaviour:
   ModDefense: 0
   ModAir: 0
   curHP: 0
+  player: 0
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
   cam: {fileID: 0}
@@ -260,7 +260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123891971261819047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.385, y: 0.2, z: 0.25}
+  m_LocalPosition: {x: 0.385, y: 0.13, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 844173187424776326}
@@ -290,7 +290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6070983921043348129}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.385, y: 0.2, z: 0.25}
+  m_LocalPosition: {x: -0.385, y: 0.13, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 844173187424776326}
@@ -10253,17 +10253,17 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: c6795bb8e61c5734e8b44373f2c2b57b,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c6795bb8e61c5734e8b44373f2c2b57b,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: c6795bb8e61c5734e8b44373f2c2b57b,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 20
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: c6795bb8e61c5734e8b44373f2c2b57b,
         type: 3}

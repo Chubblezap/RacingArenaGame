@@ -165,6 +165,29 @@ public class InfoDump : MonoBehaviour
         }
     }
 
+    public int GetGunMatSize(string gunType)
+    {
+        switch (gunType)
+        {
+            case "Basic Gun":
+                return 4;
+            case "Flamethrower":
+                return 1;
+            case "Bomb Cannon":
+                return 1;
+            case "Mine Layer":
+                return 1;
+            case "Viral Spiral":
+                return 1;
+            case "Gearblade Launcher":
+                return 1;
+            case "Boost Jumper":
+                return 1;
+            default:
+                return 0;
+        }
+    }
+
     public Mesh GetPartMesh(string partName)
     {
         switch (partName)

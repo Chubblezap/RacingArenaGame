@@ -91,6 +91,7 @@ public class GunHandler : MonoBehaviour
         carriedGun = Instantiate(carriedGunObject, item.transform.position, Quaternion.identity);
         carriedGun.GetComponent<HeldGun>().gunType = item.GetComponent<GunPickup>().gunType;
         carriedGun.GetComponent<HeldGun>().gunMesh = gameMaster.GetComponent<InfoDump>().GetGunMesh(item.GetComponent<GunPickup>().gunType);
+        carriedGun.GetComponent<HeldGun>().matSize = gameMaster.GetComponent<InfoDump>().GetGunMatSize(item.GetComponent<GunPickup>().gunType);
         carriedGun.GetComponent<HeldGun>().owner = transform;
         carriedGun.transform.SetParent(transform);
     }
