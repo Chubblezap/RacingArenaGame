@@ -14,7 +14,7 @@ public class GunPickup : BaseItem
         switch (typeDecider)
         {
             case 1:
-                gunType = "Basic Gun";
+                gunType = "Allgear Basic";
                 break;
             case 2:
                 gunType = "Flamethrower";

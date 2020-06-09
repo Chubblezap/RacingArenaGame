@@ -7,10 +7,9 @@ public class HeldGun : MonoBehaviour
     public Transform owner;
     public GameObject moveTarget;
     public string gunType;
-    public Mesh gunMesh;
-    public int matSize;
     private float curSpeed = 0;
     private bool movingToPlayer = true;
+    private int renderedGunIndex = -1;
 
     //flags
     public string flag = "Picked Up";
@@ -36,13 +35,7 @@ public class HeldGun : MonoBehaviour
 
                 // rendering hovering gun
                 GetComponent<TrailRenderer>().enabled = false;
-                GetComponent<MeshFilter>().mesh = gunMesh;
-                Material[] newmats = new Material[matSize];
-                for(int i = 0; i < matSize; i++)
-                {
-                    newmats[i] = GetComponent<MeshRenderer>().material;
-                }
-                GetComponent<MeshRenderer>().materials = newmats;
+                RenderGun(gunType);
             }
         }
         if(movingToPlayer == false && flag != "Slotted" && flag != "Equipped") // gun hovering over player
@@ -73,8 +66,24 @@ public class HeldGun : MonoBehaviour
                 GetComponent<FiringHandler>().GetGunStats();
                 flag = "Equipped";
                 owner.GetComponent<GunHandler>().carriedGun = null;
+                transform.GetChild(renderedGunIndex).GetChild(0).gameObject.SetActive(false); //Disable outline
             }
         }
-        
+    }
+
+    void RenderGun(string GT)
+    {
+        for (int i=0; i < transform.childCount; i++)
+        {
+            if(transform.GetChild(i).GetComponent<HeldGunChildMesh>().gunName == GT)
+            {
+                renderedGunIndex = i;
+            }
+        }
+        if(renderedGunIndex != -1)
+        {
+            transform.GetChild(renderedGunIndex).gameObject.SetActive(true);
+            GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 }

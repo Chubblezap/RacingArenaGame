@@ -31,7 +31,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunMeshes[0];
             case "Flamethrower":
                 return gunMeshes[1];
@@ -54,7 +54,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunProjectiles[0];
             case "Flamethrower":
                 return gunProjectiles[1];
@@ -77,7 +77,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunFireRates[0];
             case "Flamethrower":
                 return gunFireRates[1];
@@ -100,7 +100,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunMaxAmmo[0];
             case "Flamethrower":
                 return gunMaxAmmo[1];
@@ -123,7 +123,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunChargeTime[0];
             case "Flamethrower":
                 return gunChargeTime[1];
@@ -146,7 +146,7 @@ public class InfoDump : MonoBehaviour
     {
         switch (gunType)
         {
-            case "Basic Gun":
+            case "Allgear Basic":
                 return gunReloadSpeed[0];
             case "Flamethrower":
                 return gunReloadSpeed[1];
@@ -160,29 +160,6 @@ public class InfoDump : MonoBehaviour
                 return gunReloadSpeed[5];
             case "Boost Jumper":
                 return gunReloadSpeed[6];
-            default:
-                return 0;
-        }
-    }
-
-    public int GetGunMatSize(string gunType)
-    {
-        switch (gunType)
-        {
-            case "Basic Gun":
-                return 4;
-            case "Flamethrower":
-                return 1;
-            case "Bomb Cannon":
-                return 1;
-            case "Mine Layer":
-                return 1;
-            case "Viral Spiral":
-                return 1;
-            case "Gearblade Launcher":
-                return 1;
-            case "Boost Jumper":
-                return 1;
             default:
                 return 0;
         }
