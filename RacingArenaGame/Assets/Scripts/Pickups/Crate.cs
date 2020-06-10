@@ -16,7 +16,7 @@ public class Crate : BaseItem
     void Start()
     {
         itemType = "Crate";
-        int crateDecider = Random.Range(1, 3);
+        int crateDecider = Random.Range(1, 4);
         switch (crateDecider)
         {
             case 1:

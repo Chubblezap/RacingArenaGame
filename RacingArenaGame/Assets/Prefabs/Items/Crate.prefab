@@ -136,7 +136,7 @@ MonoBehaviour:
   - {fileID: 4175470100146542420, guid: 2f7d332aa73dca442ad4612ccd768866, type: 3}
   - {fileID: 7851871318008185708, guid: f07cfbb0fe290dd4abedd407c13cac48, type: 3}
   - {fileID: 2711669298056708860, guid: c78b192f556daac42afa4bad1fbfd12d, type: 3}
-  - {fileID: 2711669298056708860, guid: c78b192f556daac42afa4bad1fbfd12d, type: 3}
+  - {fileID: 2711669298056708860, guid: a7abdf7706a2a5648b46704077d39ac8, type: 3}
   maxHP: 0
   curHP: 0
   breakLayer: {fileID: 3437270545189232345}
