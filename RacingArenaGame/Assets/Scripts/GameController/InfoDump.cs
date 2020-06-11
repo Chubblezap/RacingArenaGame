@@ -27,7 +27,7 @@ public class InfoDump : MonoBehaviour
         
     }
 
-    public Mesh GetGunMesh(string gunType)
+    /*public Mesh GetGunMesh(string gunType)
     {
         switch (gunType)
         {
@@ -48,7 +48,7 @@ public class InfoDump : MonoBehaviour
             default:
                 return null;
         }
-    }
+    }*/
 
     public GameObject GetGunProjectile(string gunType)
     {

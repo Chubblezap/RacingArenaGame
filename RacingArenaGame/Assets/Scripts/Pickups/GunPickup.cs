@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunPickup : BaseItem
 {
     public string gunType;
+    private int renderedGunIndex = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,30 @@ public class GunPickup : BaseItem
                 break;
             default:
                 Debug.Log("Wacky case");
+                gunType = "error";
                 break;
+        }
+        RenderGun(gunType);
+    }
+
+    private void FixedUpdate()
+    {
+        transform.Rotate(new Vector3(0, 1, 0), 1);
+    }
+
+    void RenderGun(string GT)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<GunChildMesh>() != null && transform.GetChild(i).GetComponent<GunChildMesh>().gunName == GT)
+            {
+                renderedGunIndex = i;
+            }
+        }
+        if (renderedGunIndex != -1)
+        {
+            transform.GetChild(renderedGunIndex).gameObject.SetActive(true);
+            GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }

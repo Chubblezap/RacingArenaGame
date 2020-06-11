@@ -75,7 +75,7 @@ public class HeldGun : MonoBehaviour
     {
         for (int i=0; i < transform.childCount; i++)
         {
-            if(transform.GetChild(i).GetComponent<HeldGunChildMesh>().gunName == GT)
+            if(transform.GetChild(i).GetComponent<GunChildMesh>().gunName == GT)
             {
                 renderedGunIndex = i;
             }

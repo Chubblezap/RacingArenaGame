@@ -8,13 +8,23 @@ public class BasicProjectile : MonoBehaviour
     public float damage;
     public float speed;
     public float force;
+    public float lifetime;
     protected Rigidbody body;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        body.AddForce(transform.forward * speed);
+        body.AddForce(transform.forward * speed, ForceMode.Impulse);
+    }
+
+    private void Update()
+    {
+        lifetime -= Time.deltaTime;
+        if(lifetime < 0)
+        {
+            Detonate();
+        }
     }
 
     public void Detonate()

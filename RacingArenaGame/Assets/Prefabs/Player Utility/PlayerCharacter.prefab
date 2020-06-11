@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3004928547914443175}
   - component: {fileID: 6267828969076164383}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   ModOffense: 0
   ModDefense: 0
   ModAir: 0
+  UI: {fileID: 0}
   cam: {fileID: 0}
   groundcollider: {fileID: 1190903693624447902}
   flag: 

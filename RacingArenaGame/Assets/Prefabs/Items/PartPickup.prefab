@@ -51,6 +51,7 @@ MonoBehaviour:
   itemType: 
   despawnTimer: 60
   doingTimer: 1
+  partName: 
   partType: 
 --- !u!135 &1811298346590183374
 SphereCollider:
@@ -138,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7991117947722171014}
   - component: {fileID: 7749512311644094751}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
