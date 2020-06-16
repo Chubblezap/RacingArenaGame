@@ -31,28 +31,28 @@ public class MenuItem : MonoBehaviour
         {
             if(upItem != null)
             {
-                if(Input.GetAxis("menuVertical") >= 0.25)
+                if(Input.GetAxis("p1menuVertical") >= 0.25)
                 {
                     SwitchItems(upItem);
                 }
             }
             if (downItem != null)
             {
-                if(Input.GetAxis("menuVertical") <= -0.25)
+                if(Input.GetAxis("p1menuVertical") <= -0.25)
                 {
                     SwitchItems(downItem);
                 }
             }
             if (leftItem != null)
             {
-                if (Input.GetAxis("menuHorizontal") >= 0.25)
+                if (Input.GetAxis("p1menuHorizontal") <= -0.25)
                 {
                     SwitchItems(leftItem);
                 }
             }
             if (rightItem != null)
             {
-                if (Input.GetAxis("menuHorizontal") <= -0.25)
+                if (Input.GetAxis("p1menuHorizontal") >= 0.25)
                 {
                     SwitchItems(rightItem);
                 }
@@ -60,14 +60,14 @@ public class MenuItem : MonoBehaviour
 
             if(pushItem != null)
             {
-                if(Input.GetAxis("menuButton") >= 0.25)
+                if(Input.GetAxis("p1menuButton") >= 0.25)
                 {
                     SwitchItems(pushItem);
                 }
             }
             if (backItem != null)
             {
-                if (Input.GetAxis("menuButton") <= -0.25)
+                if (Input.GetAxis("p1menuButton") <= -0.25)
                 {
                     SwitchItems(backItem);
                 }

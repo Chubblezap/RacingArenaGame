@@ -40,7 +40,7 @@ SphereCollider:
   m_GameObject: {fileID: 1190903693624447902}
   m_Material: {fileID: 13400000, guid: 2b701ca3de2f93743be3b8e1071c44bd, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -104,6 +104,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   groundcollider: {fileID: 1190903693624447902}
   flag: 
+  player: 0
 --- !u!33 &535258385039756449
 MeshFilter:
   m_ObjectHideFlags: 0

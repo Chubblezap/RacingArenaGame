@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 743348017}
+    - target: {fileID: 844173187424776327, guid: f995a9314430f7945b5898d0a2971ed6,
+        type: 3}
+      propertyPath: startplayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 844173187424776378, guid: f995a9314430f7945b5898d0a2971ed6,
         type: 3}
       propertyPath: m_Constraints

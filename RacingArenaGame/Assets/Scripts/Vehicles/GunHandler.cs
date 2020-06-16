@@ -11,8 +11,13 @@ public class GunHandler : MonoBehaviour
     public GameObject rightGun;
     public GameObject leftGunPosition;
     public GameObject rightGunPosition;
+
     // the object that is spawned when a gun is picked up
     public GameObject carriedGunObject;
+
+    // Controls
+    private string fireLeftInput;
+    private string fireRightInput;
 
     // Start is called before the first frame update
     void Start()
@@ -27,13 +32,40 @@ public class GunHandler : MonoBehaviour
         DoGuns();
     }
 
+    public void LoadControls(int player)
+    {
+        switch (player)
+        {
+            case 1:
+                fireLeftInput = "p1FireLeft";
+                fireRightInput = "p1FireRight";
+                break;
+            case 2:
+                fireLeftInput = "p2FireLeft";
+                fireRightInput = "p2FireRight";
+                break;
+            case 3:
+                fireLeftInput = "p3FireLeft";
+                fireRightInput = "p3FireRight";
+                break;
+            case 4:
+                fireLeftInput = "p4FireLeft";
+                fireRightInput = "p4FireRight";
+                break;
+            default:
+                fireLeftInput = "p1FireLeft";
+                fireRightInput = "p1FireRight";
+                break;
+        }
+    }
+
     void DoGuns()
     {
         if (carriedGun != null)
         {
             if(carriedGun.GetComponent<HeldGun>().flag == "Hovering") // player has an overhead gun
             {
-                if (Input.GetButtonDown("p1FireRight"))
+                if (Input.GetButtonDown(fireRightInput))
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
@@ -41,7 +73,7 @@ public class GunHandler : MonoBehaviour
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
-                else if (Input.GetButtonDown("p1FireLeft"))
+                else if (Input.GetButtonDown(fireLeftInput))
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = leftGunPosition;
@@ -58,7 +90,7 @@ public class GunHandler : MonoBehaviour
         {
             if (rightGun != null)
             {
-                if (Input.GetButton("p1FireRight"))
+                if (Input.GetButton(fireRightInput))
                 {
                     rightGun.GetComponent<FiringHandler>().active = true;
                 }
@@ -69,7 +101,7 @@ public class GunHandler : MonoBehaviour
             }
             if (leftGun != null)
             {
-                if (Input.GetButton("p1FireLeft"))
+                if (Input.GetButton(fireLeftInput))
                 {
                     leftGun.GetComponent<FiringHandler>().active = true;
                 }

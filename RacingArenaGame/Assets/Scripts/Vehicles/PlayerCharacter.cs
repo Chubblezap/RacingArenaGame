@@ -20,6 +20,12 @@ public class PlayerCharacter : MonoBehaviour
     private Rigidbody body;
     private float pilotTimer;
 
+    // Controls
+    public int player = 0;
+    private string horizontal;
+    private string vertical;
+    private string jump;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,22 +35,37 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetAxisRaw("p1Horizontal") != 0 || Input.GetAxisRaw("p1Vertical") != 0)
+        if(player != 0)
         {
-            Move(Input.GetAxisRaw("p1Horizontal"), Input.GetAxisRaw("p1Vertical"));
-        }
-        else
-        {
-            body.velocity *= 0.96f;
-        }
-        if (body.velocity.magnitude > 3)
-        {
-            body.velocity *= 0.96f;
-        }
-        DoDrag();
-        if(pilotTimer > 0)
-        {
-            pilotTimer -= Time.deltaTime;
+            if (Input.GetAxisRaw(horizontal) != 0 || Input.GetAxisRaw(vertical) != 0)
+            {
+                Move(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical));
+            }
+            else
+            {
+                Vector3 tmp = body.velocity;
+                tmp.x *= 0.96f;
+                tmp.z *= 0.96f;
+                body.velocity = tmp;
+            }
+            if (body.velocity.magnitude > 3)
+            {
+                Vector3 tmp = body.velocity;
+                tmp.x *= 0.96f;
+                tmp.z *= 0.96f;
+                body.velocity = tmp;
+            }
+            DoDrag();
+
+            if(Input.GetAxis(jump) >= 0.25 && Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f))
+            {
+                body.AddForce(Vector3.up);
+            }
+
+            if (pilotTimer > 0)
+            {
+                pilotTimer -= Time.deltaTime;
+            }
         }
     }
     
@@ -55,6 +76,39 @@ public class PlayerCharacter : MonoBehaviour
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
         pilotTimer = 3f;
+    }
+
+    public void LoadControls(int newplayernum)
+    {
+        player = newplayernum;
+        switch (player)
+        {
+            case 1:
+                horizontal = "p1Horizontal";
+                vertical = "p1Vertical";
+                jump = "p1menuButton";
+                break;
+            case 2:
+                horizontal = "p2Horizontal";
+                vertical = "p2Vertical";
+                jump = "p2menuButton";
+                break;
+            case 3:
+                horizontal = "p3Horizontal";
+                vertical = "p3Vertical";
+                jump = "p3menuButton";
+                break;
+            case 4:
+                horizontal = "p4Horizontal";
+                vertical = "p4Vertical";
+                jump = "p4menuButton";
+                break;
+            default:
+                horizontal = "p1Horizontal";
+                vertical = "p1Vertical";
+                jump = "p1menuButton";
+                break;
+        }
     }
 
     private void Move(float horizontal, float vertical)
@@ -105,7 +159,7 @@ public class PlayerCharacter : MonoBehaviour
     void Pilot(GameObject vehicle)
     {
         BaseVehicle v = vehicle.GetComponent<BaseVehicle>();
-        v.player = 1;
+        v.LoadControls(player);
 
         v.cam = cam;
         cam.GetComponent<CamFollow>().target = vehicle;

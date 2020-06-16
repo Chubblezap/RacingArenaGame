@@ -46,9 +46,17 @@ public class BaseVehicle : MonoBehaviour
     private float totalFlightTime;
     private float flightTimer;
     private float ejectTimer;
+    public int startplayer;
     public int player;
     public GameObject playerCharacter;
     public GameObject cam;
+
+    // Controls
+    private string horizontalInput;
+    private string verticalInput;
+    private string chargeInput;
+    private string fireLeftInput;
+    private string fireRightInput;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +69,7 @@ public class BaseVehicle : MonoBehaviour
     {
         if(player != 0)
         {
-            isHolding = Input.GetAxis("p1Charge");
+            isHolding = Input.GetAxis(chargeInput);
             ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
         }
     }
@@ -70,11 +78,11 @@ public class BaseVehicle : MonoBehaviour
     {
         if (player != 0)
         {
-            Turn(Input.GetAxis("p1Horizontal"), BaseTurn, ModTurn);
+            Turn(Input.GetAxis(horizontalInput), BaseTurn, ModTurn);
             if (isHolding == 1) // player is holding Space or A
             {
                 Charge(BaseArmor, ModArmor, BaseBoost, ModBoost);
-                if (Input.GetAxis("p1Vertical") <= -0.75)
+                if (Input.GetAxis(verticalInput) <= -0.75)
                 {
                     ejectTimer += Time.deltaTime;
                     if (ejectTimer >= 1)
@@ -105,7 +113,7 @@ public class BaseVehicle : MonoBehaviour
             }
             else
             {
-                Aim(Input.GetAxis("p1Vertical"));
+                Aim(Input.GetAxis(verticalInput));
                 DoFlightGravity();
             }
         }
@@ -142,7 +150,6 @@ public class BaseVehicle : MonoBehaviour
         flightTimer = 0;
         totalFlightTime = 0;
         // utility
-        player = 1;
         isHolding = 0;
         currentCharge = 0;
         ejectTimer = 0;
@@ -150,6 +157,41 @@ public class BaseVehicle : MonoBehaviour
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
         partScript = GetComponent<PartHandler>();
+        LoadControls(startplayer);
+    }
+
+    public void LoadControls(int newplayernum)
+    {
+        player = newplayernum;
+        switch (player)
+        {
+            case 1:
+                horizontalInput = "p1Horizontal";
+                verticalInput = "p1Vertical";
+                chargeInput = "p1Charge";
+                break;
+            case 2:
+                horizontalInput = "p2Horizontal";
+                verticalInput = "p2Vertical";
+                chargeInput = "p2Charge";
+                break;
+            case 3:
+                horizontalInput = "p3Horizontal";
+                verticalInput = "p3Vertical";
+                chargeInput = "p3Charge";
+                break;
+            case 4:
+                horizontalInput = "p4Horizontal";
+                verticalInput = "p4Vertical";
+                chargeInput = "p4Charge";
+                break;
+            default:
+                horizontalInput = "p1Horizontal";
+                verticalInput = "p1Vertical";
+                chargeInput = "p1Charge";
+                break;
+        }
+        gunScript.LoadControls(player);
     }
 
     public void UIIinit(GameObject newui) // Called when a new UI needs to be assigned (piloting new vehicle)
@@ -244,8 +286,9 @@ public class BaseVehicle : MonoBehaviour
 
     void Eject()
     {
-        player = 0;
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
+        newplayerobject.GetComponent<PlayerCharacter>().LoadControls(player);
+        player = 0;
 
         newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
         cam.GetComponent<CamFollow>().target = newplayerobject;
