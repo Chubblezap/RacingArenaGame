@@ -14,7 +14,6 @@ public class PlayerCharacter : MonoBehaviour
     // Utilities
     public GameObject cam;
     public GameObject groundcollider;
-    public string flag;
     private GameObject gameMaster;
     private Collider myCollider;
     private Rigidbody body;
@@ -71,7 +70,6 @@ public class PlayerCharacter : MonoBehaviour
     
     void Init()
     {
-        flag = "Ejecting";
         gameMaster = GameObject.Find("GameController");
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
@@ -145,12 +143,7 @@ public class PlayerCharacter : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject collidedobject = other.gameObject;
-        if (flag == "Ejecting" && collidedobject.tag == "Environment")
-        {
-            flag = "Controlled";
-            groundcollider.GetComponent<SphereCollider>().enabled = true;
-        }
-        if (flag == "Controlled" && collidedobject.tag == "Vehicle" && pilotTimer < 0)
+        if (collidedobject.tag == "Vehicle" && pilotTimer < 0)
         {
             Pilot(collidedobject);
         }

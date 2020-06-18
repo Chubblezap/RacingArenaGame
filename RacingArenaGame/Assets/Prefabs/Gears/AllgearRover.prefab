@@ -78,6 +78,7 @@ MonoBehaviour:
   ModDefense: 0
   ModAir: 0
   curHP: 0
+  startplayer: 0
   player: 0
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
@@ -146,7 +147,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &1391309347928060743
 GameObject:
