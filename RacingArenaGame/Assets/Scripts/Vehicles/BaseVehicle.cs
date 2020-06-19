@@ -47,9 +47,11 @@ public class BaseVehicle : MonoBehaviour
     private float flightTimer;
     private float ejectTimer;
     public int startplayer;
+    [HideInInspector]
     public int player;
     public GameObject playerCharacter;
     public GameObject cam;
+    public bool usesDrag = true; // For the Slipcell
 
     // Controls
     private string horizontalInput;
@@ -81,7 +83,7 @@ public class BaseVehicle : MonoBehaviour
             Turn(Input.GetAxis(horizontalInput), BaseTurn, ModTurn);
             if (isHolding == 1) // player is holding Space or A
             {
-                Charge(BaseArmor, ModArmor, BaseBoost, ModBoost);
+                Charge(BaseArmor, ModArmor, BaseBoost, ModBoost, BaseTopSpeed, ModTopSpeed);
                 if (Input.GetAxis(verticalInput) <= -0.75)
                 {
                     ejectTimer += Time.deltaTime;
@@ -106,7 +108,10 @@ public class BaseVehicle : MonoBehaviour
                 currentCharge = 0;
                 Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
             }
-            DoDrag(BaseArmor, ModArmor);
+            if(usesDrag)
+            {
+                DoDrag(BaseArmor, ModArmor);
+            }
             if (!flying)
             {
                 CheckFlight(BaseAir, ModAir);
@@ -221,10 +226,16 @@ public class BaseVehicle : MonoBehaviour
         body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
     }
 
-    void Charge(float bArmor, float mArmor, float bBoost, float mBoost)
+    void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)
     {
-        body.velocity = new Vector3 ( body.velocity.x * (1f - (0.003f*(bArmor + (ArmorMultiplier * mArmor)))), -20f * (flying ? 1 : 0), body.velocity.z * (1f - (0.003f * (bArmor + (ArmorMultiplier * mArmor)))) );
+        float weightmult = 0.003f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
+        body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), -20f * (flying ? 1 : 0), body.velocity.z * (1f - weightmult) );
         currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
+        // Top Speed failsafe (slipcell, etc)
+        if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
+        {
+            body.velocity *= .96f;
+        }
     }
 
     void DoDrag(float bArmor, float mArmor)
