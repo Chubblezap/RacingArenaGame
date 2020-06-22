@@ -277,18 +277,29 @@ public class BaseVehicle : MonoBehaviour
             body.AddRelativeTorque(Vector3.right * direction * 5);
         }
 
-        if (NR < 0) // vehicle is pointing up
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+
+        if (NR < 0) // vehicle is pointing up, NR is negative
         {
-            flightSpeedMultiplier = 1.5f - (Mathf.Abs(NR / 45) * 0.5f);
+            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f);
+            if(localVelocity.y < 0)
+            {
+                localVelocity.y *= 0.9f; // lower opposite vertical speed
+            }
         }
-        else if (NR > 0) // vehicle is pointing down
+        else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.5f + (Mathf.Abs(NR / 45) * 1.5f);
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f);
+            if (localVelocity.y > 0)
+            {
+                localVelocity.y *= 0.9f; // lower opposite vertical speed
+            }
         }
         else
         {
-            flightSpeedMultiplier = 1.5f;
+            flightSpeedMultiplier = 1.3f;
         }
+        body.velocity = body.transform.TransformDirection(localVelocity);
     }
 
     void DoFlightGravity()

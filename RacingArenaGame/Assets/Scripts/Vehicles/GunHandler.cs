@@ -29,7 +29,10 @@ public class GunHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DoGuns();
+        if(GetComponent<BaseVehicle>().player != 0)
+        {
+            DoGuns();
+        }
     }
 
     public void LoadControls(int player)

@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseTopSpeed: 10
-  BaseAcceleration: 15
+  BaseAcceleration: 10
   BaseTurn: 10
   BaseBoost: 10
   BaseArmor: 10
@@ -83,6 +83,7 @@ MonoBehaviour:
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
   cam: {fileID: 0}
+  usesDrag: 1
 --- !u!114 &4808417052429593922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
+  speed: 1
 --- !u!1 &1569256491777336459
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
+  speed: 1
 --- !u!1 &2123891971261819047
 GameObject:
   m_ObjectHideFlags: 0

@@ -53,8 +53,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseTopSpeed: 12
-  BaseAcceleration: 1
+  BaseTopSpeed: 11
+  BaseAcceleration: 5
   BaseTurn: 30
   BaseBoost: 10
   BaseArmor: 5
@@ -482,7 +482,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a644102319ff57b4fa942e137cf4b374, type: 2}
+  - {fileID: 2100000, guid: 9da2b11998c01344e963d7a45341a526, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
