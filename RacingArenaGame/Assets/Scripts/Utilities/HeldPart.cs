@@ -8,7 +8,7 @@ public class HeldPart : MonoBehaviour
     public GameObject moveTarget;
     public string partName;
     public string partType;
-    public Mesh partMesh;
+    private int renderedPartIndex = -1;
     private float curSpeed = 0;
 
     //flags
@@ -46,7 +46,7 @@ public class HeldPart : MonoBehaviour
                     owner.GetComponent<PartHandler>().materialPart = this.gameObject;
                 }
                 GetComponent<TrailRenderer>().enabled = false;
-                GetComponent<MeshFilter>().mesh = partMesh;
+                RenderPart(partName);
                 transform.SetParent(moveTarget.transform);
                 flag = "Held";
             }
@@ -83,6 +83,21 @@ public class HeldPart : MonoBehaviour
             }
             */
         }
+    }
 
+    void RenderPart(string PN)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<ItemChildMesh>().itemName == PN)
+            {
+                renderedPartIndex = i;
+            }
+        }
+        if (renderedPartIndex != -1)
+        {
+            transform.GetChild(renderedPartIndex).gameObject.SetActive(true);
+            GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 }

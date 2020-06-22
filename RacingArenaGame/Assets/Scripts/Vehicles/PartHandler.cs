@@ -27,7 +27,6 @@ public class PartHandler : MonoBehaviour
         newPart = Instantiate(carriedPartObject, item.transform.position, Quaternion.identity);
         newPart.GetComponent<HeldPart>().partName = item.GetComponent<PartPickup>().partName;
         newPart.GetComponent<HeldPart>().partType = item.GetComponent<PartPickup>().partType;
-        newPart.GetComponent<HeldPart>().partMesh = gameMaster.GetComponent<InfoDump>().GetPartMesh(item.GetComponent<PartPickup>().partName);
         newPart.GetComponent<HeldPart>().owner = transform;
         newPart.transform.SetParent(transform);
 

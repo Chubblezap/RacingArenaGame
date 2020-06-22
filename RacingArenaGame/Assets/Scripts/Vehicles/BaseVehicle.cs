@@ -100,9 +100,9 @@ public class BaseVehicle : MonoBehaviour
             }
             else
             {
-                if (currentCharge >= 1)
+                if (currentCharge > 0)
                 {
-                    Boost(BaseBoost, ModBoost);
+                    Boost(currentCharge, BaseBoost, ModBoost);
                 }
                 ejectTimer = 0;
                 currentCharge = 0;
@@ -215,15 +215,23 @@ public class BaseVehicle : MonoBehaviour
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
         body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
-        if(body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
+        
+        if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
             body.velocity *= .96f;
         }
     }
 
-    void Boost(float bBoost, float mBoost)
+    void Boost(float charge, float bBoost, float mBoost)
     {
-        body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
+        if(charge >= 1)
+        {
+            body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
+        }
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+        localVelocity.x *= 0.2f; // lower sideways speed
+        localVelocity.z = body.velocity.magnitude;
+        body.velocity = body.transform.TransformDirection(localVelocity);
     }
 
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)

@@ -6,6 +6,8 @@ public class PartPickup : BaseItem
 {
     public string partName;
     public string partType;
+    private int renderedPartIndex = -1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,28 @@ public class PartPickup : BaseItem
             default:
                 Debug.Log("Wacky case");
                 break;
+        }
+        RenderPart(partName);
+    }
+
+    private void FixedUpdate()
+    {
+        transform.Rotate(new Vector3(0, 1, 0), 1);
+    }
+
+    void RenderPart(string PN)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).GetComponent<ItemChildMesh>() != null && transform.GetChild(i).GetComponent<ItemChildMesh>().itemName == PN)
+            {
+                renderedPartIndex = i;
+            }
+        }
+        if (renderedPartIndex != -1)
+        {
+            transform.GetChild(renderedPartIndex).gameObject.SetActive(true);
+            GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }

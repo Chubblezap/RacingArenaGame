@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4679553232091019414
+--- !u!114 &-4320029770960569538
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,9 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NeurolinkCell
-  m_Shader: {fileID: -6465566751694194690, guid: 9e1e9a40c17b9fa4f9daf20c1efaaaca,
-    type: 3}
+  m_Name: PartOutline
+  m_Shader: {fileID: 4800000, guid: 7b11d18438ad6124dafb9d293843820b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -41,12 +40,8 @@ Material:
         m_Texture: {fileID: 2800000, guid: eb9a49d3e8e793d4c9a9fef430455e12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _AlphaCutoffTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _AlphaTex:
-        m_Texture: {fileID: 2800000, guid: 221cfd28477a02e43b3dfdf8b371024a, type: 3}
+        m_Texture: {fileID: 2800000, guid: eb9a49d3e8e793d4c9a9fef430455e12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -62,7 +57,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: eb9a49d3e8e793d4c9a9fef430455e12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -78,42 +73,44 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_DE4C4AEB: 1
-    - _Additive: 1
     - _AlphaClip: 0
-    - _AlphaStrength: 1
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 2
     - _Cutoff: 0.5
+    - _Depth: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FresnelPower: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Invert: 0
+    - _Invert: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _OutlineThickness: 0.075
+    - _OutlineWidth: 15
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RimStrength: 0.5
+    - _RimStrength: 1.7
+    - _Size: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _TrueTwoSided: 0
-    - _UseAlphaTex: 0
-    - _UseCutoffTex: 0
     - _WorkflowMode: 1
+    - _WriteDepth: 1
+    - _ZTest: 8
     - _ZWrite: 1
     m_Colors:
     - _AlphaScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimTint: {r: 0, g: 0, b: 0, a: 0}
-    - _ScrollSpeed: {r: 0.05, g: 0.1, b: 0, a: 0}
+    - _FillColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LineColor: {r: 0, g: 1, b: 0.034408808, a: 1}
+    - _OutlineColor: {r: 0.2117647, g: 0.4683477, b: 1, a: 1}
+    - _RimTint: {r: 0.15178525, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _Tint: {r: 1, g: 0, b: 0.557971, a: 0.5882353}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}

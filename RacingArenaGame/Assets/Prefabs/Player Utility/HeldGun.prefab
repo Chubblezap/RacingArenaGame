@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c095477ae061794393373adc8c26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: Viral Spiral
+  itemName: Viral Spiral
 --- !u!33 &8225146430930166894
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5027,7 +5027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c095477ae061794393373adc8c26e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunName: Allgear Basic
+  itemName: Allgear Basic
 --- !u!33 &2703222948241237093
 MeshFilter:
   m_ObjectHideFlags: 0

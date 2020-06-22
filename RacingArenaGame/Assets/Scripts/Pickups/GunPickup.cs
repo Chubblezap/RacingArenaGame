@@ -52,7 +52,7 @@ public class GunPickup : BaseItem
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            if (transform.GetChild(i).GetComponent<GunChildMesh>() != null && transform.GetChild(i).GetComponent<GunChildMesh>().gunName == GT)
+            if (transform.GetChild(i).GetComponent<ItemChildMesh>() != null && transform.GetChild(i).GetComponent<ItemChildMesh>().itemName == GT)
             {
                 renderedGunIndex = i;
             }

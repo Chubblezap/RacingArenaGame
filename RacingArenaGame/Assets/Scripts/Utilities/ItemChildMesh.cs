@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunChildMesh : MonoBehaviour
+public class ItemChildMesh : MonoBehaviour
 {
-    public string gunName;
+    public string itemName;
 }
