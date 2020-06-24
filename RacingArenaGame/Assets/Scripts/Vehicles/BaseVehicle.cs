@@ -284,7 +284,7 @@ public class BaseVehicle : MonoBehaviour
             flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f);
             if(localVelocity.y < 0)
             {
-                localVelocity.y *= 0.9f; // lower opposite vertical speed
+                localVelocity.y *= 1f - (Mathf.Abs(NR / 45) * 0.1f); // lower opposite vertical speed
             }
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
@@ -292,7 +292,7 @@ public class BaseVehicle : MonoBehaviour
             flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f);
             if (localVelocity.y > 0)
             {
-                localVelocity.y *= 0.9f; // lower opposite vertical speed
+                localVelocity.y *= 1f - (Mathf.Abs(NR / 45) * 0.1f); // lower opposite vertical speed
             }
         }
         else

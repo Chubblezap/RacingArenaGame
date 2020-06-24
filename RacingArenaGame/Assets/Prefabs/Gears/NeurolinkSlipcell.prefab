@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseTopSpeed: 11
-  BaseAcceleration: 5
+  BaseAcceleration: 1
   BaseTurn: 30
   BaseBoost: 10
   BaseArmor: 5
