@@ -150,7 +150,7 @@ public class PlayerCharacter : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject collidedobject = collision.gameObject;
-        if(collidedobject.tag == "Environment")
+        if(collidedobject.tag == "Environment" || collidedobject.tag == "Destructible")
         {
             ejected = false;
         }

@@ -123,6 +123,8 @@ MonoBehaviour:
   materialPartPosition: {fileID: 1391309347928060743}
   carriedPartObject: {fileID: 8230410031731389514, guid: bd2090a7dae2a8c4bba6e8636a696c7c,
     type: 3}
+  droppedPartObject: {fileID: 2711669298056708860, guid: a7abdf7706a2a5648b46704077d39ac8,
+    type: 3}
 --- !u!135 &844173187424776325
 SphereCollider:
   m_ObjectHideFlags: 0

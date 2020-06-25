@@ -33,7 +33,7 @@ public class HeldPart : MonoBehaviour
                 {
                     if(owner.GetComponent<PartHandler>().companyPart != null)
                     {
-                        Destroy(owner.GetComponent<PartHandler>().companyPart);
+                        owner.GetComponent<PartHandler>().DropPart(owner.GetComponent<PartHandler>().companyPart);
                     }
                     owner.GetComponent<PartHandler>().companyPart = this.gameObject;
                 }
@@ -41,7 +41,7 @@ public class HeldPart : MonoBehaviour
                 {
                     if (owner.GetComponent<PartHandler>().materialPart != null)
                     {
-                        Destroy(owner.GetComponent<PartHandler>().materialPart);
+                        owner.GetComponent<PartHandler>().DropPart(owner.GetComponent<PartHandler>().materialPart);
                     }
                     owner.GetComponent<PartHandler>().materialPart = this.gameObject;
                 }
@@ -57,31 +57,20 @@ public class HeldPart : MonoBehaviour
         }
         if (flag == "Crafting") // part moving to factory box
         {
-            /*
             transform.position = Vector3.MoveTowards(transform.position, moveTarget.transform.position, curSpeed * 3 * Time.deltaTime);
             if (Vector3.Distance(transform.position, moveTarget.transform.position) < 0.001f)
             {
-                if (side == "Right")
+                if (partType == "Company")
                 {
-                    if (owner.GetComponent<GunHandler>().rightGun != null) { Destroy(owner.GetComponent<GunHandler>().rightGun); }
-                    owner.GetComponent<GunHandler>().rightGun = this.gameObject;
+                    moveTarget.GetComponent<FactoryCube>().companyPart = partName;
                 }
-                else if (side == "Left")
+                if (partType == "Material")
                 {
-                    if (owner.GetComponent<GunHandler>().leftGun != null) { Destroy(owner.GetComponent<GunHandler>().leftGun); }
-                    owner.GetComponent<GunHandler>().leftGun = this.gameObject;
+                    moveTarget.GetComponent<FactoryCube>().materialPart = partName;
                 }
-                else
-                {
-                    Debug.Log("Invalid slot side");
-                    Destroy(this.gameObject);
-                }
-                GetComponent<FiringHandler>().enabled = true;
-                GetComponent<FiringHandler>().GetGunStats();
-                flag = "Equipped";
-                owner.GetComponent<GunHandler>().carriedGun = null;
+                moveTarget.GetComponent<FactoryCube>().TryCraft();
+                Destroy(this.gameObject);
             }
-            */
         }
     }
 

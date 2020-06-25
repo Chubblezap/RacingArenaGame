@@ -13,6 +13,9 @@ public class PartHandler : MonoBehaviour
     // the object that is spawned when a part is picked up
     public GameObject carriedPartObject;
 
+    // the object that is spawned when a part is dropped
+    public GameObject droppedPartObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +45,14 @@ public class PartHandler : MonoBehaviour
         {
             Debug.Log("Invalid Part!");
         }
+    }
+
+    public void DropPart(GameObject part)
+    {
+        GameObject drop = Instantiate(droppedPartObject, part.transform.position, Quaternion.identity);
+        drop.GetComponent<PartPickup>().partName = part.GetComponent<HeldPart>().partName;
+        drop.GetComponent<PartPickup>().partType = part.GetComponent<HeldPart>().partType;
+        drop.GetComponent<Rigidbody>().AddForce(transform.forward * -0.9f + transform.up * 0.9f, ForceMode.Impulse);
+        Destroy(part);
     }
 }

@@ -10,6 +10,7 @@ public class ItemSpawning : MonoBehaviour
     public GameObject PartPickup;
     public GameObject GunPickup;
     public GameObject Crate;
+    public GameObject Factory;
 
     // Utilities
     private GameObject boundsObject;
@@ -49,7 +50,7 @@ public class ItemSpawning : MonoBehaviour
     {
         GameObject newitem;
         int boxDecider = Random.Range(0, itemSpawnBounds.Length);
-        int itemDecider = Random.Range(1, 21);
+        int itemDecider = Random.Range(1, 24);
         if(1 <= itemDecider && itemDecider < 11)
         {
             newitem = Instantiate(StatPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
@@ -68,9 +69,13 @@ public class ItemSpawning : MonoBehaviour
             newitem = Instantiate(GunPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
             newitem.GetComponent<GunPickup>().Init();
         }
-        else if(itemDecider == 20)
+        else if(20 <= itemDecider && itemDecider < 22)
         {
             newitem = Instantiate(Crate, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+        }
+        else if (22 <= itemDecider && itemDecider < 24)
+        {
+            newitem = Instantiate(Factory, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
         }
     }
 
