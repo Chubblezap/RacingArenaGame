@@ -5,12 +5,21 @@ using UnityEngine;
 public class GunPickup : BaseItem
 {
     public string gunType;
+    public bool initial;
     private int renderedGunIndex = -1;
 
     // Start is called before the first frame update
     void Start()
     {
         itemType = "Gun Pickup";
+        if(initial)
+        {
+            Init();
+        }
+    }
+
+    public void Init()
+    {
         int typeDecider = Random.Range(1, 8);
         switch (typeDecider)
         {
@@ -40,7 +49,6 @@ public class GunPickup : BaseItem
                 gunType = "error";
                 break;
         }
-        RenderGun(gunType);
     }
 
     private void FixedUpdate()
@@ -61,6 +69,15 @@ public class GunPickup : BaseItem
         {
             transform.GetChild(renderedGunIndex).gameObject.SetActive(true);
             GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if(collidedObject.tag == "Environment")
+        {
+            RenderGun(gunType);
         }
     }
 }

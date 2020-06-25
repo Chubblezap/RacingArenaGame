@@ -32,6 +32,8 @@ public class HeldGun : MonoBehaviour
             {
                 movingToPlayer = false;
                 flag = "Hovering";
+                if (owner.GetComponent<GunHandler>().carriedGun != null) { owner.GetComponent<GunHandler>().DropGun(owner.GetComponent<GunHandler>().carriedGun); }
+                owner.GetComponent<GunHandler>().carriedGun = this.gameObject;
 
                 // rendering hovering gun
                 GetComponent<TrailRenderer>().enabled = false;
@@ -49,12 +51,12 @@ public class HeldGun : MonoBehaviour
             {
                 if (side == "Right")
                 {
-                    if(owner.GetComponent<GunHandler>().rightGun != null) { Destroy(owner.GetComponent<GunHandler>().rightGun); }
+                    if(owner.GetComponent<GunHandler>().rightGun != null) { owner.GetComponent<GunHandler>().DropGun(owner.GetComponent<GunHandler>().rightGun); }
                     owner.GetComponent<GunHandler>().rightGun = this.gameObject;
                 }
                 else if(side == "Left")
                 {
-                    if (owner.GetComponent<GunHandler>().leftGun != null) { Destroy(owner.GetComponent<GunHandler>().leftGun); }
+                    if (owner.GetComponent<GunHandler>().leftGun != null) { owner.GetComponent<GunHandler>().DropGun(owner.GetComponent<GunHandler>().leftGun); }
                     owner.GetComponent<GunHandler>().leftGun = this.gameObject;
                 }
                 else

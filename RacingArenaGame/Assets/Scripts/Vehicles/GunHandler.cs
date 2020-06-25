@@ -15,6 +15,9 @@ public class GunHandler : MonoBehaviour
     // the object that is spawned when a gun is picked up
     public GameObject carriedGunObject;
 
+    // the object that is spawned when a gun is dropped
+    public GameObject droppedGunObject;
+
     // Controls
     private string fireLeftInput;
     private string fireRightInput;
@@ -118,14 +121,17 @@ public class GunHandler : MonoBehaviour
 
     public void PickupGun(GameObject item)
     {
-        if (carriedGun != null)
-        {
-            Destroy(carriedGun);
-            carriedGun = null;
-        }
-        carriedGun = Instantiate(carriedGunObject, item.transform.position, Quaternion.identity);
-        carriedGun.GetComponent<HeldGun>().gunType = item.GetComponent<GunPickup>().gunType;
-        carriedGun.GetComponent<HeldGun>().owner = transform;
-        carriedGun.transform.SetParent(transform);
+        GameObject newgun = Instantiate(carriedGunObject, item.transform.position, Quaternion.identity);
+        newgun.GetComponent<HeldGun>().gunType = item.GetComponent<GunPickup>().gunType;
+        newgun.GetComponent<HeldGun>().owner = transform;
+        newgun.transform.SetParent(transform);
+    }
+
+    public void DropGun(GameObject gun)
+    {
+        GameObject drop = Instantiate(droppedGunObject, gun.transform.position, Quaternion.identity);
+        drop.GetComponent<GunPickup>().gunType = gun.GetComponent<HeldGun>().gunType;
+        drop.GetComponent<Rigidbody>().AddForce(transform.forward * -0.9f + transform.up * 0.9f, ForceMode.Impulse);
+        Destroy(gun);
     }
 }

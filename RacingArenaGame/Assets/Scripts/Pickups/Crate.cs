@@ -78,6 +78,8 @@ public class Crate : BaseItem
                 case "Mechanical":
                     int tmp = Random.Range(2, 4);
                     newitem = Instantiate(items[tmp], transform.position, Quaternion.identity);
+                    if (newitem.GetComponent<GunPickup>() != null) { newitem.GetComponent<GunPickup>().Init(); }
+                    if (newitem.GetComponent<PartPickup>() != null) { newitem.GetComponent<PartPickup>().Init(); }
                     break;
                 default:
                     Debug.Log("weird drops");

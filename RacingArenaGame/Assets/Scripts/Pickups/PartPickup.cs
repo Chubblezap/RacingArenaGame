@@ -6,12 +6,21 @@ public class PartPickup : BaseItem
 {
     public string partName;
     public string partType;
+    public bool initial;
     private int renderedPartIndex = -1;
 
     // Start is called before the first frame update
     void Start()
     {
         itemType = "Part Pickup";
+        if(initial)
+        {
+            Init();
+        }
+    }
+
+    public void Init()
+    {
         int typeDecider = Random.Range(1, 10);
         switch (typeDecider)
         {
@@ -55,7 +64,6 @@ public class PartPickup : BaseItem
                 Debug.Log("Wacky case");
                 break;
         }
-        RenderPart(partName);
     }
 
     private void FixedUpdate()
@@ -76,6 +84,15 @@ public class PartPickup : BaseItem
         {
             transform.GetChild(renderedPartIndex).gameObject.SetActive(true);
             GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if (collidedObject.tag == "Environment")
+        {
+            RenderPart(partName);
         }
     }
 }

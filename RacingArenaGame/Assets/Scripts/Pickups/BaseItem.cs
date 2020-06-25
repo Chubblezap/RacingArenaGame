@@ -6,6 +6,7 @@ public class BaseItem : MonoBehaviour
 {
     public string itemType;
     public float despawnTimer = 60f;
+    public float pickupTimer = 1f;
     public bool doingTimer = true;
 
     private void Update()
@@ -17,6 +18,11 @@ public class BaseItem : MonoBehaviour
             {
                 Destroy(this.gameObject);
             }
+        }
+
+        if (pickupTimer > 0)
+        {
+            pickupTimer -= Time.deltaTime;
         }
     }
 }

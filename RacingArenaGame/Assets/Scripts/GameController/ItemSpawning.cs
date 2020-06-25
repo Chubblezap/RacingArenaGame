@@ -47,27 +47,30 @@ public class ItemSpawning : MonoBehaviour
 
     void SpawnItem()
     {
+        GameObject newitem;
         int boxDecider = Random.Range(0, itemSpawnBounds.Length);
         int itemDecider = Random.Range(1, 21);
         if(1 <= itemDecider && itemDecider < 11)
         {
-            Instantiate(StatPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem = Instantiate(StatPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
         }
         else if(11 <= itemDecider && itemDecider < 15)
         {
-            Instantiate(PowerPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem = Instantiate(PowerPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
         }
         else if(15 <= itemDecider && itemDecider < 18)
         {
-            Instantiate(PartPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem = Instantiate(PartPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem.GetComponent<PartPickup>().Init();
         }
         else if (18 <= itemDecider && itemDecider < 20)
         {
-            Instantiate(GunPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem = Instantiate(GunPickup, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem.GetComponent<GunPickup>().Init();
         }
         else if(itemDecider == 20)
         {
-            Instantiate(Crate, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
+            newitem = Instantiate(Crate, RandomPointInBounds(itemSpawnBounds[boxDecider].bounds), Quaternion.identity);
         }
     }
 

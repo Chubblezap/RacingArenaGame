@@ -18,6 +18,8 @@ public class PlayerCharacter : MonoBehaviour
     private Collider myCollider;
     private Rigidbody body;
     private float pilotTimer;
+    private float jumpTimer;
+    private bool ejected = true;
 
     // Controls
     public int player = 0;
@@ -34,7 +36,7 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(player != 0)
+        if(player != 0 && !ejected)
         {
             if (Input.GetAxisRaw(horizontal) != 0 || Input.GetAxisRaw(vertical) != 0)
             {
@@ -56,15 +58,13 @@ public class PlayerCharacter : MonoBehaviour
             }
             DoDrag();
 
-            if(Input.GetAxis(jump) >= 0.25 && Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f))
+            if(Input.GetAxis(jump) >= 0.25 && Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f) && jumpTimer <= 0)
             {
-                body.AddForce(Vector3.up);
+                body.AddForce(Vector3.up * 0.06f, ForceMode.Impulse);
+                jumpTimer = 1f;
             }
 
-            if (pilotTimer > 0)
-            {
-                pilotTimer -= Time.deltaTime;
-            }
+            DoTimers();
         }
     }
     
@@ -74,6 +74,18 @@ public class PlayerCharacter : MonoBehaviour
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
         pilotTimer = 3f;
+    }
+
+    void DoTimers()
+    {
+        if (pilotTimer > 0)
+        {
+            pilotTimer -= Time.deltaTime;
+        }
+        if(jumpTimer > 0)
+        {
+            jumpTimer -= Time.deltaTime;
+        }
     }
 
     public void LoadControls(int newplayernum)
@@ -138,6 +150,10 @@ public class PlayerCharacter : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject collidedobject = collision.gameObject;
+        if(collidedobject.tag == "Environment")
+        {
+            ejected = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

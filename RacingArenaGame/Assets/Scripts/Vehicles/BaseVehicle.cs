@@ -327,6 +327,7 @@ public class BaseVehicle : MonoBehaviour
         cam = null;
 
         newplayerobject.GetComponent<PlayerCharacter>().UI = UI;
+        newplayerobject.GetComponent<Rigidbody>().AddForce(transform.forward * -0.02f + transform.up * 0.05f, ForceMode.Impulse);
         ChargeBar.SetActive(false);
         UI = null;
         ChargeBar = null;
@@ -412,7 +413,10 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(collidedObject.GetComponent<BaseItem>() != null) // trigger collision is an item
         {
-            PickupItem(collidedObject);
+            if(collidedObject.GetComponent<BaseItem>().pickupTimer <= 0)
+            {
+                PickupItem(collidedObject);
+            }
         }
         if (collidedObject.GetComponent<BasicProjectile>() != null && collidedObject.GetComponent<BasicProjectile>().owner != transform) // trigger collision is an enemy projectile
         {
