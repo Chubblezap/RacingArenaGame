@@ -71,7 +71,7 @@ public class GunHandler : MonoBehaviour
         {
             if(carriedGun.GetComponent<HeldGun>().flag == "Hovering") // player has an overhead gun
             {
-                if (Input.GetButtonDown(fireRightInput))
+                if (Input.GetButtonDown(fireRightInput) || Input.GetAxisRaw(fireRightInput) >= .3)
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
@@ -79,7 +79,7 @@ public class GunHandler : MonoBehaviour
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
-                else if (Input.GetButtonDown(fireLeftInput))
+                else if (Input.GetButtonDown(fireLeftInput) || Input.GetAxisRaw(fireLeftInput) >= .3)
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = leftGunPosition;
@@ -96,7 +96,7 @@ public class GunHandler : MonoBehaviour
         {
             if (rightGun != null)
             {
-                if (Input.GetButton(fireRightInput))
+                if (Input.GetButton(fireRightInput) || Input.GetAxisRaw(fireRightInput) >= .3)
                 {
                     rightGun.GetComponent<FiringHandler>().active = true;
                 }
@@ -107,7 +107,7 @@ public class GunHandler : MonoBehaviour
             }
             if (leftGun != null)
             {
-                if (Input.GetButton(fireLeftInput))
+                if (Input.GetButton(fireLeftInput) || Input.GetAxisRaw(fireLeftInput) >= .3)
                 {
                     leftGun.GetComponent<FiringHandler>().active = true;
                 }

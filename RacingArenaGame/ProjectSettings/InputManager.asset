@@ -46,7 +46,7 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
-    dead: 0.001
+    dead: 1
     sensitivity: 3
     snap: 1
     invert: 0
@@ -62,7 +62,7 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
-    dead: 0.001
+    dead: 1
     sensitivity: 3
     snap: 1
     invert: 0
@@ -78,7 +78,7 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
-    dead: 0.001
+    dead: 1
     sensitivity: 3
     snap: 1
     invert: 0
@@ -163,6 +163,22 @@ InputManager:
     snap: 1
     invert: 0
     type: 0
+    axis: 1
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: p1Vertical
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 3
+    dead: 1
+    sensitivity: 3
+    snap: 1
+    invert: 1
+    type: 2
     axis: 1
     joyNum: 1
   - serializedVersion: 3
@@ -294,6 +310,22 @@ InputManager:
     axis: 8
     joyNum: 1
   - serializedVersion: 3
+    m_Name: p1FireLeft
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 8
+    joyNum: 1
+  - serializedVersion: 3
     m_Name: p2FireLeft
     descriptiveName: 
     descriptiveNegativeName: 
@@ -355,6 +387,22 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
+    axis: 9
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: p1FireRight
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 2
     axis: 9
     joyNum: 1
   - serializedVersion: 3
