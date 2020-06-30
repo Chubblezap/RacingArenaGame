@@ -6,10 +6,18 @@ public class PartRotate : MonoBehaviour
 {
     public Transform center;
     public float speed = 1;
+    public string axis = "Up";
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.RotateAround(center.position, center.up, speed);
+        if(axis == "Up")
+        {
+            transform.RotateAround(center.position, center.up, speed);
+        }
+        else if(axis == "Angle45")
+        {
+            transform.RotateAround(center.position, center.up + center.forward, speed);
+        }
     }
 }

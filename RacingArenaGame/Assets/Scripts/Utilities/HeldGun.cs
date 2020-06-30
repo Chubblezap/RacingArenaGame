@@ -68,7 +68,7 @@ public class HeldGun : MonoBehaviour
                 GetComponent<FiringHandler>().GetGunStats();
                 flag = "Equipped";
                 owner.GetComponent<GunHandler>().carriedGun = null;
-                transform.GetChild(renderedGunIndex).GetChild(0).gameObject.SetActive(false); //Disable outline
+                DisableOutlines(transform.GetChild(renderedGunIndex)); //Disable outline
             }
         }
     }
@@ -86,6 +86,21 @@ public class HeldGun : MonoBehaviour
         {
             transform.GetChild(renderedGunIndex).gameObject.SetActive(true);
             GetComponent<MeshRenderer>().enabled = false;
+        }
+    }
+
+    void DisableOutlines(Transform gun)
+    {
+        for(int i = 0; i < gun.childCount; i++)
+        {
+            if(gun.GetChild(i).name != "GunOutline") // The mesh is broken into parts, so the outline is the next child
+            {
+                gun.GetChild(i).GetChild(0).gameObject.SetActive(false);
+            }
+            else // The mesh is solid, so this is the outline
+            {
+                gun.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 }

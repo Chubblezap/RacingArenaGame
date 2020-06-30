@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 073003078551b604e8c2228e27d2c8d1
+guid: c49f0c7f788bfb34ca7e72c7a3924ab8
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,33 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: CellWall
-    second: {fileID: 2100000, guid: c9ff88ec3dad58b4facb0db44eef74bf, type: 2}
+      name: Casing
+    second: {fileID: 2100000, guid: 6ebbbe73feeab6f4da0f80e98eccffb9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: 72ee00fe32a7ec247a2810e49a8a893b, type: 2}
+      name: Core
+    second: {fileID: 2100000, guid: 6ebbbe73feeab6f4da0f80e98eccffb9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Material.003
-    second: {fileID: 2100000, guid: 72ee00fe32a7ec247a2810e49a8a893b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.004
-    second: {fileID: 2100000, guid: 72ee00fe32a7ec247a2810e49a8a893b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.005
-    second: {fileID: 2100000, guid: 72ee00fe32a7ec247a2810e49a8a893b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.006
-    second: {fileID: 2100000, guid: 72ee00fe32a7ec247a2810e49a8a893b, type: 2}
+      name: Prongs
+    second: {fileID: 2100000, guid: 6ebbbe73feeab6f4da0f80e98eccffb9, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -64,7 +49,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 20
+    globalScale: 25
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -90,8 +75,8 @@ ModelImporter:
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 60
-    normalImportMode: 0
+    normalSmoothAngle: 180
+    normalImportMode: 1
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
@@ -110,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 20
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
