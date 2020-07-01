@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3636758911476564879}
   - component: {fileID: 1934298251922591123}
   - component: {fileID: 8317654802032106336}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: PillRenderFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6680815143979113126}
   - component: {fileID: 9106869113080176863}
   - component: {fileID: 6566809966494515447}
-  m_Layer: 8
+  m_Layer: 14
   m_Name: ViralProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}

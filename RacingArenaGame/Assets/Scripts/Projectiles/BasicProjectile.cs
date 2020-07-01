@@ -27,9 +27,9 @@ public class BasicProjectile : MonoBehaviour
         }
     }
 
-    public void Detonate()
+    public virtual void Detonate()
     {
-        Destroy(this.gameObject);
+        StartCoroutine("DelayDetonate");
     }
 
     protected void OnTriggerEnter(Collider collision)
@@ -40,5 +40,11 @@ public class BasicProjectile : MonoBehaviour
             // do particles
             Detonate();
         }
+    }
+
+    public IEnumerator DelayDetonate()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(this.gameObject);
     }
 }
