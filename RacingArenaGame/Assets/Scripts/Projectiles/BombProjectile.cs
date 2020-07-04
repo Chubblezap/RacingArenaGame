@@ -16,7 +16,7 @@ public class BombProjectile : BasicProjectile
     public override void Detonate()
     {
         Instantiate(explosionprefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
-        StartCoroutine("DelayDetonate");
+        Destroy(this.gameObject);
     }
 
     private void FixedUpdate()

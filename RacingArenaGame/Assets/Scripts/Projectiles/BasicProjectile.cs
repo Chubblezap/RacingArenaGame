@@ -9,6 +9,7 @@ public class BasicProjectile : MonoBehaviour
     public float speed;
     public float force;
     public float lifetime;
+    public GameObject particles; // child object containing particles
     protected Rigidbody body;
 
     // Start is called before the first frame update
@@ -29,7 +30,13 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void Detonate()
     {
-        StartCoroutine("DelayDetonate");
+        particles.transform.SetParent(null);
+        if(particles.GetComponent<ParticleSystem>() != null)
+        {
+            particles.GetComponent<ParticleSystem>().Stop();
+        }
+        particles.GetComponent<ProjectileParticle>().StartCoroutine("Destroy");
+        Destroy(this.gameObject);
     }
 
     protected void OnTriggerEnter(Collider collision)
@@ -40,11 +47,5 @@ public class BasicProjectile : MonoBehaviour
             // do particles
             Detonate();
         }
-    }
-
-    public IEnumerator DelayDetonate()
-    {
-        yield return new WaitForSeconds(1);
-        Destroy(this.gameObject);
     }
 }
