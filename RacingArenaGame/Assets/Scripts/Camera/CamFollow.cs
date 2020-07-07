@@ -32,9 +32,9 @@ public class CamFollow : MonoBehaviour
         transform.LookAt(targetTransform.position + new Vector3(0f, 0.5f, 0f));
     }
 
-    public Vector3 LerpByDistance(Vector3 A, Vector3 B, float x)
+    /*public Vector3 LerpByDistance(Vector3 A, Vector3 B, float x)
     {
         Vector3 P = x * Vector3.Normalize(B - A) + A;
         return P;
-    }
+    }*/
 }

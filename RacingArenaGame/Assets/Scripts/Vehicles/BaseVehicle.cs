@@ -52,6 +52,11 @@ public class BaseVehicle : MonoBehaviour
     public GameObject playerCharacter;
     public GameObject cam;
     public bool usesDrag = true; // For the Slipcell
+    //bouncepad positions
+    [HideInInspector]
+    public Vector3 bpadstart;
+    [HideInInspector]
+    public Vector3 bpadend;
 
     // Controls
     private string horizontalInput;
@@ -332,6 +337,32 @@ public class BaseVehicle : MonoBehaviour
         UI = null;
         ChargeBar = null;
         ChargeBarFill = null;
+    }
+
+    public void doMoveAlongCurve(Vector3 startpoint, Vector3 endpoint)
+    {
+        bpadstart = startpoint;
+        bpadend = endpoint;
+        StartCoroutine("MoveAlongCurve");
+    }
+
+    IEnumerator MoveAlongCurve()
+    {
+        GetComponent<Rigidbody>().useGravity = false;
+        int oldplayer = player;
+        player = 0;
+        Vector3 middlepoint = new Vector3((bpadstart.x + bpadend.x) / 2, Mathf.Max(bpadstart.y, bpadend.y) + 10f, (bpadstart.z + bpadend.z) / 2);
+        float timer = 0;
+        while(timer < 1.5f)
+        {
+            Vector3 m1 = Vector3.Lerp(bpadstart, middlepoint, timer/1.5f);
+            Vector3 m2 = Vector3.Lerp(middlepoint, bpadend, timer / 1.5f);
+            transform.position = Vector3.Lerp(m1, m2, timer / 1.5f);
+            timer += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        GetComponent<Rigidbody>().useGravity = true;
+        player = oldplayer;
     }
 
     private float GetNormalizedRotation()
