@@ -99,8 +99,15 @@ public class Crate : BaseItem
         GameObject collidedObject = collision.gameObject;
         if(collidedObject.tag == "Projectile")
         {
-            DoHit(collidedObject.GetComponent<BasicProjectile>().force * Vector3.Normalize(collidedObject.transform.forward), collidedObject.GetComponent<BasicProjectile>().damage);
-            collidedObject.GetComponent<BasicProjectile>().Detonate();
+            if(collidedObject.GetComponent<BasicProjectile>())
+            {
+                DoHit(collidedObject.GetComponent<BasicProjectile>().force * Vector3.Normalize(collidedObject.transform.forward), collidedObject.GetComponent<BasicProjectile>().damage);
+                collidedObject.GetComponent<BasicProjectile>().Detonate();
+            }
+            else if(collidedObject.GetComponent<BombProjectileExplosion>())
+            {
+                DoHit(collidedObject.GetComponent<BombProjectileExplosion>().force * Vector3.Normalize(transform.position - collidedObject.transform.position), collidedObject.GetComponent<BombProjectileExplosion>().damage);
+            }
         }
     }
 }

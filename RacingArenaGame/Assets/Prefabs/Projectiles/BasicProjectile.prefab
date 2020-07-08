@@ -4975,7 +4975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   damage: 5
-  speed: 8
+  speed: 5
   force: 5
   lifetime: 1
   particles: {fileID: 3210296413006841930}

@@ -129,7 +129,7 @@ public class BaseVehicle : MonoBehaviour
         }
         else
         {
-            body.velocity *= 0.9f;
+            body.velocity = new Vector3(body.velocity.x * 0.95f, body.velocity.y, body.velocity.z * 0.95f);
         }
     }
 
@@ -260,7 +260,7 @@ public class BaseVehicle : MonoBehaviour
 
     void CheckFlight(float bAir, float mAir)
     {
-        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
+        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
         {
             flying = true;
             body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
@@ -321,6 +321,10 @@ public class BaseVehicle : MonoBehaviour
 
     void Eject()
     {
+        flying = false;
+        flightSpeedMultiplier = 1f;
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
         newplayerobject.GetComponent<PlayerCharacter>().LoadControls(player);
         player = 0;
@@ -433,9 +437,9 @@ public class BaseVehicle : MonoBehaviour
         Destroy(item);
     }
 
-    void takeForceHit(float force, float damage, Vector3 forceposition)
+    void takeForceHit(float force, float damage, Vector3 forcedirection)
     {
-        body.AddForce(Vector3.Normalize(transform.position - forceposition) * force);
+        body.AddForce(forcedirection * force * 10);
         curHP -= damage;
     }
 
@@ -451,8 +455,12 @@ public class BaseVehicle : MonoBehaviour
         }
         if (collidedObject.GetComponent<BasicProjectile>() != null && collidedObject.GetComponent<BasicProjectile>().owner != transform) // trigger collision is an enemy projectile
         {
-            takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.position);
+            takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.forward);
             collidedObject.GetComponent<BasicProjectile>().Detonate();
+        }
+        if (collidedObject.GetComponent<BombProjectileExplosion>() != null && collidedObject.GetComponent<BombProjectileExplosion>().owner != transform) // trigger collision is an enemy explosion
+        {
+            takeForceHit(collidedObject.GetComponent<BombProjectileExplosion>().force, collidedObject.GetComponent<BombProjectileExplosion>().damage, Vector3.Normalize(transform.position - collidedObject.transform.position));
         }
     }
 
@@ -461,9 +469,14 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
         {
-            flying = false;
-            flightSpeedMultiplier = 1f;
-            transform.rotation = Quaternion.Euler(new Vector3 (0, transform.rotation.eulerAngles.y, 0));
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.6f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
+            {
+                flying = false;
+                flightSpeedMultiplier = 1f;
+                transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+            }
         }
     }
 }

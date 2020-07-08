@@ -73,7 +73,7 @@ public class PlayerCharacter : MonoBehaviour
         gameMaster = GameObject.Find("GameController");
         myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
-        pilotTimer = 3f;
+        pilotTimer = 2f;
     }
 
     void DoTimers()

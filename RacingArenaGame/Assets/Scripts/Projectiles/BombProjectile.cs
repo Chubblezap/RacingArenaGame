@@ -15,7 +15,15 @@ public class BombProjectile : BasicProjectile
 
     public override void Detonate()
     {
-        Instantiate(explosionprefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        GameObject exp = Instantiate(explosionprefab, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        exp.GetComponent<BombProjectileExplosion>().owner = owner;
+        particles.transform.SetParent(null);
+        particles.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        if (particles.GetComponent<ParticleSystem>() != null)
+        {
+            particles.GetComponent<ParticleSystem>().Stop();
+        }
+        particles.GetComponent<ProjectileParticle>().StartCoroutine("Destroy");
         Destroy(this.gameObject);
     }
 
