@@ -242,7 +242,7 @@ public class BaseVehicle : MonoBehaviour
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)
     {
         float weightmult = 0.003f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
-        body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), -20f * (flying ? 1 : 0), body.velocity.z * (1f - weightmult) );
+        body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), (flying ? -20f : body.velocity.y), body.velocity.z * (1f - weightmult) );
         currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
         // Top Speed failsafe (slipcell, etc)
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
