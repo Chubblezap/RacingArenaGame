@@ -260,7 +260,7 @@ public class BaseVehicle : MonoBehaviour
 
     void CheckFlight(float bAir, float mAir)
     {
-        if(!Physics.Raycast(transform.position, Vector3.up*-1, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
+        if(!Physics.Raycast(transform.position, -Vector3.up, 0, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
         {
             flying = true;
             body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
@@ -469,7 +469,7 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.6f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
