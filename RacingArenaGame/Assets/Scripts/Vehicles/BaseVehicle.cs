@@ -84,7 +84,7 @@ public class BaseVehicle : MonoBehaviour
 
     void FixedUpdate() //put movement/physics stuff here
     {
-        GroundAlign();
+        GroundAlign(BaseAir, ModAir);
         if (player != 0)
         {
             Turn(Input.GetAxis(horizontalInput), BaseTurn, ModTurn);
@@ -119,13 +119,9 @@ public class BaseVehicle : MonoBehaviour
             {
                 DoDrag(BaseArmor, ModArmor);
             }
-            if (!flying)
+            if (flying)
             {
-                CheckFlight(BaseAir, ModAir);
-            }
-            else
-            {
-                Aim(Input.GetAxis(verticalInput));
+                Aim(Input.GetAxis(verticalInput), BaseAir, ModAir);
                 DoFlightGravity();
             }
         }
@@ -222,11 +218,7 @@ public class BaseVehicle : MonoBehaviour
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
         body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
-        
-        if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
-        {
-            body.velocity *= .96f;
-        }
+        HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
     void Boost(float charge, float bBoost, float mBoost)
@@ -253,6 +245,14 @@ public class BaseVehicle : MonoBehaviour
         }
     }
 
+    void HorizontalSpeedCheck(float bTopSpeed, float mTopSpeed)
+    {
+        if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
+        {
+            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y, body.velocity.z * 0.97f);
+        }
+    }
+
     void DoDrag(float bArmor, float mArmor)
     {
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
@@ -260,27 +260,25 @@ public class BaseVehicle : MonoBehaviour
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
-    void CheckFlight(float bAir, float mAir)
-    {
-        if(!Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
-        {
-            flying = true;
-            body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
-            flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
-            totalFlightTime = flightTimer;
-        }
-    }
-    void GroundAlign()
+    void GroundAlign(float bAir, float mAir) // Merged with old CheckFlight code
     {
         if(!flying)
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
-            Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
                 rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.1f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
+            }
+            else
+            {
+                Debug.Log(ray);
+                flying = true;
+                body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
+                flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
+                totalFlightTime = flightTimer;
             }
         }
         else
@@ -289,7 +287,7 @@ public class BaseVehicle : MonoBehaviour
         }
     }
 
-    void Aim(float direction)
+    void Aim(float direction, float bAir, float mAir)
     {
         float rotationUpperBound = -45;
         float rotationLowerBound = 45;
@@ -302,47 +300,39 @@ public class BaseVehicle : MonoBehaviour
             body.AddRelativeTorque(Vector3.right * direction * 5);
         }
 
-        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-
+        float newY = body.velocity.y;
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
-            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f);
-            if(localVelocity.y < 0)
+            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f + (bAir + (AirMultiplier * mAir))/10);
+            if (body.velocity.y < 0)
             {
-                localVelocity.y *= 1f - (Mathf.Abs(NR / 45) * 0.1f); // lower opposite vertical speed
+                newY *= 1f - (Mathf.Abs(NR / 45) * 0.2f); // lower opposite vertical speed
             }
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f);
-            if (localVelocity.y > 0)
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f + (bAir + (AirMultiplier * mAir))/10);
+            if (body.velocity.y > 0)
             {
-                localVelocity.y *= 1f - (Mathf.Abs(NR / 45) * 0.1f); // lower opposite vertical speed
+                newY *= 1f - (Mathf.Abs(NR / 45) * 0.2f); // lower opposite vertical speed
             }
         }
         else
         {
-            flightSpeedMultiplier = 1.3f;
+            flightSpeedMultiplier = 1.3f + (bAir + (AirMultiplier * mAir)) / 10;
         }
-        body.velocity = body.transform.TransformDirection(localVelocity);
+        body.velocity = new Vector3(body.velocity.x, newY, body.velocity.z);
     }
 
     void DoFlightGravity()
     {
         float NR = GetNormalizedRotation();
-        float grav = 9.81f;
+        float grav = 2f;
         if(NR < 0) // vehicle is pointing down
         {
             grav += 9.81f * Mathf.Abs(NR / 45);
         }
-        if(flightTimer < 0)
-        {
-            body.AddForce(grav * Vector3.up * (flightTimer/4));
-        }
-        else
-        {
-            body.AddForce(Vector3.up);
-        }
+        body.AddForce(grav * Vector3.up * (flightTimer/totalFlightTime));
         flightTimer -= Time.deltaTime;
     }
 
@@ -497,7 +487,6 @@ public class BaseVehicle : MonoBehaviour
         if(flying && collidedObject.tag == "Environment")
         {
             var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
-            Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 flying = false;

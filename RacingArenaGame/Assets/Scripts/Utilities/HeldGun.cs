@@ -64,6 +64,8 @@ public class HeldGun : MonoBehaviour
                     Debug.Log("Invalid slot side");
                     Destroy(this.gameObject);
                 }
+                transform.SetParent(moveTarget.transform);
+                transform.rotation = moveTarget.transform.parent.rotation;
                 GetComponent<FiringHandler>().enabled = true;
                 GetComponent<FiringHandler>().GetGunStats();
                 flag = "Equipped";

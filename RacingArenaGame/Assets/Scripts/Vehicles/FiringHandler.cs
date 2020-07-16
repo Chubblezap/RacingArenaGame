@@ -95,7 +95,7 @@ public class FiringHandler : MonoBehaviour
         {
             GameObject firedProjectile = Instantiate(projectileType, transform.position + transform.up*0.25f, transform.rotation);
             firedProjectile.GetComponent<BasicProjectile>().owner = GetComponent<HeldGun>().owner;
-            firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.parent.GetComponent<Rigidbody>().velocity.magnitude);
+            firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.root.GetComponent<Rigidbody>().velocity.magnitude);
             rofTimer = fireRate;
             if(hasAmmo)
             {
