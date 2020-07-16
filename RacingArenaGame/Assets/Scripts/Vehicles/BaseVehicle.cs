@@ -51,6 +51,7 @@ public class BaseVehicle : MonoBehaviour
     public int player;
     public GameObject playerCharacter;
     public GameObject cam;
+    public GameObject rotationModel;
     public bool usesDrag = true; // For the Slipcell
     //bouncepad positions
     [HideInInspector]
@@ -83,6 +84,7 @@ public class BaseVehicle : MonoBehaviour
 
     void FixedUpdate() //put movement/physics stuff here
     {
+        GroundAlign();
         if (player != 0)
         {
             Turn(Input.GetAxis(horizontalInput), BaseTurn, ModTurn);
@@ -219,7 +221,7 @@ public class BaseVehicle : MonoBehaviour
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        body.AddForce(transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
+        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
         
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
@@ -260,12 +262,30 @@ public class BaseVehicle : MonoBehaviour
 
     void CheckFlight(float bAir, float mAir)
     {
-        if(!Physics.Raycast(transform.position, -Vector3.up, 0, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
+        if(!Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore))
         {
             flying = true;
-            body.AddForce(transform.forward * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
+            body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 2, ForceMode.Impulse);
             flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
             totalFlightTime = flightTimer;
+        }
+    }
+    void GroundAlign()
+    {
+        if(!flying)
+        {
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
+            {
+                transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.1f;
+                rotationModel.transform.Rotate(transform.rotation.eulerAngles);
+            }
+        }
+        else
+        {
+            rotationModel.transform.rotation = (transform.rotation);
         }
     }
 
@@ -311,11 +331,18 @@ public class BaseVehicle : MonoBehaviour
     {
         float NR = GetNormalizedRotation();
         float grav = 9.81f;
-        if(NR < 0)
+        if(NR < 0) // vehicle is pointing down
         {
             grav += 9.81f * Mathf.Abs(NR / 45);
         }
-        body.AddForce(grav * Vector3.up * (flightTimer / totalFlightTime));
+        if(flightTimer < 0)
+        {
+            body.AddForce(grav * Vector3.up * (flightTimer/4));
+        }
+        else
+        {
+            body.AddForce(Vector3.up);
+        }
         flightTimer -= Time.deltaTime;
     }
 

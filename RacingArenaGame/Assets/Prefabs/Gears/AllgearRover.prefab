@@ -37,7 +37,6 @@ Transform:
   - {fileID: 2825227766745706055}
   - {fileID: 8408693111055227425}
   - {fileID: 6834546853792131005}
-  - {fileID: 2965916885057550775}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +82,7 @@ MonoBehaviour:
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
   cam: {fileID: 0}
+  rotationModel: {fileID: 7530698074656462254}
   usesDrag: 1
   bpadstart: {x: 0, y: 0, z: 0}
   bpadend: {x: 0, y: 0, z: 0}
@@ -151,7 +151,7 @@ Rigidbody:
   m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 30
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -6193,15 +6193,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7350141972771115097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 504960138987201803}
   - {fileID: 3164186098277356248}
   - {fileID: 697378620950532075}
-  m_Father: {fileID: 844173187424776326}
-  m_RootOrder: 5
+  m_Father: {fileID: 6834546853792131005}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &541135853037932504
 MonoBehaviour:
@@ -6248,7 +6248,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2965916885057550775}
   m_Father: {fileID: 844173187424776326}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
