@@ -7,6 +7,7 @@ public class InfoDump : MonoBehaviour
     // gun info
     public Mesh[] gunMeshes;
     public GameObject[] gunProjectiles;
+    public GameObject[] gunBurst;
     public float[] gunFireRates;
     public int[] gunMaxAmmo;
     public float[] gunReloadSpeed;
@@ -68,6 +69,29 @@ public class InfoDump : MonoBehaviour
                 return gunProjectiles[5];
             case "Boost Jumper":
                 return gunProjectiles[6];
+            default:
+                return null;
+        }
+    }
+
+    public GameObject GetGunBurst(string gunType) // Particles that spawn on fire
+    {
+        switch (gunType)
+        {
+            case "Allgear Basic":
+                return gunBurst[0];
+            case "Flamethrower":
+                return gunBurst[1];
+            case "Bomb Cannon":
+                return gunBurst[2];
+            case "Mine Layer":
+                return gunBurst[3];
+            case "Viral Spiral":
+                return gunBurst[4];
+            case "Gearblade Launcher":
+                return gunBurst[5];
+            case "Boost Jumper":
+                return gunBurst[6];
             default:
                 return null;
         }

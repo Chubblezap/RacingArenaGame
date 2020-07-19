@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 289888669181761733}
   - component: {fileID: 7690051575647174955}
+  - component: {fileID: 5121505051870521778}
   - component: {fileID: 2136340813627312683}
   - component: {fileID: 1999679742334522807}
   - component: {fileID: 5636340819794663064}
@@ -46,9 +47,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027c25dd395996248b185119b16d0968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 2
   damage: 10
   force: 5
+  owner: {fileID: 0}
+--- !u!114 &5121505051870521778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969324928880370306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017b8646598287c4a896755fd380be96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 3
 --- !u!135 &2136340813627312683
 SphereCollider:
   m_ObjectHideFlags: 0

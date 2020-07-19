@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileParticle : MonoBehaviour
+public class ProjectileParticle : MonoBehaviour // For particles that are attached to the projectile itself. 
 {
     IEnumerator Destroy()
     {

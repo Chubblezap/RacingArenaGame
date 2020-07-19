@@ -6,6 +6,7 @@ public class FiringHandler : MonoBehaviour
 {
     // universal mechanics
     public GameObject projectileType;
+    public GameObject burstParticleType;
     private float fireRate;
     private float rofTimer = 0;
     public bool active = false;
@@ -94,6 +95,10 @@ public class FiringHandler : MonoBehaviour
         if((!hasAmmo && !hasCharge) || (hasAmmo && currentAmmo > 0 && !hasCharge) || (hasCharge && curChargeTime == chargeTime && !hasAmmo) || (hasAmmo && currentAmmo > 0 && hasCharge && curChargeTime == chargeTime))
         {
             GameObject firedProjectile = Instantiate(projectileType, transform.position + transform.up*0.25f, transform.rotation);
+            if (burstParticleType != null)
+            {
+                Instantiate(burstParticleType, transform.position + transform.up * 0.25f, transform.rotation, transform);
+            }
             firedProjectile.GetComponent<BasicProjectile>().owner = GetComponent<HeldGun>().owner;
             firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.root.GetComponent<Rigidbody>().velocity.magnitude);
             rofTimer = fireRate;
@@ -113,6 +118,7 @@ public class FiringHandler : MonoBehaviour
         string thisgun = GetComponent<HeldGun>().gunType;
         InfoDump statsheet = GameObject.Find("GameController").GetComponent<InfoDump>();
         projectileType = statsheet.GetGunProjectile(thisgun);
+        burstParticleType = statsheet.GetGunBurst(thisgun);
         fireRate = statsheet.GetGunFireRate(thisgun);
         totalAmmo = statsheet.GetGunMaxAmmo(thisgun);
         if(totalAmmo == 0) { hasAmmo = false; }
