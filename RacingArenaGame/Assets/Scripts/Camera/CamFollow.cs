@@ -21,13 +21,13 @@ public class CamFollow : MonoBehaviour
     {
         if (mode == "Vehicle")
         {
-            moveTo = targetTransform.position + (targetTransform.up * 1.5f + targetTransform.forward * -2.5f);
+            moveTo = targetTransform.position + (Vector3.up * 1.5f + new Vector3(targetTransform.forward.x * -2.5f, 0, targetTransform.forward.z * -2.5f));
         }
         else if(mode == "Player")
         {
             moveTo = targetTransform.position + (targetTransform.up * 1.5f) + (new Vector3(Vector3.Normalize(transform.position - targetTransform.position).x*3, 0, Vector3.Normalize(transform.position - targetTransform.position).z*3));
         }
-        speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 10f;
+        speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 15f;
         transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
         transform.LookAt(targetTransform.position + new Vector3(0f, 0.5f, 0f));
     }

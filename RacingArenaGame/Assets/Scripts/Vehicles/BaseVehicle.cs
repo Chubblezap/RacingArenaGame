@@ -26,13 +26,14 @@ public class BaseVehicle : MonoBehaviour
     public GameObject UI;
     private GameObject ChargeBar;
     private GameObject ChargeBarFill;
+    private GameObject HealthBar;
+    private GameObject HealthBarFill;
     private GameObject Speedometer;
 
     // Stat modifiers
     [HideInInspector]
     public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir, curHP;
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
-    private float flightSpeedMultiplier;
 
     // Utilities
     private GameObject gameMaster;
@@ -42,9 +43,6 @@ public class BaseVehicle : MonoBehaviour
     Rigidbody body;
     private GunHandler gunScript;
     private PartHandler partScript;
-    private bool flying = false;
-    private float totalFlightTime;
-    private float flightTimer;
     private float ejectTimer;
     public int startplayer;
     [HideInInspector]
@@ -53,6 +51,14 @@ public class BaseVehicle : MonoBehaviour
     public GameObject cam;
     public GameObject rotationModel;
     public bool usesDrag = true; // For the Slipcell
+
+    // flight
+    private bool flying = false;
+    private bool stableFlight = true;
+    private float totalFlightTime;
+    private float flightTimer;
+    private float flightSpeedMultiplier;
+
     //bouncepad positions
     [HideInInspector]
     public Vector3 bpadstart;
@@ -79,6 +85,7 @@ public class BaseVehicle : MonoBehaviour
         {
             isHolding = Input.GetAxis(chargeInput);
             ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
+            HealthBarFill.GetComponent<Image>().fillAmount = curHP/MaxHP;
         }
     }
 
@@ -137,6 +144,10 @@ public class BaseVehicle : MonoBehaviour
         UI = GameObject.Find("PlayerUI");
         ChargeBar = UI.transform.GetChild(0).gameObject;
         ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
+        HealthBar = UI.transform.GetChild(1).gameObject;
+        HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
+        HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP*5f, 30f);
+        HealthBarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP*5f - 10f, 20f);
         //stats
         ModTopSpeed = 0;
         ModAcceleration = 0;
@@ -206,8 +217,11 @@ public class BaseVehicle : MonoBehaviour
     {
         UI = newui;
         UI.transform.GetChild(0).gameObject.SetActive(true);
+        UI.transform.GetChild(1).gameObject.SetActive(true);
         ChargeBar = UI.transform.GetChild(0).gameObject;
         ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
+        HealthBar = UI.transform.GetChild(1).gameObject;
+        HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -276,6 +290,7 @@ public class BaseVehicle : MonoBehaviour
             {
                 Debug.Log(ray);
                 flying = true;
+                stableFlight = true;
                 body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
                 flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
                 totalFlightTime = flightTimer;
@@ -299,41 +314,40 @@ public class BaseVehicle : MonoBehaviour
         {
             body.AddRelativeTorque(Vector3.right * direction * 5);
         }
-
-        float newY = body.velocity.y;
+        
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
             flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f + (bAir + (AirMultiplier * mAir))/10);
-            if (body.velocity.y < 0)
-            {
-                newY *= 1f - (Mathf.Abs(NR / 45) * 0.2f); // lower opposite vertical speed
-            }
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
             flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f + (bAir + (AirMultiplier * mAir))/10);
-            if (body.velocity.y > 0)
-            {
-                newY *= 1f - (Mathf.Abs(NR / 45) * 0.2f); // lower opposite vertical speed
-            }
         }
         else
         {
             flightSpeedMultiplier = 1.3f + (bAir + (AirMultiplier * mAir)) / 10;
         }
-        body.velocity = new Vector3(body.velocity.x, newY, body.velocity.z);
+
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+        localVelocity.y *= 0.97f; // dampen vertical speed
+        body.velocity = body.transform.TransformDirection(localVelocity);
     }
 
     void DoFlightGravity()
     {
-        float NR = GetNormalizedRotation();
-        float grav = 2f;
-        if(NR < 0) // vehicle is pointing down
-        {
-            grav += 9.81f * Mathf.Abs(NR / 45);
-        }
-        body.AddForce(grav * Vector3.up * (flightTimer/totalFlightTime));
         flightTimer -= Time.deltaTime;
+
+        float NR = GetNormalizedRotation();
+
+        if(!stableFlight)
+        {
+            body.AddForce(5 * Vector3.up * (flightTimer / totalFlightTime));
+        }
+
+        if(flightTimer <= 0 && stableFlight == true)
+        {
+            stableFlight = false;
+        }
     }
 
     void Eject()
@@ -354,10 +368,13 @@ public class BaseVehicle : MonoBehaviour
 
         newplayerobject.GetComponent<PlayerCharacter>().UI = UI;
         newplayerobject.GetComponent<Rigidbody>().AddForce(transform.forward * -0.02f + transform.up * 0.05f, ForceMode.Impulse);
-        ChargeBar.SetActive(false);
         UI = null;
+        ChargeBar.SetActive(false);
         ChargeBar = null;
         ChargeBarFill = null;
+        HealthBar.SetActive(false);
+        HealthBar = null;
+        HealthBarFill = null;
     }
 
     public void doMoveAlongCurve(Vector3 startpoint, Vector3 endpoint)
