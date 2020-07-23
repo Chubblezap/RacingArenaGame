@@ -8,6 +8,7 @@ public class GameTimer : MonoBehaviour
     public float gameMinutes;
     public int numEvents;
     public GameObject textObject;
+    public bool active = false;
     private float gameSeconds;
     private float[] eventTimes;
     private float currentTime;
@@ -16,7 +17,16 @@ public class GameTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameSeconds = gameMinutes * 60;
+        GameObject infoobj = GameObject.Find("GameInfo");
+        if(infoobj != null)
+        {
+            gameMinutes = infoobj.GetComponent<GameInfo>().timeMinutes;
+            gameSeconds = gameMinutes*60 + infoobj.GetComponent<GameInfo>().timeSeconds;
+        }
+        else
+        {
+            gameSeconds = gameMinutes * 60;
+        }
         currentTime = gameSeconds;
         eventTimes = new float[numEvents];
         for(int i=0; i<numEvents; i++)
@@ -29,7 +39,10 @@ public class GameTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime -= Time.deltaTime;
+        if(active)
+        {
+            currentTime -= Time.deltaTime;
+        }
         int minutes = Mathf.FloorToInt(currentTime / 60F);
         int seconds = Mathf.FloorToInt(currentTime - minutes * 60);
         string niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
