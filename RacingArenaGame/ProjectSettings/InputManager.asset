@@ -540,7 +540,7 @@ InputManager:
     negativeButton: joystick 2 button 1
     positiveButton: joystick 2 button 0
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: p
     gravity: 1e+10
     dead: 0.001
     sensitivity: 1000
@@ -548,7 +548,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 2
+    joyNum: 1
   - serializedVersion: 3
     m_Name: p3menuButton
     descriptiveName: 
@@ -556,7 +556,7 @@ InputManager:
     negativeButton: joystick 3 button 1
     positiveButton: joystick 3 button 0
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: o
     gravity: 1e+10
     dead: 0.001
     sensitivity: 1000
@@ -564,7 +564,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 3
+    joyNum: 1
   - serializedVersion: 3
     m_Name: p4menuButton
     descriptiveName: 
@@ -572,7 +572,7 @@ InputManager:
     negativeButton: joystick 4 button 1
     positiveButton: joystick 4 button 0
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: i
     gravity: 1e+10
     dead: 0.001
     sensitivity: 1000
@@ -580,7 +580,7 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 4
+    joyNum: 1
   - serializedVersion: 3
     m_Name: Jump
     descriptiveName: 

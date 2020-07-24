@@ -75,7 +75,7 @@ public class MenuItem : MonoBehaviour
         }
     }
 
-    protected void SwitchItems(GameObject newitem)
+    void SwitchItems(GameObject newitem)
     {
         if(newitem.transform.parent.name != transform.parent.name)
         {
@@ -90,7 +90,7 @@ public class MenuItem : MonoBehaviour
         active = false;
     }
 
-    void Activate()
+    public virtual void Activate()
     {
         if (GetComponent<MenuBlink>() != null)
         {

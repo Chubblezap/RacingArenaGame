@@ -41,6 +41,7 @@ public class GameBuilder : MonoBehaviour
         }
         GameObject[] cams = new GameObject[realplayers];
 
+        int camnum = 0;
         for(int i=0; i < players.Length; i++)
         {
             if(players[i] != 0)
@@ -50,12 +51,13 @@ public class GameBuilder : MonoBehaviour
                 {
                     spawnpointindex = Random.Range(0, spawnpoints.Length);
                 }
-                GameObject newvehicle = Instantiate(startingVehicles[players[i]], spawnpoints[spawnpointindex].position, Quaternion.identity);
-                cams[i] = Instantiate(camobj, newvehicle.transform.position + Vector3.up, Quaternion.identity);
+                GameObject newvehicle = Instantiate(startingVehicles[players[i]-1], spawnpoints[spawnpointindex].position, Quaternion.identity);
+                cams[camnum] = Instantiate(camobj, newvehicle.transform.position + Vector3.up, Quaternion.identity);
                 newvehicle.GetComponent<BaseVehicle>().startplayer = i + 1;
-                newvehicle.GetComponent<BaseVehicle>().cam = cams[i];
-                cams[i].GetComponent<CamFollow>().target = newvehicle;
-                cams[i].GetComponent<CamFollow>().targetTransform = newvehicle.transform;
+                newvehicle.GetComponent<BaseVehicle>().cam = cams[camnum];
+                cams[camnum].GetComponent<CamFollow>().target = newvehicle;
+                cams[camnum].GetComponent<CamFollow>().targetTransform = newvehicle.transform;
+                camnum++;
 
                 spawnpoints[spawnpointindex] = null;
             }

@@ -167,4 +167,33 @@ public class LobbyPlayer : MenuItem
                 break;
         }
     }
+
+    void SwitchItems(GameObject newitem)
+    {
+        if (newitem.transform.parent.name != transform.parent.name)
+        {
+            transform.parent.GetComponent<MenuContainer>().SlideOut();
+            newitem.transform.parent.GetComponent<MenuContainer>().SlideIn();
+        }
+        newitem.GetComponent<MenuItem>().Activate();
+        if (GetComponent<MenuBlink>() != null)
+        {
+            GetComponent<MenuBlink>().Deactivate();
+        }
+        active = false;
+        for (int i = 0; i < otherPlayers.Length; i++)
+        {
+            otherPlayers[i].active = false;
+        }
+    }
+
+    public override void Activate()
+    {
+        active = true;
+        for(int i=0; i<otherPlayers.Length; i++)
+        {
+            otherPlayers[i].active = true;
+        }
+        pushCooldown = 0.25f;
+    }
 }
