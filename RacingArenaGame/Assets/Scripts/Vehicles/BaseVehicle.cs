@@ -141,13 +141,15 @@ public class BaseVehicle : MonoBehaviour
     void Init()
     {
         gameMaster = GameObject.Find("GameController");
-        UI = GameObject.Find("PlayerUI");
-        ChargeBar = UI.transform.GetChild(0).gameObject;
-        ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
-        HealthBar = UI.transform.GetChild(1).gameObject;
-        HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
-        HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP*5f, 30f);
-        HealthBarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP*5f - 10f, 20f);
+        if (UI != null)
+        {
+            ChargeBar = UI.transform.GetChild(0).gameObject;
+            ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
+            HealthBar = UI.transform.GetChild(1).gameObject;
+            HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
+            HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP * 5f, 30f);
+            HealthBarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP * 5f - 10f, 20f);
+        }
         //stats
         ModTopSpeed = 0;
         ModAcceleration = 0;

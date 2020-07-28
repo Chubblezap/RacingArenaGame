@@ -55,6 +55,7 @@ public class GameBuilder : MonoBehaviour
                 cams[camnum] = Instantiate(camobj, newvehicle.transform.position + Vector3.up, Quaternion.identity);
                 newvehicle.GetComponent<BaseVehicle>().startplayer = i + 1;
                 newvehicle.GetComponent<BaseVehicle>().cam = cams[camnum];
+                newvehicle.GetComponent<BaseVehicle>().UI = cams[camnum].transform.GetChild(0).gameObject;
                 cams[camnum].GetComponent<CamFollow>().target = newvehicle;
                 cams[camnum].GetComponent<CamFollow>().targetTransform = newvehicle.transform;
                 camnum++;
