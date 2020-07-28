@@ -511,6 +511,7 @@ public class BaseVehicle : MonoBehaviour
                 flying = false;
                 flightSpeedMultiplier = 1f;
                 transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+                body.angularVelocity = Vector3.zero;
             }
         }
     }

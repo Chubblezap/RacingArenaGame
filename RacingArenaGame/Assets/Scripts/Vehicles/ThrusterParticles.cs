@@ -4,19 +4,45 @@ using UnityEngine;
 
 public class ThrusterParticles : MonoBehaviour
 {
-    public ParticleSystem[] systems;
     public GameObject vehicle;
     public BaseVehicle stats;
+    public GameObject[] particleObjects;
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (systems != null)
+        float vehicleZSpeed = vehicle.GetComponent<Rigidbody>().transform.InverseTransformDirection(vehicle.GetComponent<Rigidbody>().velocity).z;
+        if(particleObjects != null)
         {
-            for (int i=0; i < systems.Length; i++)
+            if (vehicleZSpeed < 0.5f)
             {
-                var main = systems[i].main;
-                main.startSpeed = 2 - (vehicle.GetComponent<Rigidbody>().transform.InverseTransformDirection(vehicle.GetComponent<Rigidbody>().velocity).z)/2;
+                for (int i = 0; i < particleObjects.Length; i++)
+                {
+                    if (particleObjects[i].GetComponent<ParticleSystem>() != null)
+                    {
+                        particleObjects[i].GetComponent<ParticleSystem>().Stop();
+                    }
+                    else
+                    {
+                        particleObjects[i].SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < particleObjects.Length; i++)
+                {
+                    if (particleObjects[i].GetComponent<ParticleSystem>() != null)
+                    {
+                        particleObjects[i].GetComponent<ParticleSystem>().Play();
+                        var main = particleObjects[i].GetComponent<ParticleSystem>().main;
+                        main.startSpeed = 2 - (vehicleZSpeed) / 2;
+                    }
+                    else
+                    {
+                        particleObjects[i].SetActive(true);
+                    }
+                }
             }
         }
     }
