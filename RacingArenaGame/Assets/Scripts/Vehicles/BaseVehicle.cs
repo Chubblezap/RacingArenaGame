@@ -33,13 +33,15 @@ public class BaseVehicle : MonoBehaviour
     // Stat modifiers
     [HideInInspector]
     public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir, curHP;
+    public float camsize = 1; // for camera
+    public float gunhoverdist = 1; //for held guns
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
 
     // Utilities
     private GameObject gameMaster;
     private float isHolding;
     private float currentCharge;
-    private Collider myCollider;
+    //private Collider myCollider;
     Rigidbody body;
     private GunHandler gunScript;
     private PartHandler partScript;
@@ -51,9 +53,11 @@ public class BaseVehicle : MonoBehaviour
     public GameObject cam;
     public GameObject rotationModel;
     public bool usesDrag = true; // For the Slipcell
+    public bool grounded = false;
 
     // flight
-    private bool flying = false;
+    [HideInInspector]
+    public bool flying = false;
     private bool stableFlight = true;
     private float totalFlightTime;
     private float flightTimer;
@@ -71,6 +75,8 @@ public class BaseVehicle : MonoBehaviour
     private string chargeInput;
     private string fireLeftInput;
     private string fireRightInput;
+    [HideInInspector]
+    public float turnAmount;
 
     // Start is called before the first frame update
     void Start()
@@ -94,7 +100,8 @@ public class BaseVehicle : MonoBehaviour
         GroundAlign(BaseAir, ModAir);
         if (player != 0)
         {
-            Turn(Input.GetAxis(horizontalInput), BaseTurn, ModTurn);
+            turnAmount = Input.GetAxis(horizontalInput);
+            Turn(turnAmount, BaseTurn, ModTurn);
             if (isHolding == 1) // player is holding Space or A
             {
                 Charge(BaseArmor, ModArmor, BaseBoost, ModBoost, BaseTopSpeed, ModTopSpeed);
@@ -174,7 +181,7 @@ public class BaseVehicle : MonoBehaviour
         isHolding = 0;
         currentCharge = 0;
         ejectTimer = 0;
-        myCollider = GetComponent<SphereCollider>();
+        //myCollider = GetComponent<SphereCollider>();
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
         partScript = GetComponent<PartHandler>();
@@ -272,7 +279,7 @@ public class BaseVehicle : MonoBehaviour
     void DoDrag(float bArmor, float mArmor)
     {
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))); // lower sideways speed
+        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.7f : 0f); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 

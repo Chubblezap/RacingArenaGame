@@ -27,8 +27,9 @@ public class HeldGun : MonoBehaviour
     {
         if(owner != null && movingToPlayer == true) // gun picked up, moving to top of player
         {
-            transform.position = Vector3.MoveTowards(transform.position, owner.position + new Vector3(0, 0.5f, 0), curSpeed * Time.deltaTime);
-            if(Vector3.Distance(transform.position, owner.position + new Vector3(0f,0.5f,0f)) < 0.001f)
+            float distmod = owner.gameObject.GetComponent<BaseVehicle>().gunhoverdist;
+            transform.position = Vector3.MoveTowards(transform.position, owner.position + (new Vector3(0, 0.5f, 0) * distmod), curSpeed * Time.deltaTime);
+            if(Vector3.Distance(transform.position, owner.position + (new Vector3(0f,0.5f,0f) * distmod)) < 0.001f)
             {
                 movingToPlayer = false;
                 flag = "Hovering";
