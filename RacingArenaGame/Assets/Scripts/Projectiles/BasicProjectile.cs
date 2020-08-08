@@ -39,7 +39,7 @@ public class BasicProjectile : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    protected void OnTriggerEnter(Collider collision)
+    protected virtual void OnTriggerEnter(Collider collision)
     {
         GameObject collidedObject = collision.gameObject;
         if (collidedObject.tag == "Environment")

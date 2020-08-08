@@ -21,7 +21,8 @@ public class CamFollow : MonoBehaviour
     {
         if (mode == "Vehicle")
         {
-            moveTo = targetTransform.position + (Vector3.up * 1.5f + new Vector3(targetTransform.forward.x * -2.5f, 0, targetTransform.forward.z * -2.5f)) * target.GetComponent<BaseVehicle>().camsize;
+            float camdist = (-2.5f - (target.GetComponent<BaseVehicle>().boostPower / 5));
+            moveTo = targetTransform.position + (Vector3.up * 1.5f + new Vector3(targetTransform.forward.x * camdist, 0, targetTransform.forward.z * camdist)) * target.GetComponent<BaseVehicle>().camsize;
         }
         else if(mode == "Player")
         {

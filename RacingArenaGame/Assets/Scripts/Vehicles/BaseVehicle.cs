@@ -36,6 +36,8 @@ public class BaseVehicle : MonoBehaviour
     public float camsize = 1; // for camera
     public float gunhoverdist = 1; //for held guns
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
+    [HideInInspector]
+    public float boostPower = 0;
 
     // Utilities
     private GameObject gameMaster;
@@ -52,8 +54,12 @@ public class BaseVehicle : MonoBehaviour
     public GameObject playerCharacter;
     public GameObject cam;
     public GameObject rotationModel;
-    public bool usesDrag = true; // For the Slipcell
+
+    // Flags
+    public bool usesDrag = true; // Slipcell
     public bool grounded = false;
+    public bool halfBoosts = false; // Megabooster
+    
 
     // flight
     [HideInInspector]
@@ -123,7 +129,8 @@ public class BaseVehicle : MonoBehaviour
             {
                 if (currentCharge > 0)
                 {
-                    Boost(currentCharge, BaseBoost, ModBoost);
+                    AlignVelocity();
+                    StartCoroutine("Boost");
                 }
                 ejectTimer = 0;
                 currentCharge = 0;
@@ -240,20 +247,43 @@ public class BaseVehicle : MonoBehaviour
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration)));
+        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower));
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
-    void Boost(float charge, float bBoost, float mBoost)
+    void AlignVelocity()
     {
-        if(charge >= 1)
-        {
-            body.AddForce(transform.forward * 50 * (bBoost + (BoostMultiplier * mBoost)));
-        }
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
         localVelocity.x *= 0.2f; // lower sideways speed
         localVelocity.z = body.velocity.magnitude;
         body.velocity = body.transform.TransformDirection(localVelocity);
+    }
+
+    private IEnumerator Boost()
+    {
+        float boostTime = 0;
+        float curBoostTime = 0;
+        float MaxBoostPower = 0;
+
+        if (currentCharge >= 1 || halfBoosts)
+        {
+            body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * ModBoost)) * 25);
+            MaxBoostPower = BaseBoost + (BoostMultiplier * ModBoost) * 2;
+            boostPower = MaxBoostPower;
+            boostTime = 0.5f + (BaseBoost + (BoostMultiplier * ModBoost)) / 10;
+            curBoostTime = boostTime;
+        }
+        while (curBoostTime > 0)
+        {
+            curBoostTime -= Time.deltaTime;
+            if(isHolding == 1) // Cut boost if the player is braking
+            {
+                curBoostTime = 0;
+            }
+            boostPower = MaxBoostPower * (curBoostTime / boostTime);
+            yield return new WaitForFixedUpdate();
+        }
+        yield return null;
     }
 
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)
@@ -270,7 +300,7 @@ public class BaseVehicle : MonoBehaviour
 
     void HorizontalSpeedCheck(float bTopSpeed, float mTopSpeed)
     {
-        if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
+        if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
             body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y, body.velocity.z * 0.97f);
         }
