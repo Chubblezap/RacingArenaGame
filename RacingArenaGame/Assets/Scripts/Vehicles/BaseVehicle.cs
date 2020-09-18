@@ -28,6 +28,10 @@ public class BaseVehicle : MonoBehaviour
     private GameObject ChargeBarFill;
     private GameObject HealthBar;
     private GameObject HealthBarFill;
+    [HideInInspector]
+    public GameObject WeaponBarL;
+    [HideInInspector]
+    public GameObject WeaponBarR;
     private GameObject Speedometer;
 
     // Stat modifiers
@@ -98,6 +102,14 @@ public class BaseVehicle : MonoBehaviour
             isHolding = Input.GetAxis(chargeInput);
             ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
             HealthBarFill.GetComponent<Image>().fillAmount = curHP/MaxHP;
+            if(WeaponBarL.activeSelf)
+            {
+                WeaponBarL.transform.GetChild(0).GetComponent<Image>().fillAmount = GetComponent<GunHandler>().leftGun.GetComponent<FiringHandler>().GetBarAmount();
+            }
+            if (WeaponBarR.activeSelf)
+            {
+                WeaponBarR.transform.GetChild(0).GetComponent<Image>().fillAmount = GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().GetBarAmount();
+            }
         }
     }
 
@@ -161,8 +173,12 @@ public class BaseVehicle : MonoBehaviour
             ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
             HealthBar = UI.transform.GetChild(1).gameObject;
             HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
-            HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP * 5f, 30f);
-            HealthBarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(MaxHP * 5f - 10f, 20f);
+            HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(30f, MaxHP * 5f);
+            HealthBarFill.GetComponent<RectTransform>().sizeDelta = new Vector2(20f, MaxHP * 5f - 10f);
+            WeaponBarL = UI.transform.GetChild(2).gameObject;
+            WeaponBarL.SetActive(false);
+            WeaponBarR = UI.transform.GetChild(3).gameObject;
+            WeaponBarR.SetActive(false);
         }
         //stats
         ModTopSpeed = 0;
@@ -238,6 +254,30 @@ public class BaseVehicle : MonoBehaviour
         ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
         HealthBar = UI.transform.GetChild(1).gameObject;
         HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
+        WeaponBarL = UI.transform.GetChild(2).gameObject;
+        if(GetComponent<GunHandler>().leftGun != null && (GetComponent<GunHandler>().leftGun.GetComponent<FiringHandler>().hasAmmo || GetComponent<GunHandler>().leftGun.GetComponent<FiringHandler>().hasCharge))
+        {
+            WeaponBarL.SetActive(true);
+        }
+        WeaponBarR = UI.transform.GetChild(3).gameObject;
+        if (GetComponent<GunHandler>().rightGun != null && (GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasAmmo || GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasCharge))
+        {
+            WeaponBarR.SetActive(true);
+        }
+    }
+
+    public void UIReload() // Check for new UI elements (equipping weapons, etc)
+    {
+        WeaponBarL = UI.transform.GetChild(2).gameObject;
+        if (GetComponent<GunHandler>().leftGun != null && (GetComponent<GunHandler>().leftGun.GetComponent<FiringHandler>().hasAmmo || GetComponent<GunHandler>().leftGun.GetComponent<FiringHandler>().hasCharge))
+        {
+            WeaponBarL.SetActive(true);
+        }
+        WeaponBarR = UI.transform.GetChild(3).gameObject;
+        if (GetComponent<GunHandler>().rightGun != null && (GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasAmmo || GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasCharge))
+        {
+            WeaponBarR.SetActive(true);
+        }
     }
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
@@ -414,6 +454,10 @@ public class BaseVehicle : MonoBehaviour
         HealthBar.SetActive(false);
         HealthBar = null;
         HealthBarFill = null;
+        WeaponBarL.SetActive(false);
+        WeaponBarL = null;
+        WeaponBarR.SetActive(false);
+        WeaponBarR = null;
     }
 
     public void doMoveAlongCurve(Vector3 startpoint, Vector3 endpoint)
@@ -438,7 +482,6 @@ public class BaseVehicle : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
-        GetComponent<Rigidbody>().useGravity = true;
         player = oldplayer;
     }
 

@@ -14,21 +14,21 @@ public class FiringHandler : MonoBehaviour
     // special conditions
 
     // ammo
-    private bool hasAmmo = false;
+    public bool hasAmmo = false;
     private int totalAmmo;
     private int currentAmmo = 0;
     private float reloadSpeed;
     private float reloadTimer = 0;
 
     // charging
-    private bool hasCharge = false;
+    public bool hasCharge = false;
     private float chargeTime;
     private float curChargeTime = 0;
 
     private void FixedUpdate()
     {
         // non-charge weapons
-        if(!hasCharge)
+        if (!hasCharge)
         {
             if (rofTimer > 0)
             {
@@ -46,9 +46,9 @@ public class FiringHandler : MonoBehaviour
         // charge weapons
         else
         {
-            if(active)  // active
+            if (active)  // active
             {
-                if(curChargeTime <= chargeTime)
+                if (curChargeTime <= chargeTime)
                 {
                     curChargeTime += Time.deltaTime;
                 }
@@ -59,13 +59,13 @@ public class FiringHandler : MonoBehaviour
             }
             else // inactive
             {
-                if(curChargeTime == chargeTime)
+                if (curChargeTime == chargeTime)
                 {
                     Fire();
                 }
                 else
                 {
-                    if(curChargeTime > 0)
+                    if (curChargeTime > 0)
                     {
                         curChargeTime -= Time.deltaTime * 2;
                     }
@@ -78,10 +78,10 @@ public class FiringHandler : MonoBehaviour
         }
 
         // reloading handler
-        if(hasAmmo && currentAmmo == 0)
+        if (hasAmmo && currentAmmo == 0)
         {
             reloadTimer += Time.deltaTime;
-            if(reloadTimer >= reloadSpeed)
+            if (reloadTimer >= reloadSpeed)
             {
                 reloadTimer = 0;
                 currentAmmo = totalAmmo;
@@ -92,9 +92,9 @@ public class FiringHandler : MonoBehaviour
     void Fire()
     {
         // gun is ready to fire
-        if((!hasAmmo && !hasCharge) || (hasAmmo && currentAmmo > 0 && !hasCharge) || (hasCharge && curChargeTime == chargeTime && !hasAmmo) || (hasAmmo && currentAmmo > 0 && hasCharge && curChargeTime == chargeTime))
+        if ((!hasAmmo && !hasCharge) || (hasAmmo && currentAmmo > 0 && !hasCharge) || (hasCharge && curChargeTime == chargeTime && !hasAmmo) || (hasAmmo && currentAmmo > 0 && hasCharge && curChargeTime == chargeTime))
         {
-            GameObject firedProjectile = Instantiate(projectileType, transform.position + transform.up*0.25f, transform.rotation);
+            GameObject firedProjectile = Instantiate(projectileType, transform.position + transform.up * 0.25f, transform.rotation);
             if (burstParticleType != null)
             {
                 Instantiate(burstParticleType, transform.position + transform.up * 0.25f, transform.rotation, transform);
@@ -102,14 +102,31 @@ public class FiringHandler : MonoBehaviour
             firedProjectile.GetComponent<BasicProjectile>().owner = GetComponent<HeldGun>().owner;
             firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.root.GetComponent<Rigidbody>().velocity.magnitude);
             rofTimer = fireRate;
-            if(hasAmmo)
+            if (hasAmmo)
             {
                 currentAmmo -= 1;
             }
-            if(hasCharge)
+            if (hasCharge)
             {
                 curChargeTime = 0;
             }
+        }
+    }
+
+    public float GetBarAmount()
+    {
+        if (hasAmmo)
+        {
+            return currentAmmo / totalAmmo;
+        }
+        else if (hasCharge)
+        {
+            return curChargeTime / chargeTime;
+        }
+        else
+        {
+            Debug.Log("Gun has no ammo or charge, something wrong");
+            return 0;
         }
     }
 
@@ -121,9 +138,9 @@ public class FiringHandler : MonoBehaviour
         burstParticleType = statsheet.GetGunBurst(thisgun);
         fireRate = statsheet.GetGunFireRate(thisgun);
         totalAmmo = statsheet.GetGunMaxAmmo(thisgun);
-        if(totalAmmo == 0) { hasAmmo = false; }
+        hasAmmo = (totalAmmo == 0 ? false : true);
         reloadSpeed = statsheet.GetGunReloadSpeed(thisgun);
         chargeTime = statsheet.GetGunChargeTime(thisgun);
-        if(chargeTime == 0) { hasCharge = false; }
+        hasCharge = (chargeTime == 0 ? false : true);
     }
 }

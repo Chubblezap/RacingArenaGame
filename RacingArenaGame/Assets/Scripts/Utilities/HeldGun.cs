@@ -71,6 +71,7 @@ public class HeldGun : MonoBehaviour
                 GetComponent<FiringHandler>().GetGunStats();
                 flag = "Equipped";
                 owner.GetComponent<GunHandler>().carriedGun = null;
+                owner.GetComponent<BaseVehicle>().UIReload();
                 DisableOutlines(transform.GetChild(renderedGunIndex)); //Disable outline
             }
         }
