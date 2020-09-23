@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: grass
+    second: {fileID: 2100000, guid: 291ad9201e4e12a40a7cb033a0a433b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: water
     second: {fileID: 2100000, guid: d62b34d58cfa52a4994b789a1993d7aa, type: 2}
   materials:
@@ -85,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 15
+    globalScale: 1500
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
