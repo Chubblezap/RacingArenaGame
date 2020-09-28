@@ -229,15 +229,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1778632596590873087}
     - target: {fileID: 4039597650542315, guid: cce03a9c8268e014380e8e3d92f6a23c, type: 3}
-      propertyPath: m_PixelPerfect
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039597650542315, guid: cce03a9c8268e014380e8e3d92f6a23c, type: 3}
       propertyPath: m_PlaneDistance
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 4039597650542315, guid: cce03a9c8268e014380e8e3d92f6a23c, type: 3}
       propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039597650542315, guid: cce03a9c8268e014380e8e3d92f6a23c, type: 3}
+      propertyPath: m_RenderMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4039597650542318, guid: cce03a9c8268e014380e8e3d92f6a23c, type: 3}

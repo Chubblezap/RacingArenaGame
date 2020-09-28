@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 279019774320360961}
   - component: {fileID: 1208534070329481590}
   - component: {fileID: 425109959717527107}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftExhaust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4887,7 +4887,7 @@ GameObject:
   - component: {fileID: 5540780172802527482}
   - component: {fileID: 7494956744944301541}
   - component: {fileID: 9200084504693989587}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightExhaust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9641,7 +9641,7 @@ GameObject:
   - component: {fileID: 4959465813069865126}
   - component: {fileID: 8757560139437411848}
   - component: {fileID: 6091662757758003087}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointR2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9723,7 +9723,7 @@ GameObject:
   - component: {fileID: 8489869694181816902}
   - component: {fileID: 1698337844875668954}
   - component: {fileID: 7441304064366196469}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GearL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9873,6 +9873,8 @@ MonoBehaviour:
   PercentOffensePerMod: 0.1
   PercentAirPerMod: 0.5
   UI: {fileID: 0}
+  WeaponBarL: {fileID: 0}
+  WeaponBarR: {fileID: 0}
   ModTopSpeed: 0
   ModAcceleration: 0
   ModTurn: 0
@@ -9884,6 +9886,7 @@ MonoBehaviour:
   curHP: 0
   camsize: 1.5
   gunhoverdist: 2
+  boostPower: 0
   startplayer: 0
   player: 0
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
@@ -9892,6 +9895,7 @@ MonoBehaviour:
   rotationModel: {fileID: 5837086360343903617}
   usesDrag: 1
   grounded: 1
+  halfBoosts: 0
   flying: 0
   bpadstart: {x: 0, y: 0, z: 0}
   bpadend: {x: 0, y: 0, z: 0}
@@ -9989,7 +9993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6529961766136346406}
   - component: {fileID: 3476747608030317760}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointR2Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10035,7 +10039,7 @@ GameObject:
   - component: {fileID: 2171664377743575340}
   - component: {fileID: 3363468855671671919}
   - component: {fileID: 1853574781390425633}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointL2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10117,7 +10121,7 @@ GameObject:
   - component: {fileID: 2706770901779002216}
   - component: {fileID: 5631623133764699421}
   - component: {fileID: 506587539411337148}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GearR2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10210,7 +10214,7 @@ GameObject:
   - component: {fileID: 3281992230024630729}
   - component: {fileID: 6565163435496159564}
   - component: {fileID: 3866370954569943988}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GearL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10301,7 +10305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3068514261640149780}
   - component: {fileID: 404544905012636644}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointL2Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10345,7 +10349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2238389005938482130}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10378,7 +10382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3748111665388601994}
   - component: {fileID: 7471396549618416589}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointL1Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10424,7 +10428,7 @@ GameObject:
   - component: {fileID: 814064628928435674}
   - component: {fileID: 8039975840133628453}
   - component: {fileID: 7094572533027027298}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10537,7 +10541,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7447307568743288722}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MacroTechGigant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10575,7 +10579,7 @@ GameObject:
   - component: {fileID: 7843067737037200679}
   - component: {fileID: 5852985847161109322}
   - component: {fileID: 1988029271659197484}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10657,7 +10661,7 @@ GameObject:
   - component: {fileID: 4021901106440782954}
   - component: {fileID: 114252899439645557}
   - component: {fileID: 8981760802754108049}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GearR1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10748,7 +10752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804738264598812103}
   - component: {fileID: 4583042847263230763}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointR1Rotator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10794,7 +10798,7 @@ GameObject:
   - component: {fileID: 7066245983477817076}
   - component: {fileID: 3804259304222139028}
   - component: {fileID: 5235029527154471984}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: JointR1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

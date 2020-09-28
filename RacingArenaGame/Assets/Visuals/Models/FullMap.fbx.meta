@@ -7,8 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: CaveFloor
+    second: {fileID: 2100000, guid: 3fcd17ffdf78eb94fa608d657d3d14b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pave
+    second: {fileID: 2100000, guid: 4709e005e0614c842ada9d819a3629e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: cityground
+    second: {fileID: 2100000, guid: 05d2e0cb6d0a5b04bbe0693f1c682751, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: grass
     second: {fileID: 2100000, guid: 291ad9201e4e12a40a7cb033a0a433b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: road
+    second: {fileID: 2100000, guid: a423e216d5bb81e4b90837d0991f8d25, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

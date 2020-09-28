@@ -562,7 +562,7 @@ public class BaseVehicle : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collidedObject = collision.gameObject;
-        if(collidedObject.GetComponent<BaseItem>() != null) // trigger collision is an item
+        if(collidedObject.GetComponent<BaseItem>() != null && collidedObject.layer != 11) // trigger collision is an item and NOT in the crate layer
         {
             if(collidedObject.GetComponent<BaseItem>().pickupTimer <= 0)
             {

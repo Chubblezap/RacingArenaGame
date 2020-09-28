@@ -117,11 +117,11 @@ public class FiringHandler : MonoBehaviour
     {
         if (hasAmmo)
         {
-            return currentAmmo / totalAmmo;
+            return (float)currentAmmo / totalAmmo;
         }
         else if (hasCharge)
         {
-            return curChargeTime / chargeTime;
+            return (float)curChargeTime / chargeTime;
         }
         else
         {
