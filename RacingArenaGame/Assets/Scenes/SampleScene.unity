@@ -238,14 +238,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay
       objectReference: {fileID: 0}
+    - target: {fileID: 8187825558487720910, guid: 5b046c8448aa0ce41a67090d42b9e59c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b046c8448aa0ce41a67090d42b9e59c, type: 3}
---- !u!1 &103752977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5190590932439695123, guid: 5b046c8448aa0ce41a67090d42b9e59c,
-    type: 3}
-  m_PrefabInstance: {fileID: 29201131}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &145728802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1130,10 +1129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f75fae4540d054a9917d8974e52e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMinutes: 5
-  numEvents: 2
-  textObject: {fileID: 103752977}
-  active: 0
+  gameMinutes: 0.05
+  numEvents: 0
+  active: 1
 --- !u!1 &957512358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1509,6 +1507,11 @@ PrefabInstance:
     - target: {fileID: 1778632596590873086, guid: 5a8ae1704b3b6094c80be214dcf55036,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8112832942480460514, guid: 5a8ae1704b3b6094c80be214dcf55036,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

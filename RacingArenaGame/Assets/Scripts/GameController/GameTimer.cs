@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameTimer : MonoBehaviour
 {
     public float gameMinutes;
     public int numEvents;
-    public GameObject textObject;
+    private GameObject textObject;
+    private GameObject endSlideObject;
     public bool active = false;
     private float gameSeconds;
     private float[] eventTimes;
@@ -17,6 +19,8 @@ public class GameTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        textObject = GameObject.Find("GameTimer");
+        endSlideObject = GameObject.Find("TimerEndSlider");
         GameObject infoobj = GameObject.Find("GameInfo");
         if(infoobj != null)
         {
@@ -42,19 +46,46 @@ public class GameTimer : MonoBehaviour
         if(active)
         {
             currentTime -= Time.deltaTime;
-        }
-        int minutes = Mathf.FloorToInt(currentTime / 60F);
-        int seconds = Mathf.FloorToInt(currentTime - minutes * 60);
-        string niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+            int minutes = Mathf.FloorToInt(currentTime / 60F);
+            int seconds = Mathf.FloorToInt(currentTime - minutes * 60);
+            string niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        textObject.GetComponent<Text>().text = niceTime;
-        if(currentTime <= eventTimes[currentEvent])
-        {
-            currentEvent -= 1;
+            textObject.GetComponent<Text>().text = niceTime;
+            if (eventTimes.Length > 0 && currentTime <= eventTimes[currentEvent])
+            {
+                currentEvent -= 1;
+            }
+            if (currentTime <= 0)
+            {
+                Debug.Log("End Game");
+                EndCityGame();
+                active = false;
+            }
         }
-        if(currentTime <= 0)
+    }
+
+    void EndCityGame()
+    {
+        Time.timeScale = 0;
+        StartCoroutine("TimerSlide");
+        StartCoroutine("EndOfGameBuffer");
+    }
+
+    private IEnumerator TimerSlide()
+    {
+        while (endSlideObject.GetComponent<RectTransform>().position.x < Screen.width/2)
         {
-            Debug.Log("End Game");
+            Vector3 newpos = endSlideObject.GetComponent<RectTransform>().position;
+            newpos.x += 25;
+            endSlideObject.GetComponent<RectTransform>().position = newpos;
+            yield return null;
         }
+    }
+
+    IEnumerator EndOfGameBuffer()
+    {
+        yield return new WaitForSecondsRealtime(5);
+        //SceneManager.LoadScene("StatScreen");
+        yield return null;
     }
 }
