@@ -9,7 +9,7 @@ public class Bouncepad : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collidedobject = collision.gameObject;
-        if(collidedobject.tag == "Vehicle" && collidedobject.GetComponent<BaseVehicle>().player != 0)
+        if(collidedobject.tag == "Vehicle" && collidedobject.GetComponent<BaseVehicle>().myPlayer != null)
         {
             collidedobject.GetComponent<BaseVehicle>().doMoveAlongCurve(collidedobject.transform.position, endpoint.position);
         }

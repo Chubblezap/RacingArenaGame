@@ -36,7 +36,7 @@ public class BaseVehicle : MonoBehaviour
 
     // Stat modifiers
     [HideInInspector]
-    public float ModTopSpeed, ModAcceleration, ModTurn, ModBoost, ModArmor, ModOffense, ModDefense, ModAir, curHP;
+    public float curHP;
     public float camsize = 1; // for camera
     public float gunhoverdist = 1; //for held guns
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
@@ -52,9 +52,7 @@ public class BaseVehicle : MonoBehaviour
     private GunHandler gunScript;
     private PartHandler partScript;
     private float ejectTimer;
-    public int startplayer;
-    [HideInInspector]
-    public int player;
+    public Player myPlayer;
     public GameObject playerCharacter;
     public GameObject cam;
     public GameObject rotationModel;
@@ -64,7 +62,6 @@ public class BaseVehicle : MonoBehaviour
     public bool grounded = false;
     public bool halfBoosts = false; // Megabooster
     
-
     // flight
     [HideInInspector]
     public bool flying = false;
@@ -73,18 +70,14 @@ public class BaseVehicle : MonoBehaviour
     private float flightTimer;
     private float flightSpeedMultiplier;
 
-    //bouncepad positions
+    // bouncepad/rail
+    public bool hasControl = true;
     [HideInInspector]
     public Vector3 bpadstart;
     [HideInInspector]
     public Vector3 bpadend;
 
     // Controls
-    private string horizontalInput;
-    private string verticalInput;
-    private string chargeInput;
-    private string fireLeftInput;
-    private string fireRightInput;
     [HideInInspector]
     public float turnAmount;
 
@@ -97,9 +90,9 @@ public class BaseVehicle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player != 0)
+        if(myPlayer != null && hasControl)
         {
-            isHolding = Input.GetAxis(chargeInput);
+            isHolding = Input.GetAxis(myPlayer.chargeInput);
             ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
             HealthBarFill.GetComponent<Image>().fillAmount = curHP/MaxHP;
             if(WeaponBarL.activeSelf)
@@ -115,15 +108,15 @@ public class BaseVehicle : MonoBehaviour
 
     void FixedUpdate() //put movement/physics stuff here
     {
-        GroundAlign(BaseAir, ModAir);
-        if (player != 0)
+        GroundAlign();
+        if (myPlayer != null && hasControl)
         {
-            turnAmount = Input.GetAxis(horizontalInput);
-            Turn(turnAmount, BaseTurn, ModTurn);
+            turnAmount = Input.GetAxis(myPlayer.horizontalInput);
+            Turn(turnAmount, BaseTurn, myPlayer.Turn);
             if (isHolding == 1) // player is holding Space or A
             {
-                Charge(BaseArmor, ModArmor, BaseBoost, ModBoost, BaseTopSpeed, ModTopSpeed);
-                if (Input.GetAxis(verticalInput) <= -0.75)
+                Charge(BaseArmor, myPlayer.Armor, BaseBoost, myPlayer.Boost, BaseTopSpeed, myPlayer.TopSpeed);
+                if (Input.GetAxis(myPlayer.verticalInput) <= -0.75)
                 {
                     ejectTimer += Time.deltaTime;
                     if (ejectTimer >= 1)
@@ -146,15 +139,15 @@ public class BaseVehicle : MonoBehaviour
                 }
                 ejectTimer = 0;
                 currentCharge = 0;
-                Accelerate(BaseAcceleration, ModAcceleration, BaseTopSpeed, ModTopSpeed);
+                Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
             }
             if(usesDrag)
             {
-                DoDrag(BaseArmor, ModArmor);
+                DoDrag(BaseArmor, myPlayer.Armor);
             }
             if (flying)
             {
-                Aim(Input.GetAxis(verticalInput), BaseAir, ModAir);
+                Aim(Input.GetAxis(myPlayer.verticalInput), BaseAir, myPlayer.Air);
                 DoFlightGravity();
             }
         }
@@ -180,14 +173,6 @@ public class BaseVehicle : MonoBehaviour
             WeaponBarR = UI.transform.GetChild(3).gameObject;
             WeaponBarR.SetActive(false);
         }
-        //stats
-        ModTopSpeed = 0;
-        ModAcceleration = 0;
-        ModTurn = 0;
-        ModBoost = 0;
-        ModArmor = 0;
-        ModOffense = 0;
-        ModAir = 0;
         // stat modifiers
         TopSpeedMultiplier = BaseTopSpeed * PercentTopSpeedPerMod;
         AccelerationMultiplier = BaseAcceleration * PercentAccelerationPerMod;
@@ -208,10 +193,10 @@ public class BaseVehicle : MonoBehaviour
         body = GetComponent<Rigidbody>();
         gunScript = GetComponent<GunHandler>();
         partScript = GetComponent<PartHandler>();
-        LoadControls(startplayer);
+        //LoadControls(startplayer);
     }
 
-    public void LoadControls(int newplayernum)
+    /*public void LoadControls(int newplayernum)
     {
         player = newplayernum;
         switch (player)
@@ -243,7 +228,7 @@ public class BaseVehicle : MonoBehaviour
                 break;
         }
         gunScript.LoadControls(player);
-    }
+    }*/
 
     public void UIIinit(GameObject newui) // Called when a new UI needs to be assigned (piloting new vehicle)
     {
@@ -307,10 +292,10 @@ public class BaseVehicle : MonoBehaviour
 
         if (currentCharge >= 1 || halfBoosts)
         {
-            body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * ModBoost)) * 25);
-            MaxBoostPower = BaseBoost + (BoostMultiplier * ModBoost) * 2;
+            body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * myPlayer.Boost)) * 25);
+            MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
             boostPower = MaxBoostPower;
-            boostTime = 0.5f + (BaseBoost + (BoostMultiplier * ModBoost)) / 10;
+            boostTime = 0.5f + (BaseBoost + (BoostMultiplier * myPlayer.Boost)) / 10;
             curBoostTime = boostTime;
         }
         while (curBoostTime > 0)
@@ -353,7 +338,7 @@ public class BaseVehicle : MonoBehaviour
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
-    void GroundAlign(float bAir, float mAir) // Merged with old CheckFlight code
+    void GroundAlign() // Merged with old CheckFlight code
     {
         if(!flying)
         {
@@ -367,18 +352,25 @@ public class BaseVehicle : MonoBehaviour
             }
             else
             {
-                Debug.Log(ray);
-                flying = true;
-                stableFlight = true;
-                body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
-                flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
-                totalFlightTime = flightTimer;
+                if(myPlayer != null && hasControl)
+                {
+                    Launch(BaseAir, myPlayer.Air);
+                }
             }
         }
         else
         {
             rotationModel.transform.rotation = (transform.rotation);
         }
+    }
+
+    void Launch(float bAir, float mAir)
+    {
+        flying = true;
+        stableFlight = true;
+        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
+        flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
+        totalFlightTime = flightTimer;
     }
 
     void Aim(float direction, float bAir, float mAir)
@@ -436,8 +428,8 @@ public class BaseVehicle : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
 
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
-        newplayerobject.GetComponent<PlayerCharacter>().LoadControls(player);
-        player = 0;
+        newplayerobject.GetComponent<PlayerCharacter>().myPlayer = myPlayer;
+        myPlayer = null;
 
         newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
         cam.GetComponent<CamFollow>().target = newplayerobject;
@@ -470,8 +462,7 @@ public class BaseVehicle : MonoBehaviour
     IEnumerator MoveAlongCurve()
     {
         GetComponent<Rigidbody>().useGravity = false;
-        int oldplayer = player;
-        player = 0;
+        hasControl = false;
         Vector3 middlepoint = new Vector3((bpadstart.x + bpadend.x) / 2, Mathf.Max(bpadstart.y, bpadend.y) + 10f, (bpadstart.z + bpadend.z) / 2);
         float timer = 0;
         while(timer < 1.5f)
@@ -482,7 +473,7 @@ public class BaseVehicle : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
-        player = oldplayer;
+        hasControl = true;
     }
 
     private float GetNormalizedRotation()
@@ -508,25 +499,25 @@ public class BaseVehicle : MonoBehaviour
             switch (item.GetComponent<StatPickup>().statType)
             {
                 case "Top Speed":
-                    ModTopSpeed += 1;
+                    if (myPlayer.TopSpeed < 18) { myPlayer.TopSpeed += 1; }
                     break;
                 case "Acceleration":
-                    ModAcceleration += 1;
+                    if(myPlayer.Acceleration < 18) { myPlayer.Acceleration += 1; }
                     break;
                 case "Turn":
-                    ModTurn += 1;
+                    if (myPlayer.Turn < 18) { myPlayer.Turn += 1; }
                     break;
                 case "Boost":
-                    ModBoost += 1;
+                    if (myPlayer.Boost < 18) { myPlayer.Boost += 1; }
                     break;
                 case "Armor":
-                    ModArmor += 1;
+                    if (myPlayer.Armor < 18) { myPlayer.Armor += 1; }
                     break;
                 case "Offense":
-                    ModOffense += 1;
+                    if (myPlayer.Offense < 18) { myPlayer.Offense += 1; }
                     break;
                 case "Air":
-                    ModAir += 1;
+                    if (myPlayer.Air < 18) { myPlayer.Air += 1; }
                     break;
                 default:
                     Debug.Log("Got an invalid stat! Yay!");

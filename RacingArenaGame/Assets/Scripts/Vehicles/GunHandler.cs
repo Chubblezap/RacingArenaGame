@@ -5,6 +5,7 @@ using UnityEngine;
 public class GunHandler : MonoBehaviour
 {
     private GameObject gameMaster;
+    private BaseVehicle vehicleScript;
     // Guns
     public GameObject carriedGun;
     public GameObject leftGun;
@@ -18,27 +19,24 @@ public class GunHandler : MonoBehaviour
     // the object that is spawned when a gun is dropped
     public GameObject droppedGunObject;
 
-    // Controls
-    private string fireLeftInput;
-    private string fireRightInput;
-
     // Start is called before the first frame update
     void Start()
     {
         carriedGun = null;
         gameMaster = GameObject.Find("GameController");
+        vehicleScript = GetComponent<BaseVehicle>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GetComponent<BaseVehicle>().player != 0)
+        if(vehicleScript.myPlayer != null)
         {
             DoGuns();
         }
     }
 
-    public void LoadControls(int player)
+    /*public void LoadControls(int player)
     {
         switch (player)
         {
@@ -63,7 +61,7 @@ public class GunHandler : MonoBehaviour
                 fireRightInput = "p1FireRight";
                 break;
         }
-    }
+    }*/
 
     void DoGuns()
     {
@@ -71,7 +69,7 @@ public class GunHandler : MonoBehaviour
         {
             if(carriedGun.GetComponent<HeldGun>().flag == "Hovering") // player has an overhead gun
             {
-                if (Input.GetButtonDown(fireRightInput) || Input.GetAxisRaw(fireRightInput) >= .3)
+                if (Input.GetButtonDown(vehicleScript.myPlayer.fireRightInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireRightInput) >= .3)
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
@@ -79,7 +77,7 @@ public class GunHandler : MonoBehaviour
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
-                else if (Input.GetButtonDown(fireLeftInput) || Input.GetAxisRaw(fireLeftInput) >= .3)
+                else if (Input.GetButtonDown(vehicleScript.myPlayer.fireLeftInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireLeftInput) >= .3)
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = leftGunPosition;
@@ -96,7 +94,7 @@ public class GunHandler : MonoBehaviour
         {
             if (rightGun != null)
             {
-                if (Input.GetButton(fireRightInput) || Input.GetAxisRaw(fireRightInput) >= .3)
+                if (Input.GetButton(vehicleScript.myPlayer.fireRightInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireRightInput) >= .3)
                 {
                     rightGun.GetComponent<FiringHandler>().active = true;
                 }
@@ -107,7 +105,7 @@ public class GunHandler : MonoBehaviour
             }
             if (leftGun != null)
             {
-                if (Input.GetButton(fireLeftInput) || Input.GetAxisRaw(fireLeftInput) >= .3)
+                if (Input.GetButton(vehicleScript.myPlayer.fireLeftInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireLeftInput) >= .3)
                 {
                     leftGun.GetComponent<FiringHandler>().active = true;
                 }

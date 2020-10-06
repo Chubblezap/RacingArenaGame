@@ -22,7 +22,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool ejected = true;
 
     // Controls
-    public int player = 0;
+    public Player myPlayer;
     private string horizontal;
     private string vertical;
     private string jump;
@@ -36,11 +36,11 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(player != 0 && !ejected)
+        if(myPlayer != null && !ejected)
         {
-            if (Input.GetAxisRaw(horizontal) != 0 || Input.GetAxisRaw(vertical) != 0)
+            if (Input.GetAxisRaw(myPlayer.horizontalInput) != 0 || Input.GetAxisRaw(myPlayer.verticalInput) != 0)
             {
-                Move(Input.GetAxisRaw(horizontal), Input.GetAxisRaw(vertical));
+                Move(Input.GetAxisRaw(myPlayer.horizontalInput), Input.GetAxisRaw(myPlayer.verticalInput));
             }
             else
             {
@@ -58,7 +58,7 @@ public class PlayerCharacter : MonoBehaviour
             }
             DoDrag();
 
-            if(Input.GetAxis(jump) >= 0.25 && Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f) && jumpTimer <= 0)
+            if(Input.GetAxis(myPlayer.jumpInput) >= 0.25 && Physics.Raycast(transform.position, -Vector3.up, GetComponent<Collider>().bounds.extents.y + 0.1f) && jumpTimer <= 0)
             {
                 body.AddForce(Vector3.up * 0.06f, ForceMode.Impulse);
                 jumpTimer = 1f;
@@ -85,39 +85,6 @@ public class PlayerCharacter : MonoBehaviour
         if(jumpTimer > 0)
         {
             jumpTimer -= Time.deltaTime;
-        }
-    }
-
-    public void LoadControls(int newplayernum)
-    {
-        player = newplayernum;
-        switch (player)
-        {
-            case 1:
-                horizontal = "p1Horizontal";
-                vertical = "p1Vertical";
-                jump = "p1menuButton";
-                break;
-            case 2:
-                horizontal = "p2Horizontal";
-                vertical = "p2Vertical";
-                jump = "p2menuButton";
-                break;
-            case 3:
-                horizontal = "p3Horizontal";
-                vertical = "p3Vertical";
-                jump = "p3menuButton";
-                break;
-            case 4:
-                horizontal = "p4Horizontal";
-                vertical = "p4Vertical";
-                jump = "p4menuButton";
-                break;
-            default:
-                horizontal = "p1Horizontal";
-                vertical = "p1Vertical";
-                jump = "p1menuButton";
-                break;
         }
     }
 
@@ -168,7 +135,7 @@ public class PlayerCharacter : MonoBehaviour
     void Pilot(GameObject vehicle)
     {
         BaseVehicle v = vehicle.GetComponent<BaseVehicle>();
-        v.LoadControls(player);
+        v.myPlayer = myPlayer;
 
         v.cam = cam;
         cam.GetComponent<CamFollow>().target = vehicle;

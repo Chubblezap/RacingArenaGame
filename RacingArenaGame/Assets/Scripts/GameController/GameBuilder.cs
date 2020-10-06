@@ -7,6 +7,7 @@ public class GameBuilder : MonoBehaviour
     public GameObject spawnpointObj;
     public GameObject[] startingVehicles;
     public GameObject camobj;
+    public GameObject playerObj;
     private GameObject infoobj;
     private Transform[] spawnpoints;
 
@@ -40,12 +41,15 @@ public class GameBuilder : MonoBehaviour
             }
         }
         GameObject[] cams = new GameObject[realplayers];
+        GameObject[] playerobjects = new GameObject[realplayers];
 
         int camnum = 0;
         for(int i=0; i < players.Length; i++)
         {
             if(players[i] != 0)
             {
+                GameObject newplayer = Instantiate(playerObj);
+                newplayer.GetComponent<Player>().playerNum = i + 1;
                 int spawnpointindex = Random.Range(0, spawnpoints.Length);
                 while(spawnpoints[spawnpointindex] == null)
                 {
@@ -53,7 +57,9 @@ public class GameBuilder : MonoBehaviour
                 }
                 GameObject newvehicle = Instantiate(startingVehicles[players[i]-1], spawnpoints[spawnpointindex].position, Quaternion.identity);
                 cams[camnum] = Instantiate(camobj, newvehicle.transform.position + Vector3.up, Quaternion.identity);
-                newvehicle.GetComponent<BaseVehicle>().startplayer = i + 1;
+                newplayer.GetComponent<Player>().currentVehicle = newvehicle;
+                newplayer.GetComponent<Player>().playerCam = cams[camnum];
+                newvehicle.GetComponent<BaseVehicle>().myPlayer = newplayer.GetComponent<Player>();
                 newvehicle.GetComponent<BaseVehicle>().cam = cams[camnum];
                 newvehicle.GetComponent<BaseVehicle>().UI = cams[camnum].transform.GetChild(0).gameObject;
                 cams[camnum].GetComponent<CamFollow>().target = newvehicle;
@@ -73,19 +79,19 @@ public class GameBuilder : MonoBehaviour
         {
             for(int i=0; i<cams.Length; i++)
             {
-                if(cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().startplayer == 1)
+                if(cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().myPlayer.playerNum == 1)
                 {
                     cams[i].GetComponent<Camera>().rect = new Rect(0, 0.5f, 0.5f, 0.5f);
                 }
-                else if(cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().startplayer == 2)
+                else if(cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().myPlayer.playerNum == 2)
                 {
                     cams[i].GetComponent<Camera>().rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
                 }
-                else if (cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().startplayer == 3)
+                else if (cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().myPlayer.playerNum == 3)
                 {
                     cams[i].GetComponent<Camera>().rect = new Rect(0, 0, 0.5f, 0.5f);
                 }
-                else if (cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().startplayer == 4)
+                else if (cams[i].GetComponent<CamFollow>().target.GetComponent<BaseVehicle>().myPlayer.playerNum == 4)
                 {
                     cams[i].GetComponent<Camera>().rect = new Rect(0.5f, 0, 0.5f, 0.5f);
                 }
