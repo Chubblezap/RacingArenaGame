@@ -123,6 +123,7 @@ public class BaseVehicle : MonoBehaviour
                     {
                         currentCharge = 0;
                         Eject();
+                        return;
                     }
                 }
                 else

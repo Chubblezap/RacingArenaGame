@@ -117,7 +117,14 @@ public class FiringHandler : MonoBehaviour
     {
         if (hasAmmo)
         {
-            return (float)currentAmmo / totalAmmo;
+            if(currentAmmo > 0)
+            {
+                return (float)currentAmmo / totalAmmo;
+            }
+            else
+            {
+                return reloadTimer / reloadSpeed;
+            }
         }
         else if (hasCharge)
         {

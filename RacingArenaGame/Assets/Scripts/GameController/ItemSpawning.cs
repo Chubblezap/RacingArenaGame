@@ -13,6 +13,7 @@ public class ItemSpawning : MonoBehaviour
     public GameObject Factory;
 
     // Utilities
+    public bool active = true;
     private GameObject boundsObject;
     private Collider[] itemSpawnBounds;
     private float itemSpawnTimer;
@@ -22,18 +23,24 @@ public class ItemSpawning : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Init();
+        if(active)
+        {
+            Init();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        itemSpawnTimer += Time.deltaTime;
-        if(itemSpawnTimer > timeToSpawn)
+        if(active)
         {
-            SpawnItem();
-            itemSpawnTimer = 0;
-            timeToSpawn = Random.Range(0f, 2f);
+            itemSpawnTimer += Time.deltaTime;
+            if (itemSpawnTimer > timeToSpawn)
+            {
+                SpawnItem();
+                itemSpawnTimer = 0;
+                timeToSpawn = Random.Range(0f, 2f);
+            }
         }
     }
 
