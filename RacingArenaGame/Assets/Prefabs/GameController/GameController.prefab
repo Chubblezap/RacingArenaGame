@@ -1,0 +1,166 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5843494342152803463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5843494342152803462}
+  - component: {fileID: 5843494342152803482}
+  - component: {fileID: 5843494342152803483}
+  - component: {fileID: 5843494342152803481}
+  - component: {fileID: 5843494342152803480}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5843494342152803462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843494342152803463}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5843494342152803482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843494342152803463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 448c8685bf2c3854499b74c783daf8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnpointObj: {fileID: 0}
+  startingVehicles:
+  - {fileID: 844173187424776381, guid: f995a9314430f7945b5898d0a2971ed6, type: 3}
+  - {fileID: 844173187424776381, guid: 49a7ddbde4de80649942ea0d76cf229a, type: 3}
+  - {fileID: 844173187424776381, guid: 56266129dd116a6418297eab493cd81c, type: 3}
+  - {fileID: 844173187424776381, guid: f995a9314430f7945b5898d0a2971ed6, type: 3}
+  camobj: {fileID: 1778632596590873082, guid: 5a8ae1704b3b6094c80be214dcf55036, type: 3}
+  playerObj: {fileID: 7506588942413070545, guid: 2a1fa97255fa1604d9f4d51c1355303c,
+    type: 3}
+--- !u!114 &5843494342152803483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843494342152803463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8f75fae4540d054a9917d8974e52e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMinutes: 5
+  numEvents: 2
+  active: 1
+--- !u!114 &5843494342152803481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843494342152803463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042f8cbe4668e47488e441f7056d633a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StatPickup: {fileID: 4175470100146542420, guid: 2f7d332aa73dca442ad4612ccd768866,
+    type: 3}
+  PowerPickup: {fileID: 7851871318008185708, guid: f07cfbb0fe290dd4abedd407c13cac48,
+    type: 3}
+  PartPickup: {fileID: 2711669298056708860, guid: a7abdf7706a2a5648b46704077d39ac8,
+    type: 3}
+  GunPickup: {fileID: 2711669298056708860, guid: c78b192f556daac42afa4bad1fbfd12d,
+    type: 3}
+  Crate: {fileID: 9213086292227709212, guid: c48c6521bb64e2e499c619e5a22dd5bd, type: 3}
+  Factory: {fileID: 9213086292227709212, guid: f7a45e1976ecfc54195ba95bee625ae5, type: 3}
+  active: 1
+--- !u!114 &5843494342152803480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5843494342152803463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22234699d832ebd4db07b78c39c4b4a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunMeshes:
+  - {fileID: -5495902117074765545, guid: 57dd40677ba18ec4f8bcffae142bd449, type: 3}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  gunProjectiles:
+  - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
+  - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
+  - {fileID: 300804576598338685, guid: e21e46e2ba4852345a594727f2a44658, type: 3}
+  - {fileID: 300804576598338685, guid: 8b3a9be5df9c95e4b807b5904c0cba9a, type: 3}
+  - {fileID: 5094337208973054754, guid: eead3725e7ae144439f87ddd686302ad, type: 3}
+  - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
+  - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
+  gunBurst:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 3165099685154342721, guid: 4b5ef97884393434d9331d019f1582d2, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  gunFireRates:
+  - 0.25
+  - 1
+  - 0.5
+  - 1
+  - 1
+  - 0.6
+  - 1
+  gunMaxAmmo: 00000000000000000500000000000000000000000000000000000000
+  gunReloadSpeed:
+  - 0
+  - 0
+  - 2
+  - 0
+  - 0
+  - 0
+  - 0
+  gunChargeTime:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  partMeshes:
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

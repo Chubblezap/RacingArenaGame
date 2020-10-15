@@ -427,6 +427,7 @@ public class BaseVehicle : MonoBehaviour
         flying = false;
         flightSpeedMultiplier = 1f;
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+        myPlayer.currentVehicle = null;
 
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
         newplayerobject.GetComponent<PlayerCharacter>().myPlayer = myPlayer;

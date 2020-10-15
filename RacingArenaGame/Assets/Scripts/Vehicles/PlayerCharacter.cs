@@ -134,6 +134,7 @@ public class PlayerCharacter : MonoBehaviour
 
     void Pilot(GameObject vehicle)
     {
+        myPlayer.currentVehicle = vehicle;
         BaseVehicle v = vehicle.GetComponent<BaseVehicle>();
         v.myPlayer = myPlayer;
 

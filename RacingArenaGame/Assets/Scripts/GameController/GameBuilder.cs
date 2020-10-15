@@ -15,13 +15,16 @@ public class GameBuilder : MonoBehaviour
     void Start()
     {
         infoobj = GameObject.Find("GameInfo");
-        spawnpoints = new Transform[spawnpointObj.transform.childCount];
-        for(int i=0; i<spawnpoints.Length; i++)
+        if(infoobj != null)
         {
-            spawnpoints[i] = spawnpointObj.transform.GetChild(i);
-        }
+            spawnpoints = new Transform[spawnpointObj.transform.childCount];
+            for (int i = 0; i < spawnpoints.Length; i++)
+            {
+                spawnpoints[i] = spawnpointObj.transform.GetChild(i);
+            }
 
-        SpawnPlayers(infoobj.GetComponent<GameInfo>().players);
+            SpawnPlayers(infoobj.GetComponent<GameInfo>().players);
+        }
     }
 
     // Update is called once per frame
