@@ -12,7 +12,6 @@ public class PlayerCharacter : MonoBehaviour
     public GameObject UI;
 
     // Utilities
-    public GameObject cam;
     public GameObject groundcollider;
     private GameObject gameMaster;
     private Collider myCollider;
@@ -90,8 +89,8 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Move(float horizontal, float vertical)
     {
-        var forward = cam.transform.forward;
-        var right = cam.transform.right;
+        var forward = myPlayer.cam.transform.forward;
+        var right = myPlayer.cam.transform.right;
 
         // project forward and right vectors on the horizontal plane (y = 0)
         forward.y = 0f;
@@ -137,12 +136,6 @@ public class PlayerCharacter : MonoBehaviour
         myPlayer.currentVehicle = vehicle;
         BaseVehicle v = vehicle.GetComponent<BaseVehicle>();
         v.myPlayer = myPlayer;
-
-        v.cam = cam;
-        cam.GetComponent<CamFollow>().target = vehicle;
-        cam.GetComponent<CamFollow>().targetTransform = vehicle.transform;
-        cam.GetComponent<CamFollow>().mode = "Vehicle";
-        cam = null;
         v.UIIinit(UI);
         Destroy(this.gameObject);
     }

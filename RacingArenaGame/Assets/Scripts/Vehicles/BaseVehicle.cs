@@ -54,7 +54,6 @@ public class BaseVehicle : MonoBehaviour
     private float ejectTimer;
     public Player myPlayer;
     public GameObject playerCharacter;
-    public GameObject cam;
     public GameObject rotationModel;
 
     // Flags
@@ -427,17 +426,11 @@ public class BaseVehicle : MonoBehaviour
         flying = false;
         flightSpeedMultiplier = 1f;
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-        myPlayer.currentVehicle = null;
 
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
         newplayerobject.GetComponent<PlayerCharacter>().myPlayer = myPlayer;
+        myPlayer.currentVehicle = newplayerobject;
         myPlayer = null;
-
-        newplayerobject.GetComponent<PlayerCharacter>().cam = cam;
-        cam.GetComponent<CamFollow>().target = newplayerobject;
-        cam.GetComponent<CamFollow>().targetTransform = newplayerobject.transform;
-        cam.GetComponent<CamFollow>().mode = "Player";
-        cam = null;
 
         newplayerobject.GetComponent<PlayerCharacter>().UI = UI;
         newplayerobject.GetComponent<Rigidbody>().AddForce(transform.forward * -0.02f + transform.up * 0.05f, ForceMode.Impulse);

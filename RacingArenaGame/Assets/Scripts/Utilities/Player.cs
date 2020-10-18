@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     public int playerNum = 0;
     public GameObject currentVehicle;
-    public GameObject playerCam;
+    public Camera cam;
+    public GameObject UI;
 
     // stats
     public int TopSpeed = 0;
