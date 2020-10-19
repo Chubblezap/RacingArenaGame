@@ -30,38 +30,11 @@ public class GunHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(vehicleScript.myPlayer != null)
+        if(vehicleScript.myPlayer != null && !vehicleScript.disarmed)
         {
             DoGuns();
         }
     }
-
-    /*public void LoadControls(int player)
-    {
-        switch (player)
-        {
-            case 1:
-                fireLeftInput = "p1FireLeft";
-                fireRightInput = "p1FireRight";
-                break;
-            case 2:
-                fireLeftInput = "p2FireLeft";
-                fireRightInput = "p2FireRight";
-                break;
-            case 3:
-                fireLeftInput = "p3FireLeft";
-                fireRightInput = "p3FireRight";
-                break;
-            case 4:
-                fireLeftInput = "p4FireLeft";
-                fireRightInput = "p4FireRight";
-                break;
-            default:
-                fireLeftInput = "p1FireLeft";
-                fireRightInput = "p1FireRight";
-                break;
-        }
-    }*/
 
     void DoGuns()
     {

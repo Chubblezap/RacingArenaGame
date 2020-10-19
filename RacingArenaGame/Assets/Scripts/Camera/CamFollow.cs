@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CamFollow : MonoBehaviour
 {
+    public Vector3 moveTo;
+    [HideInInspector]
+    public string mode = "Standard";
     private GameObject curObject;
     private Transform curTransform;
-    public Vector3 moveTo;
     private float speed;
     private Player myPlayer;
 
@@ -19,24 +21,34 @@ public class CamFollow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        curObject = myPlayer.currentVehicle;
-        curTransform = myPlayer.currentVehicle.transform;
-        if (curObject.tag == "Vehicle")
+        if(mode == "Standard")
         {
-            float camdist = (-2.5f - (curObject.GetComponent<BaseVehicle>().boostPower / 5));
-            moveTo = curTransform.position + (Vector3.up * 1.5f + new Vector3(curTransform.forward.x * camdist, 0, curTransform.forward.z * camdist)) * curObject.GetComponent<BaseVehicle>().camsize;
+            curObject = myPlayer.currentVehicle;
+            curTransform = myPlayer.currentVehicle.transform;
+            if (curObject.tag == "Vehicle")
+            {
+                float camdist = (-2.5f - (curObject.GetComponent<BaseVehicle>().boostPower / 5));
+                moveTo = curTransform.position + (Vector3.up * 1.5f + new Vector3(curTransform.forward.x * camdist, 0, curTransform.forward.z * camdist)) * curObject.GetComponent<BaseVehicle>().camsize;
+            }
+            else if (curObject.tag == "Player")
+            {
+                moveTo = curTransform.position + (curTransform.up * 1.5f) + (new Vector3(Vector3.Normalize(transform.position - curTransform.position).x * 3, 0, Vector3.Normalize(transform.position - curTransform.position).z * 3));
+            }
+            else
+            {
+                Debug.Log("Unknown camtarget tag");
+            }
+            speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 15f;
+            transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
+            transform.LookAt(curTransform.position + new Vector3(0f, 0.5f, 0f));
         }
-        else if(curObject.tag == "Player")
+        else if(mode == "StatScreen")
         {
-            moveTo = curTransform.position + (curTransform.up * 1.5f) + (new Vector3(Vector3.Normalize(transform.position - curTransform.position).x*3, 0, Vector3.Normalize(transform.position - curTransform.position).z*3));
+            curObject = myPlayer.currentVehicle;
+            curTransform = myPlayer.currentVehicle.transform;
+            transform.position = curTransform.position + (new Vector3(0f, 0.5f, 2.5f));
+            transform.LookAt(curTransform.position);
         }
-        else
-        {
-            Debug.Log("Unknown camtarget tag");
-        }
-        speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 15f;
-        transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
-        transform.LookAt(curTransform.position + new Vector3(0f, 0.5f, 0f));
     }
 
     /*public Vector3 LerpByDistance(Vector3 A, Vector3 B, float x)

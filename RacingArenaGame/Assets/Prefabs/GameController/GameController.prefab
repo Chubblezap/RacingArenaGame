@@ -52,7 +52,6 @@ MonoBehaviour:
   - {fileID: 844173187424776381, guid: 49a7ddbde4de80649942ea0d76cf229a, type: 3}
   - {fileID: 844173187424776381, guid: 56266129dd116a6418297eab493cd81c, type: 3}
   - {fileID: 844173187424776381, guid: f995a9314430f7945b5898d0a2971ed6, type: 3}
-  camobj: {fileID: 1778632596590873082, guid: 5a8ae1704b3b6094c80be214dcf55036, type: 3}
   playerObj: {fileID: 7506588942413070545, guid: 2a1fa97255fa1604d9f4d51c1355303c,
     type: 3}
 --- !u!114 &5843494342152803483
@@ -70,6 +69,8 @@ MonoBehaviour:
   gameMinutes: 5
   numEvents: 2
   active: 1
+  dataCarrierObj: {fileID: 4774389856166173731, guid: c16346996f7dc3848b508bd95a545d55,
+    type: 3}
 --- !u!114 &5843494342152803481
 MonoBehaviour:
   m_ObjectHideFlags: 0

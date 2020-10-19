@@ -60,6 +60,7 @@ public class BaseVehicle : MonoBehaviour
     public bool usesDrag = true; // Slipcell
     public bool grounded = false;
     public bool halfBoosts = false; // Megabooster
+    public bool disarmed = false; // Used in FiringHandler
     
     // flight
     [HideInInspector]
@@ -580,5 +581,10 @@ public class BaseVehicle : MonoBehaviour
                 body.angularVelocity = Vector3.zero;
             }
         }
+    }
+
+    void PurgeCarriedObjects()
+    {
+
     }
 }
