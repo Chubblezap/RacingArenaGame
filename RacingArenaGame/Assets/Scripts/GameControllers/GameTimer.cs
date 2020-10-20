@@ -94,10 +94,11 @@ public class GameTimer : MonoBehaviour
         yield return new WaitForSecondsRealtime(5);
         Time.timeScale = 1;
         GameObject carrier = Instantiate(dataCarrierObj);
-        DontDestroyOnLoad(carrier);
         GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
         for(int i = 0; i < players.Length; i++)
         {
+            int thisplayer = players[i].GetComponent<Player>().playerNum;
+            carrier.GetComponent<DataCarrier>().orderedPlayers[thisplayer-1] = players[i];
             // Attach player data and player vehicle to data carrier
             players[i].transform.parent = carrier.transform;
             players[i].GetComponent<Player>().currentVehicle.transform.parent = carrier.transform;
@@ -106,8 +107,7 @@ public class GameTimer : MonoBehaviour
             players[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().disarmed = true;
             players[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().hasControl = false;
             players[i].GetComponent<Player>().currentVehicle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePosition;
-            players[i].GetComponent<Player>().currentVehicle.transform.position = new Vector3(5, 5, 2);
-            players[i].GetComponent<Player>().currentVehicle.transform.rotation = Quaternion.Euler(0, 0, 0);
+            players[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().rotationModel.transform.rotation = Quaternion.Euler(0, 0, 0);
 
             // Set up cameras
             players[i].GetComponentInChildren<CamFollow>().mode = "StatScreen";
