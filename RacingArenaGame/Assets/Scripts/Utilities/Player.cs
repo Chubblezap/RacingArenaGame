@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public int playerNum = 0;
     public GameObject currentVehicle;
     public Camera cam;
+    public GameObject statSheet;
     public GameObject UI;
 
     // stats

@@ -47,10 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e76dd388906cc48b91529c07501f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  targetTransform: {fileID: 0}
   moveTo: {x: 0, y: 0, z: 0}
-  mode: 
+  mode: Standard
 --- !u!20 &1778632596590873087
 Camera:
   m_ObjectHideFlags: 0

@@ -91,10 +91,11 @@ public class GameTimer : MonoBehaviour
 
     IEnumerator EndOfGameBuffer()
     {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
+        players[0].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Display();
         yield return new WaitForSecondsRealtime(5);
         Time.timeScale = 1;
         GameObject carrier = Instantiate(dataCarrierObj);
-        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
         for(int i = 0; i < players.Length; i++)
         {
             int thisplayer = players[i].GetComponent<Player>().playerNum;
