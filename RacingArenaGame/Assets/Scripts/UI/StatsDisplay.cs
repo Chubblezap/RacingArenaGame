@@ -7,6 +7,11 @@ public class StatsDisplay : MonoBehaviour
     private bool showing = false;
     private float target;
 
+    private void Start()
+    {
+        Debug.Log("Parent is " + transform.parent + ". width is " + transform.parent.GetComponent<RectTransform>().rect.width);
+    }
+
     public void Display()
     {
         if(!showing)
@@ -25,11 +30,11 @@ public class StatsDisplay : MonoBehaviour
 
     private IEnumerator SlideIn()
     {
-        while (GetComponent<RectTransform>().position.x < Screen.width / 8)
+        while (GetComponent<RectTransform>().anchoredPosition.x < 200)
         {
-            Vector3 newpos = GetComponent<RectTransform>().position;
+            Vector3 newpos = GetComponent<RectTransform>().anchoredPosition;
             newpos.x += 25;
-            GetComponent<RectTransform>().position = newpos;
+            GetComponent<RectTransform>().anchoredPosition = newpos;
             yield return null;
         }
         showing = true;
@@ -37,11 +42,11 @@ public class StatsDisplay : MonoBehaviour
 
     private IEnumerator SlideOut()
     {
-        while (GetComponent<RectTransform>().position.x < -Screen.width / 4)
+        while (GetComponent<RectTransform>().anchoredPosition.x < -200)
         {
-            Vector3 newpos = GetComponent<RectTransform>().position;
+            Vector3 newpos = GetComponent<RectTransform>().anchoredPosition;
             newpos.x -= 25;
-            GetComponent<RectTransform>().position = newpos;
+            GetComponent<RectTransform>().anchoredPosition = newpos;
             yield return null;
         }
         showing = false;

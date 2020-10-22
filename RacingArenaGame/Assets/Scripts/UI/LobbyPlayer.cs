@@ -121,6 +121,14 @@ public class LobbyPlayer : MenuItem
     	{
             infoObject.GetComponent<GameInfo>().players[player - 1] = vehicleIndex;
         }
+        int j = 0;
+        while(infoObject.GetComponent<GameInfo>().leadingPlayer == 0)
+        {
+            if(infoObject.GetComponent<GameInfo>().players[j] != 0)
+            {
+                infoObject.GetComponent<GameInfo>().leadingPlayer = j + 1;
+            }
+        }
     	infoObject.GetComponent<GameInfo>().timeMinutes = 5;
     	infoObject.GetComponent<GameInfo>().timeSeconds = 0;
     	SceneManager.LoadScene("MainScene");
