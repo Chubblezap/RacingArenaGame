@@ -15,31 +15,31 @@ public class StatBar : MonoBehaviour
         {
             if(stat == "Top Speed")
             {
-                GetComponent<Image>().fillAmount = target.TopSpeed / 18;
+                GetComponent<Image>().fillAmount = (float)target.TopSpeed / 18;
             }
             else if (stat == "Acceleration")
             {
-                GetComponent<Image>().fillAmount = target.Acceleration / 18;
+                GetComponent<Image>().fillAmount = (float)target.Acceleration / 18;
             }
             else if (stat == "Boost")
             {
-                GetComponent<Image>().fillAmount = target.Boost / 18;
+                GetComponent<Image>().fillAmount = (float)target.Boost / 18;
             }
             else if (stat == "Turn")
             {
-                GetComponent<Image>().fillAmount = target.Turn / 18;
+                GetComponent<Image>().fillAmount = (float)target.Turn / 18;
             }
             else if (stat == "Armor")
             {
-                GetComponent<Image>().fillAmount = target.Armor / 18;
+                GetComponent<Image>().fillAmount = (float)target.Armor / 18;
             }
             else if (stat == "Offense")
             {
-                GetComponent<Image>().fillAmount = target.Offense / 18;
+                GetComponent<Image>().fillAmount = (float)target.Offense / 18;
             }
             else if (stat == "Air")
             {
-                GetComponent<Image>().fillAmount = target.Air / 18;
+                GetComponent<Image>().fillAmount = (float)target.Air / 18;
             }
             else
             {

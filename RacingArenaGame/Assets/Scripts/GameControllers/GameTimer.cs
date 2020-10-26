@@ -15,6 +15,8 @@ public class GameTimer : MonoBehaviour
     private float[] eventTimes;
     private float currentTime;
     private int currentEvent;
+    private bool paused = false;
+    public GameObject leadingPlayer;
     public GameObject dataCarrierObj;
 
     // Start is called before the first frame update
@@ -62,6 +64,45 @@ public class GameTimer : MonoBehaviour
                 EndCityGame();
                 active = false;
             }
+
+            if(Input.GetButtonDown(leadingPlayer.GetComponent<Player>().startInput))
+            {
+                Pause();
+            }
+        }
+    }
+
+    void Pause()
+    {
+        if(!paused)
+        {
+            Time.timeScale = 0;
+            DisplayAllPlayerStats();
+            paused = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            HideAllPlayerStats();
+            paused = false;
+        }
+    }
+
+    void DisplayAllPlayerStats()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
+        for(int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Display();
+        }
+    }
+
+    void HideAllPlayerStats()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Hide();
         }
     }
 
@@ -91,12 +132,11 @@ public class GameTimer : MonoBehaviour
 
     IEnumerator EndOfGameBuffer()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
-        players[0].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Display();
         yield return new WaitForSecondsRealtime(5);
         Time.timeScale = 1;
         GameObject carrier = Instantiate(dataCarrierObj);
-        for(int i = 0; i < players.Length; i++)
+        GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
+        for (int i = 0; i < players.Length; i++)
         {
             int thisplayer = players[i].GetComponent<Player>().playerNum;
             carrier.GetComponent<DataCarrier>().orderedPlayers[thisplayer-1] = players[i];
@@ -113,6 +153,7 @@ public class GameTimer : MonoBehaviour
             // Set up cameras
             players[i].GetComponentInChildren<CamFollow>().mode = "StatScreen";
         }
+        DisplayAllPlayerStats();
         SceneManager.LoadScene("StatScene");
         yield return null;
     }

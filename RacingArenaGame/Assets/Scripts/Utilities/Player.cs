@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     // controls
     [HideInInspector]
-    public string horizontalInput, verticalInput, chargeInput, fireLeftInput, fireRightInput, jumpInput;
+    public string horizontalInput, verticalInput, chargeInput, fireLeftInput, fireRightInput, jumpInput, startInput;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
                 fireLeftInput = "p1FireLeft";
                 fireRightInput = "p1FireRight";
                 jumpInput = "p1menuButton";
+                startInput = "p1startButton";
                 break;
             case 2:
                 horizontalInput = "p2Horizontal";
@@ -58,6 +59,7 @@ public class Player : MonoBehaviour
                 fireLeftInput = "p2FireLeft";
                 fireRightInput = "p2FireRight";
                 jumpInput = "p2menuButton";
+                startInput = "p2startButton";
                 break;
             case 3:
                 horizontalInput = "p3Horizontal";
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
                 fireLeftInput = "p3FireLeft";
                 fireRightInput = "p3FireRight";
                 jumpInput = "p3menuButton";
+                startInput = "p3startButton";
                 break;
             case 4:
                 horizontalInput = "p4Horizontal";
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour
                 fireLeftInput = "p4FireLeft";
                 fireRightInput = "p4FireRight";
                 jumpInput = "p4menuButton";
+                startInput = "p4startButton";
                 break;
             default:
                 Debug.Log("Default player loaded");
@@ -83,6 +87,7 @@ public class Player : MonoBehaviour
                 fireLeftInput = "p1FireLeft";
                 fireRightInput = "p1FireRight";
                 jumpInput = "p1menuButton";
+                startInput = "p1startButton";
                 break;
         }
     }

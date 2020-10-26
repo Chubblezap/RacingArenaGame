@@ -9,7 +9,7 @@ public class StatsDisplay : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Parent is " + transform.parent + ". width is " + transform.parent.GetComponent<RectTransform>().rect.width);
+        
     }
 
     public void Display()
@@ -24,7 +24,7 @@ public class StatsDisplay : MonoBehaviour
     {
         if(showing)
         {
-            StartCoroutine("Slide");
+            StartCoroutine("SlideOut");
         }
     }
 
@@ -42,7 +42,7 @@ public class StatsDisplay : MonoBehaviour
 
     private IEnumerator SlideOut()
     {
-        while (GetComponent<RectTransform>().anchoredPosition.x < -200)
+        while (GetComponent<RectTransform>().anchoredPosition.x > -200)
         {
             Vector3 newpos = GetComponent<RectTransform>().anchoredPosition;
             newpos.x -= 25;

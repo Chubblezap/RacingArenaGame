@@ -51,11 +51,18 @@ public class GameBuilder : MonoBehaviour
             {
                 GameObject newplayer = Instantiate(playerObj);
                 newplayer.GetComponent<Player>().playerNum = i + 1;
+                // Check if this player is "player 1"
+                if(newplayer.GetComponent<Player>().playerNum == infoobj.GetComponent<GameInfo>().leadingPlayer)
+                {
+                    GetComponent<GameTimer>().leadingPlayer = newplayer;
+                }
+                // Pick a random spawn point
                 int spawnpointindex = Random.Range(0, spawnpoints.Length);
                 while(spawnpoints[spawnpointindex] == null)
                 {
                     spawnpointindex = Random.Range(0, spawnpoints.Length);
                 }
+                // Create starting vehicle
                 GameObject newvehicle = Instantiate(startingVehicles[players[i]-1], spawnpoints[spawnpointindex].position, Quaternion.identity);
                 newplayer.GetComponent<Player>().currentVehicle = newvehicle;
                 newvehicle.GetComponent<BaseVehicle>().myPlayer = newplayer.GetComponent<Player>();
