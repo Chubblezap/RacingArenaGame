@@ -5,6 +5,7 @@ using UnityEngine;
 public class DataCarrier : MonoBehaviour
 {
     public GameObject[] orderedPlayers = new GameObject[4];
+    public GameObject leadingPlayer;
 
     // Start is called before the first frame update
     void Start()

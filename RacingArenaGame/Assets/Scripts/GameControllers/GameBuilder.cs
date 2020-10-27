@@ -23,6 +23,7 @@ public class GameBuilder : MonoBehaviour
             }
 
             SpawnPlayers(infoobj.GetComponent<GameInfo>().players);
+            GetComponent<GameTimer>().gameMinutes = infoobj.GetComponent<GameInfo>().timeMinutes;
         }
     }
 
@@ -74,7 +75,11 @@ public class GameBuilder : MonoBehaviour
             }
         }
 
-        if(playerobjects.Length == 2)
+        if(playerobjects.Length == 1)
+        {
+            playerobjects[0].GetComponent<Player>().cam.rect = new Rect(0, 0, 1, 1);
+        }
+        else if(playerobjects.Length == 2)
         {
             playerobjects[0].GetComponent<Player>().cam.rect = new Rect(0, 0.5f, 1, 0.5f);
             playerobjects[1].GetComponent<Player>().cam.rect = new Rect(0, 0, 1, 0.5f);

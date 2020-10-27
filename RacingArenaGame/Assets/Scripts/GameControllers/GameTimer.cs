@@ -135,6 +135,7 @@ public class GameTimer : MonoBehaviour
         yield return new WaitForSecondsRealtime(5);
         Time.timeScale = 1;
         GameObject carrier = Instantiate(dataCarrierObj);
+        carrier.GetComponent<DataCarrier>().leadingPlayer = leadingPlayer;
         GameObject[] players = GameObject.FindGameObjectsWithTag("PlayerData");
         for (int i = 0; i < players.Length; i++)
         {

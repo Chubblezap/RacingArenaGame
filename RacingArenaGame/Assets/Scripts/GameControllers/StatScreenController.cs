@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StatScreenController : MonoBehaviour
 {
     public GameObject dataobj;
+    public GameObject leadingPlayer;
     private GameObject[] playerlist;
 
     // Start is called before the first frame update
@@ -12,6 +14,7 @@ public class StatScreenController : MonoBehaviour
     {
         dataobj = GameObject.Find("DataCarrier(Clone)");
         playerlist = dataobj.GetComponent<DataCarrier>().orderedPlayers;
+        leadingPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer;
         BuildStatScreen();
     }
 
@@ -25,6 +28,31 @@ public class StatScreenController : MonoBehaviour
                 playerlist[i].GetComponent<Player>().currentVehicle.transform.Rotate(0, 0.25f, 0);
             }
         }
+        if(leadingPlayer != null && Input.GetButtonDown(leadingPlayer.GetComponent<Player>().startInput))
+        {
+            StartMinigame();
+        }
+    }
+
+    void StartMinigame()
+    {
+        for (int i = 0; i < playerlist.Length; i++)
+        {
+            if (playerlist[i] == null)
+            {
+                continue;
+            }
+            EnableExtraUI(playerlist[i].GetComponent<Player>().cam.transform.GetChild(0));
+            playerlist[i].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Hide();
+            // Disable vehicle controls (stat screen)
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().disarmed = false;
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().hasControl = true;
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+            // Set up cameras
+            playerlist[i].GetComponentInChildren<CamFollow>().mode = "Standard";
+        }
+        SceneManager.LoadScene("DragRace1");
     }
 
     void BuildStatScreen()
@@ -69,6 +97,22 @@ public class StatScreenController : MonoBehaviour
             if(UIObj.GetChild(i).name != "Stats")
             {
                 UIObj.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    void EnableExtraUI(Transform UIObj)
+    {
+        for (int i = 0; i < UIObj.childCount; i++)
+        {
+            if (UIObj.GetChild(i).name != "WeaponBarL" && UIObj.GetChild(i).name != "WeaponBarR")
+            {
+                UIObj.GetChild(i).gameObject.SetActive(true);
+            }
+            else if((UIObj.GetChild(i).name == "WeaponBarL" && UIObj.GetComponentInParent<Player>().currentVehicle.GetComponent<GunHandler>().leftGun != null) 
+                || (UIObj.GetChild(i).name != "WeaponBarR" && UIObj.GetComponentInParent<Player>().currentVehicle.GetComponent<GunHandler>().rightGun != null))
+            {
+                UIObj.GetChild(i).gameObject.SetActive(true);
             }
         }
     }
