@@ -44,10 +44,6 @@ public class StatScreenController : MonoBehaviour
             }
             EnableExtraUI(playerlist[i].GetComponent<Player>().cam.transform.GetChild(0));
             playerlist[i].GetComponent<Player>().statSheet.GetComponent<StatsDisplay>().Hide();
-            // Disable vehicle controls (stat screen)
-            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().disarmed = false;
-            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().hasControl = true;
-            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
             // Set up cameras
             playerlist[i].GetComponentInChildren<CamFollow>().mode = "Standard";

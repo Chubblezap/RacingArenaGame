@@ -38,6 +38,7 @@ public class MinigameBuilder : MonoBehaviour
             if (playerslots[i] != null)
             {
                 playerslots[i].GetComponent<Player>().currentVehicle.transform.position = spawnpoints[i].transform.position;
+                playerslots[i].GetComponent<Player>().currentVehicle.transform.rotation = spawnpoints[i].transform.rotation;
                 realplayers++;
             }
         }
@@ -91,6 +92,21 @@ public class MinigameBuilder : MonoBehaviour
             playerobjects[1].GetComponent<Player>().cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
             playerobjects[2].GetComponent<Player>().cam.rect = new Rect(0, 0, 0.5f, 0.5f);
             playerobjects[3].GetComponent<Player>().cam.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
+        }
+    }
+
+    void EnableControls(GameObject[] playerlist)
+    {
+        for (int i = 0; i < playerlist.Length; i++)
+        {
+            if (playerlist[i] == null)
+            {
+                continue;
+            }
+            // Re-enable vehicle controls
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().disarmed = false;
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().hasControl = true;
+            playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
     }
 }
