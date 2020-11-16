@@ -1,30 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OverviewCamera : MonoBehaviour
+public class OverviewCamera : MonoBehaviour // Contains camera movement functions that are called from a mode-specific script. Also handles the fade-out.
 {
+    public Player leadPlayer;
     private Vector3 motionstart;
     private Vector3 motiondestination;
     private Vector3 motionmidpoint; // used in curves
     private Vector3 camfocus;
     private float motiontimer;
+    private bool fading = false;
+    public GameObject fadeImage;
+    [HideInInspector]
+    public bool ready = true;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        //doSweep(new Vector3(6, 40, 285), new Vector3(6, 40, -130), Quaternion.Euler(45, 180, 0), 6);
-        //doPushPull(new Vector3(-36, 47, 60), -100, Quaternion.Euler(35, 110, 0), 2);
-        //doMoveAlongCurve(new Vector3(70, 60, 180), new Vector3(150, 60, 45), new Vector3(70, 60, -90), new Vector3(0, 0, 25), 8);
+        if(leadPlayer != null && (Input.GetButtonDown(leadPlayer.startInput) || Input.GetButtonDown(leadPlayer.chargeInput)) && !fading)
+        {
+            fading = true;
+            fadeImage.GetComponent<Fader>().doFadeIn();
+            StartCoroutine("TimedDestroy");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator TimedDestroy()
     {
-        
+        float timer = 0;
+        while(timer < 1)
+        {
+            timer += 0.0025f;
+            yield return null;
+        }
+        yield return new WaitForSecondsRealtime(0.1f);
+        fadeImage.GetComponent<Fader>().doFadeOut();
+        Destroy(this.gameObject);
+        yield return null;
     }
 
-    void doSweep(Vector3 startpos, Vector3 endpos, Quaternion rot, float time) // Move from point A to B at a set rotation over a specified time
+    public void doSweep(Vector3 startpos, Vector3 endpos, Quaternion rot, float time) // Move from point A to B at a set rotation over a specified time
     {
         transform.position = startpos;
         transform.rotation = rot;
@@ -43,10 +59,12 @@ public class OverviewCamera : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
+        yield return new WaitForSecondsRealtime(1);
+        ready = true;
         yield return null;
     }
 
-    void doPushPull(Vector3 startpos, float multiplier, Quaternion rot, float time) // Move from point A to point A + foward/backward at a set rotation over a specified time
+    public void doPushPull(Vector3 startpos, float multiplier, Quaternion rot, float time) // Move from point A to point A + foward/backward at a set rotation over a specified time
     {
         transform.position = startpos;
         transform.rotation = rot;
@@ -79,5 +97,8 @@ public class OverviewCamera : MonoBehaviour
             timer += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
+        yield return new WaitForSecondsRealtime(1);
+        ready = true;
+        yield return null;
     }
 }

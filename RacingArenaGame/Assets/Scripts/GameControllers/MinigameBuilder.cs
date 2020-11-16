@@ -20,6 +20,9 @@ public class MinigameBuilder : MonoBehaviour
         GameObject dataobj = GameObject.Find("DataCarrier(Clone)");
         orderedPlayers = dataobj.GetComponent<DataCarrier>().orderedPlayers;
         MovePlayers(orderedPlayers);
+
+        GetComponent<PauseMenuHandler>().leadingPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer;
+        GameObject.Find("OverviewCamera").GetComponent<OverviewCamera>().leadPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer.GetComponent<Player>();
     }
 
     // Update is called once per frame

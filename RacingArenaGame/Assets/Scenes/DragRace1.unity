@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -238,6 +238,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overlay
       objectReference: {fileID: 0}
+    - target: {fileID: 5190590932439695133, guid: 5b046c8448aa0ce41a67090d42b9e59c,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8187825558487720910, guid: 5b046c8448aa0ce41a67090d42b9e59c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -245,6 +250,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b046c8448aa0ce41a67090d42b9e59c, type: 3}
+--- !u!1 &29201132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1265803958264061601, guid: 5b046c8448aa0ce41a67090d42b9e59c,
+    type: 3}
+  m_PrefabInstance: {fileID: 29201131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &64600973 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8397423764246325557, guid: c34b69a9f8b38c3418e3eb7db609a583,
@@ -915,6 +926,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1344972016}
   - component: {fileID: 1344972015}
+  - component: {fileID: 1344972018}
   - component: {fileID: 1344972017}
   - component: {fileID: 1344972014}
   - component: {fileID: 1344972013}
@@ -1031,6 +1043,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 954a6e8f10ef56843879d3000b276ea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leadPlayer: {fileID: 0}
+  fadeImage: {fileID: 29201132}
+  ready: 1
+--- !u!114 &1344972018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344972012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd604aff96f6f6e46b97d4c78f1a3a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1409034816 stripped
@@ -1207,6 +1234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921181185}
   - component: {fileID: 1921181184}
+  - component: {fileID: 1921181186}
   m_Layer: 0
   m_Name: MiniGameController
   m_TagString: Untagged
@@ -1221,7 +1249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921181183}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1094fe43d1809324bb8817a8f7fe9a9e, type: 3}
   m_Name: 
@@ -1241,6 +1269,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921181186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921181183}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02bb15830edf86845a2dc5bcaeb21a34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leadingPlayer: {fileID: 0}
 --- !u!1001 &2064930634
 PrefabInstance:
   m_ObjectHideFlags: 0

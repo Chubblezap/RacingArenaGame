@@ -55,7 +55,7 @@ public class GameBuilder : MonoBehaviour
                 // Check if this player is "player 1"
                 if(newplayer.GetComponent<Player>().playerNum == infoobj.GetComponent<GameInfo>().leadingPlayer)
                 {
-                    GetComponent<GameTimer>().leadingPlayer = newplayer;
+                    GetComponent<PauseMenuHandler>().leadingPlayer = newplayer;
                 }
                 // Pick a random spawn point
                 int spawnpointindex = Random.Range(0, spawnpoints.Length);

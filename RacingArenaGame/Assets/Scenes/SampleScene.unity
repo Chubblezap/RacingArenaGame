@@ -399,7 +399,7 @@ PrefabInstance:
     - target: {fileID: 5843494342152803483, guid: aea6e418af6efb24f8d49d770209aa24,
         type: 3}
       propertyPath: gameMinutes
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5843494342152803483, guid: aea6e418af6efb24f8d49d770209aa24,
         type: 3}
@@ -407,6 +407,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5843494342152803483, guid: aea6e418af6efb24f8d49d770209aa24,
+        type: 3}
+      propertyPath: leadingPlayer
+      value: 
+      objectReference: {fileID: 1543450282}
+    - target: {fileID: 8836304795017202213, guid: aea6e418af6efb24f8d49d770209aa24,
         type: 3}
       propertyPath: leadingPlayer
       value: 

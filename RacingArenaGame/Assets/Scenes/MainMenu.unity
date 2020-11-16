@@ -1606,7 +1606,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 125162207}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 8
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2310,9 +2310,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c4285fcc3d8e94e8401be09d1104f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numplayers: 0
+  players: 00000000000000000000000000000000
   timeMinutes: 0
   timeSeconds: 0
+  leadingPlayer: 0
 --- !u!4 &2018076360
 Transform:
   m_ObjectHideFlags: 0
