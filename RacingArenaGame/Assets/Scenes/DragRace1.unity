@@ -1060,6 +1060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd604aff96f6f6e46b97d4c78f1a3a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minigame: DragRace1
 --- !u!1 &1409034816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2652937442741772701, guid: c34b69a9f8b38c3418e3eb7db609a583,

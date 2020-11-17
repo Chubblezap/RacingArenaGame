@@ -98,6 +98,17 @@ public class MinigameBuilder : MonoBehaviour
         }
     }
 
+    public void StartGame() // Runs as the player cameras start to fade in
+    {
+        StartCoroutine("TimedStart");
+    }
+
+    IEnumerator TimedStart()
+    {
+        yield return new WaitForSecondsRealtime(2.5f);
+        EnableControls(orderedPlayers);
+    }
+
     void EnableControls(GameObject[] playerlist)
     {
         for (int i = 0; i < playerlist.Length; i++)

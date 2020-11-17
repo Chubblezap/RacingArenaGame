@@ -36,6 +36,8 @@ public class OverviewCamera : MonoBehaviour // Contains camera movement function
         }
         yield return new WaitForSecondsRealtime(0.1f);
         fadeImage.GetComponent<Fader>().doFadeOut();
+        GameObject.Find("Countdown").GetComponent<Countdown>().doCount();
+        GameObject.Find("MiniGameController").GetComponent<MinigameBuilder>().StartGame();
         Destroy(this.gameObject);
         yield return null;
     }
