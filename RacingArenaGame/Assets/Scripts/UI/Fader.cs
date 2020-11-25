@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Fader : MonoBehaviour
 {
+    private float myTimer;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -17,21 +19,25 @@ public class Fader : MonoBehaviour
         
     }
 
-    public void doFadeIn()
+    public void doFadeIn(float timer)
     {
+        myTimer = timer;
         StartCoroutine("FadeIn");
     }
 
-    public void doFadeOut()
+    public void doFadeOut(float timer)
     {
+        myTimer = timer;
         StartCoroutine("FadeOut");
     }
 
     IEnumerator FadeIn()
     {
-        while (GetComponent<Image>().color.a < 1)
+        float curtime = 0;
+        while (curtime < myTimer)
         {
-            GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, GetComponent<Image>().color.a + 0.0025f);
+            GetComponent<Image>().color = Color.Lerp(new Color(1, 1, 1, 0), new Color(1, 1, 1, 1), curtime / myTimer);
+            curtime += Time.deltaTime;
             yield return null;
         }
         yield return new WaitForSecondsRealtime(0.5f);
@@ -39,9 +45,11 @@ public class Fader : MonoBehaviour
 
     IEnumerator FadeOut()
     {
-        while (GetComponent<Image>().color.a > 0)
+        float curtime = 0;
+        while (curtime < myTimer)
         {
-            GetComponent<Image>().color = new Color(GetComponent<Image>().color.r, GetComponent<Image>().color.g, GetComponent<Image>().color.b, GetComponent<Image>().color.a - 0.0025f);
+            GetComponent<Image>().color = Color.Lerp(new Color(1, 1, 1, 1), new Color(1, 1, 1, 0), curtime / myTimer);
+            curtime += Time.deltaTime;
             yield return null;
         }
         yield return new WaitForSecondsRealtime(0.5f);

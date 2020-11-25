@@ -298,6 +298,73 @@ MonoBehaviour:
   center: {fileID: 0}
   speed: 10
   axis: Forward
+--- !u!1 &313833586
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 313833590}
+  - component: {fileID: 313833589}
+  - component: {fileID: 313833588}
+  - component: {fileID: 313833587}
+  m_Layer: 9
+  m_Name: Goal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &313833587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313833586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830b43b509d6ff8408094b2076d1b3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: Drag
+--- !u!65 &313833588
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313833586}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &313833589
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313833586}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &313833590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313833586}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.44, y: 22.73, z: -150}
+  m_LocalScale: {x: 500, y: 500, z: 20}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &526811323 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -7485800531644403184, guid: c34b69a9f8b38c3418e3eb7db609a583,
@@ -1256,6 +1323,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnpointObj: {fileID: 1282496853}
+  niceTime: 
+  scoreboardDataObj: {fileID: 6800742765722840882, guid: 27954f94721c91740abb8a487b4df8cf,
+    type: 3}
 --- !u!4 &1921181185
 Transform:
   m_ObjectHideFlags: 0

@@ -18,4 +18,16 @@ public class DataCarrier : MonoBehaviour
     {
         
     }
+
+    public void DeleteVehicles() // Mainly used at the end of minigames because player controls are still needed for menus
+    {
+        for(int i=0; i<orderedPlayers.Length; i++)
+        {
+            if(orderedPlayers[i] != null)
+            {
+                orderedPlayers[i].GetComponent<Player>().cam.GetComponent<CamFollow>().enabled = false;
+                Destroy(orderedPlayers[i].GetComponent<Player>().currentVehicle);
+            }
+        }
+    }
 }

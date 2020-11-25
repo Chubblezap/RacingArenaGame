@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DragRace1.unity
     guid: 6c4737f12fddea04da7bc05845d0a203
+  - enabled: 1
+    path: Assets/Scenes/ScoreBoard.unity
+    guid: eb44015360533034ba3e0d095b047e18
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b2025afc111dbf24fb71223d117ef5d3,
       type: 2}

@@ -21,21 +21,15 @@ public class OverviewCamera : MonoBehaviour // Contains camera movement function
         if(leadPlayer != null && (Input.GetButtonDown(leadPlayer.startInput) || Input.GetButtonDown(leadPlayer.chargeInput)) && !fading)
         {
             fading = true;
-            fadeImage.GetComponent<Fader>().doFadeIn();
+            fadeImage.GetComponent<Fader>().doFadeIn(2f);
             StartCoroutine("TimedDestroy");
         }
     }
 
     IEnumerator TimedDestroy()
     {
-        float timer = 0;
-        while(timer < 1)
-        {
-            timer += 0.0025f;
-            yield return null;
-        }
-        yield return new WaitForSecondsRealtime(0.1f);
-        fadeImage.GetComponent<Fader>().doFadeOut();
+        yield return new WaitForSecondsRealtime(2.1f);
+        fadeImage.GetComponent<Fader>().doFadeOut(2f);
         GameObject.Find("Countdown").GetComponent<Countdown>().doCount();
         GameObject.Find("MiniGameController").GetComponent<MinigameBuilder>().StartGame();
         Destroy(this.gameObject);

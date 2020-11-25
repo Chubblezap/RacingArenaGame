@@ -17,7 +17,6 @@ public class Countdown : MonoBehaviour
 
     IEnumerator Count()
     {
-        float testime = Time.time;
         yield return new WaitForSecondsRealtime(1f);
         GetComponent<Image>().color = new Color(1, 1, 1, 0);
         GetComponent<RectTransform>().localScale = new Vector3(2, 2, 1);
@@ -59,7 +58,6 @@ public class Countdown : MonoBehaviour
                     break;
             }
         }
-        Debug.Log(Time.time - testime);
         yield return null;
     }
 }

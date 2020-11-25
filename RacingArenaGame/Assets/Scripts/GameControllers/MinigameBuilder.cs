@@ -1,12 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class MinigameBuilder : MonoBehaviour
+public class MinigameBuilder : MonoBehaviour // Builds and manages minigame elements
 {
     public GameObject spawnpointObj;
     private GameObject[] orderedPlayers; // length-4 array. may have 0's. Passed from DataCarrier
     private Transform[] spawnpoints;
+    private GameObject dataobj;
+
+    // Timer utility
+    private bool timerActive;
+    private GameObject timerText;
+    private float curTime = 0;
+    public string niceTime; // needs to be a global variable to pass to scoreboard
+
+    // Scoreboard organizing
+    public GameObject scoreboardDataObj;
 
     // Start is called before the first frame update
     void Start()
@@ -17,9 +29,11 @@ public class MinigameBuilder : MonoBehaviour
             spawnpoints[i] = spawnpointObj.transform.GetChild(i);
         }
 
-        GameObject dataobj = GameObject.Find("DataCarrier(Clone)");
+        dataobj = GameObject.Find("DataCarrier(Clone)");
         orderedPlayers = dataobj.GetComponent<DataCarrier>().orderedPlayers;
         MovePlayers(orderedPlayers);
+
+        timerText = GameObject.Find("GameTimer");
 
         GetComponent<PauseMenuHandler>().leadingPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer;
         GameObject.Find("OverviewCamera").GetComponent<OverviewCamera>().leadPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer.GetComponent<Player>();
@@ -28,7 +42,15 @@ public class MinigameBuilder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (timerActive)
+        {
+            curTime += Time.deltaTime;
+            int minutes = Mathf.FloorToInt(curTime / 60F);
+            int seconds = Mathf.FloorToInt(curTime - minutes * 60);
+            niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            timerText.GetComponent<Text>().text = niceTime;
+        }
     }
 
     void MovePlayers(GameObject[] playerslots) // Edit of SpawnPlayers() in GameBuilder, players should be attached to DataCarrier and don't need instantiation
@@ -106,6 +128,8 @@ public class MinigameBuilder : MonoBehaviour
     IEnumerator TimedStart()
     {
         yield return new WaitForSecondsRealtime(2.5f);
+        timerActive = true;
+        GetComponent<PauseMenuHandler>().enabled = true;
         EnableControls(orderedPlayers);
     }
 
@@ -122,5 +146,27 @@ public class MinigameBuilder : MonoBehaviour
             playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<BaseVehicle>().hasControl = true;
             playerlist[i].GetComponent<Player>().currentVehicle.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
+    }
+
+    public void EndGame() // Runs as the player cameras start to fade in
+    {
+        StartCoroutine("TimedEnd");
+    }
+
+    IEnumerator TimedEnd()
+    {
+        GetComponent<PauseMenuHandler>().enabled = false;
+        GameObject.Find("Fader").GetComponent<Fader>().doFadeIn(2f);
+        yield return new WaitForSecondsRealtime(2f);
+        dataobj.GetComponent<DataCarrier>().DeleteVehicles();
+        SceneManager.LoadScene("Scoreboard");
+    }
+
+    public void CreateScoreboard(Player[] orderedPlayers, string[] playerScores) 
+    {
+        GameObject scores = Instantiate(scoreboardDataObj);
+        scores.GetComponent<ScoreboardData>().leadingPlayer = dataobj.GetComponent<DataCarrier>().leadingPlayer;
+        scores.GetComponent<ScoreboardData>().playerOrder = orderedPlayers;
+        scores.GetComponent<ScoreboardData>().playerScoreString = playerScores;
     }
 }
