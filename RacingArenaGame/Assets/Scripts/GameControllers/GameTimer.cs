@@ -48,13 +48,15 @@ public class GameTimer : MonoBehaviour
         {
             currentTime -= Time.deltaTime;
             int minutes = Mathf.FloorToInt(currentTime / 60F);
-            int seconds = Mathf.FloorToInt(currentTime - minutes * 60);
-            string niceTime = string.Format("{0:00}:{1:00}", minutes, seconds);
-
+            int seconds = Mathf.FloorToInt(currentTime - (minutes * 60));
+            int centiseconds = Mathf.FloorToInt((currentTime - (minutes * 60) - seconds) * 100);
+            string niceTime = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, centiseconds);
             textObject.GetComponent<Text>().text = niceTime;
-            if (eventTimes.Length > 0 && currentTime <= eventTimes[currentEvent])
+
+            if (eventTimes.Length > 0 && currentEvent >= 0 && currentTime <= eventTimes[currentEvent])
             {
                 currentEvent -= 1;
+                Debug.Log("do event");
             }
             if (currentTime <= 0)
             {
