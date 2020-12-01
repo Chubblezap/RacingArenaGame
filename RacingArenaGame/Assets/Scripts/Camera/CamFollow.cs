@@ -24,14 +24,15 @@ public class CamFollow : MonoBehaviour
         if(mode == "Standard")
         {
             curObject = myPlayer.currentVehicle;
-            curTransform = myPlayer.currentVehicle.transform;
             if (curObject.tag == "Vehicle")
             {
+                curTransform = curObject.GetComponent<BaseVehicle>().rotationModel.transform;
                 float camdist = (-2.5f - (curObject.GetComponent<BaseVehicle>().boostPower / 5));
                 moveTo = curTransform.position + (Vector3.up * 1.5f + new Vector3(curTransform.forward.x * camdist, 0, curTransform.forward.z * camdist)) * curObject.GetComponent<BaseVehicle>().camsize;
             }
             else if (curObject.tag == "Player")
             {
+                curTransform = curObject.transform;
                 moveTo = curTransform.position + (curTransform.up * 1.5f) + (new Vector3(Vector3.Normalize(transform.position - curTransform.position).x * 3, 0, Vector3.Normalize(transform.position - curTransform.position).z * 3));
             }
             else

@@ -345,7 +345,7 @@ public class BaseVehicle : MonoBehaviour
         {
             var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
-            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 30f)
             {
                 transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
                 rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.1f;
@@ -361,12 +361,13 @@ public class BaseVehicle : MonoBehaviour
         }
         else
         {
-            rotationModel.transform.rotation = (transform.rotation);
+            //rotationModel.transform.rotation = (transform.rotation);
         }
     }
 
     void Launch(float bAir, float mAir)
     {
+        rotationModel.transform.rotation = (transform.rotation);
         flying = true;
         stableFlight = true;
         body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
@@ -380,11 +381,12 @@ public class BaseVehicle : MonoBehaviour
         float rotationLowerBound = 45;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
 
-        float NR = GetNormalizedRotation();
+        float NR = GetNormalizedRotation(rotationModel.transform);
 
         if ((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound))
         {
-            body.AddRelativeTorque(Vector3.right * direction * 5);
+            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(2, 0.1f, Mathf.Abs(NR)/45));
+            //body.AddRelativeTorque(Vector3.right * direction * 5);
         }
         
         if (NR < 0) // vehicle is pointing up, NR is negative
@@ -408,8 +410,6 @@ public class BaseVehicle : MonoBehaviour
     void DoFlightGravity()
     {
         flightTimer -= Time.deltaTime;
-
-        float NR = GetNormalizedRotation();
 
         if(!stableFlight)
         {
@@ -472,18 +472,18 @@ public class BaseVehicle : MonoBehaviour
         hasControl = true;
     }
 
-    private float GetNormalizedRotation()
+    private float GetNormalizedRotation(Transform T)
     {
-        Vector3 currentRotation = transform.localRotation.eulerAngles;
+        Vector3 myRotation = T.localRotation.eulerAngles;
 
         float normalizedRotation;
-        if (currentRotation.x > 180)
+        if (myRotation.x > 180)
         {
-            normalizedRotation = -360 + currentRotation.x;
+            normalizedRotation = -360 + myRotation.x;
         }
         else
         {
-            normalizedRotation = currentRotation.x;
+            normalizedRotation = myRotation.x;
         }
         return normalizedRotation;
     }

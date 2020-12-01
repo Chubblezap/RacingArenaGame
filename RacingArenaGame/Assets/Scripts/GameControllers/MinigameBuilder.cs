@@ -47,7 +47,7 @@ public class MinigameBuilder : MonoBehaviour // Builds and manages minigame elem
             curTime += Time.deltaTime;
             int minutes = Mathf.FloorToInt(curTime / 60F);
             int seconds = Mathf.FloorToInt(curTime - minutes * 60);
-            int centiseconds = Mathf.FloorToInt((currentTime - (minutes * 60) - seconds) * 100);
+            int centiseconds = Mathf.FloorToInt((curTime - (minutes * 60) - seconds) * 100);
             string niceTime = string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, centiseconds);
 
             timerText.GetComponent<Text>().text = niceTime;
