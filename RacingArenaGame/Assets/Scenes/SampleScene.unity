@@ -1524,6 +1524,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8031174093884459587, guid: 2a1fa97255fa1604d9f4d51c1355303c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031174093884459587, guid: 2a1fa97255fa1604d9f4d51c1355303c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8031174094099962996, guid: 2a1fa97255fa1604d9f4d51c1355303c,
         type: 3}
       propertyPath: m_PixelPerfect

@@ -93,7 +93,13 @@ public class BaseVehicle : MonoBehaviour
         if(myPlayer != null && hasControl)
         {
             isHolding = Input.GetAxis(myPlayer.chargeInput);
-            ChargeBarFill.GetComponent<Image>().fillAmount = currentCharge;
+            ChargeBarFill.GetComponent<Image>().fillAmount = Mathf.Lerp(0.235f, 0.81f, currentCharge);
+            ChargeBarFill.GetComponent<Image>().color = Color.Lerp(new Color(1,0,0,1), new Color(0,1,0,1), currentCharge);
+            
+            string tmptex = string.Format("{0:00.0}", body.velocity.magnitude);
+
+            Speedometer.GetComponent<Text>().text = tmptex;
+
             HealthBarFill.GetComponent<Image>().fillAmount = curHP/MaxHP;
             if(WeaponBarL.activeSelf)
             {
@@ -164,7 +170,8 @@ public class BaseVehicle : MonoBehaviour
         if (UI != null)
         {
             ChargeBar = UI.transform.GetChild(0).gameObject;
-            ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
+            ChargeBarFill = ChargeBar.transform.GetChild(1).gameObject;
+            Speedometer = ChargeBar.transform.GetChild(3).gameObject;
             HealthBar = UI.transform.GetChild(1).gameObject;
             HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
             HealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(30f, MaxHP * 5f);
