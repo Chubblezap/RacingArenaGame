@@ -244,7 +244,8 @@ public class BaseVehicle : MonoBehaviour
         UI.transform.GetChild(0).gameObject.SetActive(true);
         UI.transform.GetChild(1).gameObject.SetActive(true);
         ChargeBar = UI.transform.GetChild(0).gameObject;
-        ChargeBarFill = ChargeBar.transform.GetChild(0).gameObject;
+        ChargeBarFill = ChargeBar.transform.GetChild(1).gameObject;
+        Speedometer = ChargeBar.transform.GetChild(3).gameObject;
         HealthBar = UI.transform.GetChild(1).gameObject;
         HealthBarFill = HealthBar.transform.GetChild(0).gameObject;
         WeaponBarL = UI.transform.GetChild(2).gameObject;
@@ -266,10 +267,18 @@ public class BaseVehicle : MonoBehaviour
         {
             WeaponBarL.SetActive(true);
         }
+        else
+        {
+            WeaponBarL.SetActive(false);
+        }
         WeaponBarR = UI.transform.GetChild(3).gameObject;
         if (GetComponent<GunHandler>().rightGun != null && (GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasAmmo || GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().hasCharge))
         {
             WeaponBarR.SetActive(true);
+        }
+        else
+        {
+            WeaponBarR.SetActive(false);
         }
     }
 
@@ -335,7 +344,7 @@ public class BaseVehicle : MonoBehaviour
     {
         if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
-            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y, body.velocity.z * 0.97f);
+            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y * 0.97f, body.velocity.z * 0.97f);
         }
     }
 
@@ -402,7 +411,7 @@ public class BaseVehicle : MonoBehaviour
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.7f + (bAir + (AirMultiplier * mAir))/10);
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.4f + (bAir + (AirMultiplier * mAir))/10);
         }
         else
         {
@@ -420,7 +429,7 @@ public class BaseVehicle : MonoBehaviour
 
         if(!stableFlight)
         {
-            body.AddForce(5 * Vector3.up * (flightTimer / totalFlightTime));
+            body.AddForce(5f * Vector3.up * (flightTimer / totalFlightTime));
         }
 
         if(flightTimer <= 0 && stableFlight == true)
