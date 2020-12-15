@@ -344,7 +344,7 @@ public class BaseVehicle : MonoBehaviour
     {
         if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
-            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y * 0.97f, body.velocity.z * 0.97f);
+            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y, body.velocity.z * 0.97f);
         }
     }
 
@@ -363,8 +363,8 @@ public class BaseVehicle : MonoBehaviour
             //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 30f)
             {
-                transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
-                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.1f;
+                //transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
             else
@@ -386,7 +386,7 @@ public class BaseVehicle : MonoBehaviour
         rotationModel.transform.rotation = (transform.rotation);
         flying = true;
         stableFlight = true;
-        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 4, ForceMode.Impulse);
+        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
         flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
         totalFlightTime = flightTimer;
     }
@@ -396,6 +396,8 @@ public class BaseVehicle : MonoBehaviour
         float rotationUpperBound = -45;
         float rotationLowerBound = 45;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
+
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
 
         float NR = GetNormalizedRotation(rotationModel.transform);
 
@@ -408,18 +410,18 @@ public class BaseVehicle : MonoBehaviour
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
             flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f + (bAir + (AirMultiplier * mAir))/10);
+            localVelocity.y *= 0.97f; // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 1.4f + (bAir + (AirMultiplier * mAir))/10);
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 0.7f + (bAir + (AirMultiplier * mAir))/10);
         }
         else
         {
             flightSpeedMultiplier = 1.3f + (bAir + (AirMultiplier * mAir)) / 10;
         }
 
-        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.y *= 0.97f; // dampen vertical speed
+        
         body.velocity = body.transform.TransformDirection(localVelocity);
     }
 
