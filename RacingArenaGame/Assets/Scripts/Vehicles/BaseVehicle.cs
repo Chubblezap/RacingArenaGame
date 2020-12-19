@@ -361,9 +361,9 @@ public class BaseVehicle : MonoBehaviour
         {
             var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
-            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 30f)
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
-                //transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
+                transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
                 rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
@@ -384,11 +384,16 @@ public class BaseVehicle : MonoBehaviour
     void Launch(float bAir, float mAir)
     {
         rotationModel.transform.rotation = (transform.rotation);
-        flying = true;
-        stableFlight = true;
-        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
         flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
         totalFlightTime = flightTimer;
+        flying = true;
+        stableFlight = true;
+
+        Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+        localVelocity.y *= 0.15f; // cut vertical speed before launching
+        body.velocity = body.transform.TransformDirection(localVelocity);
+
+        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
     }
 
     void Aim(float direction, float bAir, float mAir)
@@ -409,16 +414,16 @@ public class BaseVehicle : MonoBehaviour
         
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
-            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f + (bAir + (AirMultiplier * mAir))/10);
-            localVelocity.y *= 0.97f; // dampen vertical speed
+            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f);
+            localVelocity.y *= 1 - (0.03f * Mathf.Abs(NR / 45)); // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 0.7f + (bAir + (AirMultiplier * mAir))/10);
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 0.7f);
         }
         else
         {
-            flightSpeedMultiplier = 1.3f + (bAir + (AirMultiplier * mAir)) / 10;
+            flightSpeedMultiplier = 1.3f;
         }
 
         
