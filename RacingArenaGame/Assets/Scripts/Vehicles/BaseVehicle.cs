@@ -69,6 +69,7 @@ public class BaseVehicle : MonoBehaviour
     private float totalFlightTime;
     private float flightTimer;
     private float flightSpeedMultiplier;
+    private float lastdir = 0;
 
     // bouncepad/rail
     public bool hasControl = true;
@@ -400,28 +401,38 @@ public class BaseVehicle : MonoBehaviour
 
     void Aim(float direction, float bAir, float mAir)
     {
-        float rotationUpperBound = -45;
-        float rotationLowerBound = 45;
+        bool held = true;
+        if(lastdir > Mathf.Abs(direction) || direction == 0)
+        {
+            held = false;
+        }
+        lastdir = Mathf.Abs(direction);
+        float rotationUpperBound = -75;
+        float rotationLowerBound = 75;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
 
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
 
         float NR = GetNormalizedRotation(rotationModel.transform);
 
-        if ((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound))
+        if (((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound)) && held)
         {
-            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(2, 0.1f, Mathf.Abs(NR)/45));
+            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(4, 0.2f, Mathf.Abs(NR)/75));
             //body.AddRelativeTorque(Vector3.right * direction * 5);
+        }
+        else if(!held) // Button not held, return to neutral
+        {
+            rotationModel.transform.Rotate(Vector3.right * -Mathf.Sign(NR) * Mathf.Lerp(0.1f, 4, Mathf.Abs(NR) / 75));
         }
         
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
-            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 45) * 0.4f);
-            localVelocity.y *= 1 - (0.03f * Mathf.Abs(NR / 45)); // dampen vertical speed
+            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 75) * 0.4f);
+            localVelocity.y *= 1 - (0.03f * Mathf.Abs(NR / 75)); // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 45) * 0.7f);
+            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 75) * 0.7f);
         }
         else
         {
