@@ -41,7 +41,7 @@ public class CamFollow : MonoBehaviour
             }
             speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 15f;
             transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
-            transform.LookAt(curTransform.position + new Vector3(0f, 0.5f, 0f));
+            transform.LookAt(curTransform.position + new Vector3(0f, 0.75f, 0f));
         }
         else if(mode == "StatScreen")
         {

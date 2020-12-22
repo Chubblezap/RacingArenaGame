@@ -141,7 +141,7 @@ public class BaseVehicle : MonoBehaviour
             {
                 if (currentCharge > 0)
                 {
-                    AlignVelocity();
+                    AlignVelocity(currentCharge);
                     StartCoroutine("Boost");
                 }
                 ejectTimer = 0;
@@ -293,10 +293,12 @@ public class BaseVehicle : MonoBehaviour
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
-    void AlignVelocity()
+    void AlignVelocity(float charge)
     {
+        float tmpchg = charge;
+        if(tmpchg >= 1) { tmpchg = 1; }
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 0.2f; // lower sideways speed
+        localVelocity.x *= Mathf.Lerp(0.95f, 0.1f, tmpchg); // lower sideways speed
         localVelocity.z = body.velocity.magnitude;
         body.velocity = body.transform.TransformDirection(localVelocity);
     }
@@ -364,7 +366,7 @@ public class BaseVehicle : MonoBehaviour
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
-                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.3f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
             else
