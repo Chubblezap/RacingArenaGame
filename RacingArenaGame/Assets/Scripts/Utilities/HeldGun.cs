@@ -97,9 +97,12 @@ public class HeldGun : MonoBehaviour
     {
         for(int i = 0; i < gun.childCount; i++)
         {
-            if(gun.GetChild(i).name != "GunOutline") // The mesh is broken into parts, so the outline is the next child
+            if(gun.GetChild(i).name != "GunOutline") // The mesh is broken into parts, so the next child would be the outline
             {
-                gun.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                if(gun.GetChild(i).childCount > 0)
+                {
+                    gun.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                }
             }
             else // The mesh is solid, so this is the outline
             {

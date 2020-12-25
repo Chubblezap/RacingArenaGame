@@ -11,7 +11,7 @@ public class MineProjectile : BasicProjectile
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        body.AddForce((transform.forward*2) * speed);
+        body.AddForce((transform.forward * speed) + Vector3.up*3);
     }
 
     public override void Detonate()
@@ -35,7 +35,7 @@ public class MineProjectile : BasicProjectile
     {
         if(!set)
         {
-            body.AddForce(transform.up * -0.5f);
+            body.velocity = new Vector3(body.velocity.x * 0.95f, body.velocity.y, body.velocity.z * 0.95f);
         }
     }
 

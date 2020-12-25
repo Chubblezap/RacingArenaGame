@@ -59,11 +59,11 @@ public class InfoDump : MonoBehaviour
                 return gunProjectiles[0];
             case "Flamethrower":
                 return gunProjectiles[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunProjectiles[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunProjectiles[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunProjectiles[4];
             case "Gearblade Launcher":
                 return gunProjectiles[5];
@@ -82,11 +82,11 @@ public class InfoDump : MonoBehaviour
                 return gunBurst[0];
             case "Flamethrower":
                 return gunBurst[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunBurst[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunBurst[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunBurst[4];
             case "Gearblade Launcher":
                 return gunBurst[5];
@@ -105,11 +105,11 @@ public class InfoDump : MonoBehaviour
                 return gunFireRates[0];
             case "Flamethrower":
                 return gunFireRates[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunFireRates[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunFireRates[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunFireRates[4];
             case "Gearblade Launcher":
                 return gunFireRates[5];
@@ -128,11 +128,11 @@ public class InfoDump : MonoBehaviour
                 return gunMaxAmmo[0];
             case "Flamethrower":
                 return gunMaxAmmo[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunMaxAmmo[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunMaxAmmo[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunMaxAmmo[4];
             case "Gearblade Launcher":
                 return gunMaxAmmo[5];
@@ -151,11 +151,11 @@ public class InfoDump : MonoBehaviour
                 return gunChargeTime[0];
             case "Flamethrower":
                 return gunChargeTime[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunChargeTime[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunChargeTime[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunChargeTime[4];
             case "Gearblade Launcher":
                 return gunChargeTime[5];
@@ -174,11 +174,11 @@ public class InfoDump : MonoBehaviour
                 return gunReloadSpeed[0];
             case "Flamethrower":
                 return gunReloadSpeed[1];
-            case "Bomb Cannon":
+            case "Macrotech Bomb Cannon":
                 return gunReloadSpeed[2];
-            case "Mine Layer":
+            case "Slicing Edge Firewall":
                 return gunReloadSpeed[3];
-            case "Viral Spiral":
+            case "Neurolink Viral Spiral":
                 return gunReloadSpeed[4];
             case "Gearblade Launcher":
                 return gunReloadSpeed[5];

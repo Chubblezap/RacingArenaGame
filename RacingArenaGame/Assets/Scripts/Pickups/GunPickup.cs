@@ -30,13 +30,13 @@ public class GunPickup : BaseItem
                 gunType = "Flamethrower";
                 break;
             case 3:
-                gunType = "Bomb Cannon";
+                gunType = "Macrotech Bomb Cannon";
                 break;
             case 4:
-                gunType = "Mine Layer";
+                gunType = "Slicing Edge Firewall";
                 break;
             case 5:
-                gunType = "Viral Spiral";
+                gunType = "Neurolink Viral Spiral";
                 break;
             case 6:
                 gunType = "Gearblade Launcher";
