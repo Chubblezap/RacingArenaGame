@@ -12,6 +12,7 @@ public class MineProjectile : BasicProjectile
     {
         body = GetComponent<Rigidbody>();
         body.AddForce((transform.forward * speed) + Vector3.up*3);
+        body.AddTorque(0, Random.Range(-2, 2), 0);
     }
 
     public override void Detonate()
@@ -46,6 +47,7 @@ public class MineProjectile : BasicProjectile
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<SphereCollider>().radius = 5;
+        GetComponent<SphereCollider>().isTrigger = true;
     }
 
     protected override void OnTriggerEnter(Collider collision)
@@ -54,6 +56,16 @@ public class MineProjectile : BasicProjectile
         if (collidedObject.tag == "Environment" && !set)
         {
             Set();
+        }
+    }
+
+    protected void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if (collidedObject.tag == "Environment" && !set)
+        {
+            Set();
+            transform.up -= (transform.up - collision.GetContact(0).normal);
         }
     }
 

@@ -139,7 +139,7 @@ MonoBehaviour:
   gunBurst:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3165099685154342721, guid: 6fe841e47ccfac84aaa6ffa04696b79e, type: 3}
   - {fileID: 0}
   - {fileID: 3165099685154342721, guid: 4b5ef97884393434d9331d019f1582d2, type: 3}
   - {fileID: 0}
