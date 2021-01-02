@@ -97,11 +97,11 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _BaseTint: {r: 0, g: 1, b: 0.1019609, a: 1}
+    - _BaseTint: {r: 1, g: 0, b: 0, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GlowTint: {r: 0, g: 1, b: 0.1019609, a: 1}
+    - _GlowTint: {r: 1, g: 0, b: 0, a: 1}
     - _ScrollSpeed: {r: 0, g: -1, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _TexSize: {r: 10, g: 5, b: 0, a: 0}
+    - _TexSize: {r: 30, g: 15, b: 0, a: 0}
     - _Tint: {r: 0.23619485, g: 1, b: 0, a: 1}
