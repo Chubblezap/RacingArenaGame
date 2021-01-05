@@ -53,7 +53,7 @@ public class HeldPart : MonoBehaviour
         }
         if (flag == "Held") // part hovering over player
         {
-            transform.Rotate(new Vector3(0, 1, 0), 1);
+            transform.Rotate(new Vector3(0, 1, 0), 0.75f);
         }
         if (flag == "Crafting") // part moving to factory box
         {

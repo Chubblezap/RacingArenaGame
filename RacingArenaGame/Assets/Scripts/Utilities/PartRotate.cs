@@ -5,7 +5,7 @@ using UnityEngine;
 public class PartRotate : MonoBehaviour
 {
     public Transform center;
-    public float speed = 1;
+    public float speed = 0.5f;
     public string axis = "Up";
 
     private void Start()

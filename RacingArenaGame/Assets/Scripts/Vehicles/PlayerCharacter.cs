@@ -32,6 +32,14 @@ public class PlayerCharacter : MonoBehaviour
         Init();
     }
 
+    private void Update()
+    {
+        if (myPlayer != null && !ejected)
+        {
+            DoTimers();
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -44,15 +52,15 @@ public class PlayerCharacter : MonoBehaviour
             else
             {
                 Vector3 tmp = body.velocity;
-                tmp.x *= 0.96f;
-                tmp.z *= 0.96f;
+                tmp.x *= 0.965f;
+                tmp.z *= 0.965f;
                 body.velocity = tmp;
             }
             if (body.velocity.magnitude > 3)
             {
                 Vector3 tmp = body.velocity;
-                tmp.x *= 0.96f;
-                tmp.z *= 0.96f;
+                tmp.x *= 0.965f;
+                tmp.z *= 0.965f;
                 body.velocity = tmp;
             }
             DoDrag();
@@ -62,8 +70,6 @@ public class PlayerCharacter : MonoBehaviour
                 body.AddForce(Vector3.up * 0.06f, ForceMode.Impulse);
                 jumpTimer = 1f;
             }
-
-            DoTimers();
         }
     }
     
@@ -103,13 +109,13 @@ public class PlayerCharacter : MonoBehaviour
 
         // apply the movement
         body.rotation = Quaternion.Slerp(body.rotation, Quaternion.LookRotation(desiredMoveDirection, Vector3.up), 10 * Time.deltaTime);
-        body.AddForce(Vector3.Normalize(desiredMoveDirection) * 7 * Time.deltaTime, ForceMode.VelocityChange);
+        body.AddForce(Vector3.Normalize(desiredMoveDirection) * 3.5f * Time.deltaTime, ForceMode.VelocityChange);
     }
 
     void DoDrag()
     {
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 0.8f; // lower sideways speed
+        localVelocity.x *= 0.85f; // lower sideways speed
         body.velocity = body.transform.TransformDirection(localVelocity);
     }
 

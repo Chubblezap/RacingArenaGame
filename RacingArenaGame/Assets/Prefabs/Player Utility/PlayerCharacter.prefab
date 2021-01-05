@@ -101,10 +101,8 @@ MonoBehaviour:
   ModDefense: 0
   ModAir: 0
   UI: {fileID: 0}
-  cam: {fileID: 0}
   groundcollider: {fileID: 1190903693624447902}
-  flag: 
-  player: 0
+  myPlayer: {fileID: 0}
 --- !u!33 &535258385039756449
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -173,7 +171,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4930876436514930606}
   serializedVersion: 2
-  m_Mass: 0.01
+  m_Mass: 0.02
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1

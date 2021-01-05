@@ -5890,7 +5890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 7440843332524650712}
-  speed: 1
+  speed: 0.5
   axis: Angle45
 --- !u!33 &405681750908685094
 MeshFilter:

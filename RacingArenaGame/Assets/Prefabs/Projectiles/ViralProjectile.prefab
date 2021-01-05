@@ -325,7 +325,7 @@ MonoBehaviour:
   force: 5
   lifetime: 2
   particles: {fileID: 3917331417544297590}
-  spinspeed: 35
+  spinspeed: 20
 --- !u!135 &5543959729719079586
 SphereCollider:
   m_ObjectHideFlags: 0

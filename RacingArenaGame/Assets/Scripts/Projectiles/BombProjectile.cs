@@ -10,7 +10,7 @@ public class BombProjectile : BasicProjectile
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        body.AddForce((transform.up*4 + transform.forward*3) * speed);
+        body.AddForce((transform.up*5 + transform.forward*8) * speed);
     }
 
     public override void Detonate()
@@ -29,6 +29,6 @@ public class BombProjectile : BasicProjectile
 
     private void FixedUpdate()
     {
-        body.AddForce(transform.up * -0.5f);
+        body.AddForce(transform.up * -0.2f);
     }
 }

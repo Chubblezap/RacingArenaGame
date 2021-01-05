@@ -13,8 +13,8 @@ public class MineProjectile : BasicProjectile
     void Start()
     {
         body = GetComponent<Rigidbody>();
-        body.AddForce((transform.forward * speed) + Vector3.up*3);
-        body.AddTorque(0, Random.Range(-2, 2), 0);
+        body.AddForce((transform.forward * speed * 4) + Vector3.up*4);
+        body.AddTorque(0, Random.Range(-2f, 2f), 0);
     }
 
     public override void Detonate()
@@ -38,7 +38,7 @@ public class MineProjectile : BasicProjectile
     {
         if(!set)
         {
-            body.velocity = new Vector3(body.velocity.x * 0.95f, body.velocity.y, body.velocity.z * 0.95f);
+            body.velocity = new Vector3(body.velocity.x * 0.96f, body.velocity.y, body.velocity.z * 0.96f);
         }
     }
 

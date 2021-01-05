@@ -285,12 +285,12 @@ public class BaseVehicle : MonoBehaviour
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
     {
-        body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction);
+        body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction / 2);
     }
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower));
+        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower) / 2);
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
@@ -333,13 +333,13 @@ public class BaseVehicle : MonoBehaviour
 
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)
     {
-        float weightmult = 0.003f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
+        float weightmult = 0.0015f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
         body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), (flying ? -20f : body.velocity.y), body.velocity.z * (1f - weightmult) );
-        currentCharge += 0.0015f * (bBoost + (BoostMultiplier * mBoost));
+        currentCharge += 0.00075f * (bBoost + (BoostMultiplier * mBoost));
         // Top Speed failsafe (slipcell, etc)
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
-            body.velocity *= .96f;
+            body.velocity *= .97f;
         }
     }
 
@@ -347,7 +347,7 @@ public class BaseVehicle : MonoBehaviour
     {
         if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
-            body.velocity = new Vector3(body.velocity.x * 0.97f, body.velocity.y, body.velocity.z * 0.97f);
+            body.velocity = new Vector3(body.velocity.x * 0.96f, body.velocity.y, body.velocity.z * 0.96f);
         }
     }
 
@@ -367,7 +367,7 @@ public class BaseVehicle : MonoBehaviour
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
-                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.3f;
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
             else
@@ -417,18 +417,18 @@ public class BaseVehicle : MonoBehaviour
 
         if (((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound)) && held)
         {
-            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(4, 0.2f, Mathf.Abs(NR)/75));
+            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(4, 0.2f, Mathf.Abs(NR)/75) / 2);
             //body.AddRelativeTorque(Vector3.right * direction * 5);
         }
         else if(!held) // Button not held, return to neutral
         {
-            rotationModel.transform.Rotate(Vector3.right * -Mathf.Sign(NR) * Mathf.Lerp(0.1f, 4, Mathf.Abs(NR) / 75));
+            rotationModel.transform.Rotate(Vector3.right * -Mathf.Sign(NR) * Mathf.Lerp(0.1f, 4, Mathf.Abs(NR) / 75) / 2);
         }
         
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
             flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 75) * 0.4f);
-            localVelocity.y *= 1 - (0.03f * Mathf.Abs(NR / 75)); // dampen vertical speed
+            localVelocity.y *= 1 - (0.04f * Mathf.Abs(NR / 75)); // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
@@ -449,7 +449,7 @@ public class BaseVehicle : MonoBehaviour
 
         if(!stableFlight)
         {
-            body.AddForce(5f * Vector3.up * (flightTimer / totalFlightTime));
+            body.AddForce(2.5f * Vector3.up * (flightTimer / totalFlightTime));
         }
 
         if(flightTimer <= 0 && stableFlight == true)

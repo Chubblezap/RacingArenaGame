@@ -4828,7 +4828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 1462588543972721468}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &915884357409734909
 GameObject:
@@ -4874,7 +4874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 1462588543972721468}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &924317478164857853
 GameObject:
@@ -9875,28 +9875,20 @@ MonoBehaviour:
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
-  ModTopSpeed: 0
-  ModAcceleration: 0
-  ModTurn: 0
-  ModBoost: 0
-  ModArmor: 0
-  ModOffense: 0
-  ModDefense: 0
-  ModAir: 0
   curHP: 0
   camsize: 1.5
   gunhoverdist: 2
   boostPower: 0
-  startplayer: 0
-  player: 0
+  myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
-  cam: {fileID: 0}
   rotationModel: {fileID: 5837086360343903617}
   usesDrag: 1
   grounded: 1
   halfBoosts: 0
+  disarmed: 0
   flying: 0
+  hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}
   bpadend: {x: 0, y: 0, z: 0}
   turnAmount: 0

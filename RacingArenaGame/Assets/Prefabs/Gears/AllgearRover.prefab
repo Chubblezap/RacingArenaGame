@@ -66,24 +66,25 @@ MonoBehaviour:
   PercentOffensePerMod: 0.1
   PercentAirPerMod: 0.1
   UI: {fileID: 0}
-  ModTopSpeed: 0
-  ModAcceleration: 0
-  ModTurn: 0
-  ModBoost: 0
-  ModArmor: 0
-  ModOffense: 0
-  ModDefense: 0
-  ModAir: 0
+  WeaponBarL: {fileID: 0}
+  WeaponBarR: {fileID: 0}
   curHP: 0
-  startplayer: 0
-  player: 0
+  camsize: 1
+  gunhoverdist: 1
+  boostPower: 0
+  myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
-  cam: {fileID: 0}
   rotationModel: {fileID: 7530698074656462254}
   usesDrag: 1
+  grounded: 0
+  halfBoosts: 0
+  disarmed: 0
+  flying: 0
+  hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}
   bpadend: {x: 0, y: 0, z: 0}
+  turnAmount: 0
 --- !u!114 &4808417052429593922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &1569256491777336459
 GameObject:
@@ -323,7 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &2123891971261819047
 GameObject:

@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &1613943296145574502
 GameObject:
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 844173187424776326}
-  speed: 1
+  speed: 0.5
   axis: Up
 --- !u!1 &2098363854709092118
 GameObject:

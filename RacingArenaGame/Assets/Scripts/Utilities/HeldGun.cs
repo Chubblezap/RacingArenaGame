@@ -43,7 +43,7 @@ public class HeldGun : MonoBehaviour
         }
         if(movingToPlayer == false && flag != "Slotted" && flag != "Equipped") // gun hovering over player
         {
-            transform.Rotate(new Vector3(0, 1, 0), 1);
+            transform.Rotate(new Vector3(0, 1, 0), 0.75f);
         }
         if(flag == "Slotted") // gun moving to slot
         {

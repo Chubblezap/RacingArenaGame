@@ -653,7 +653,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 153531767299413145}
-  speed: 1
+  speed: 0.5
+  axis: Up
 --- !u!33 &6313007176921542833
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5834,7 +5835,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   center: {fileID: 153531767299413145}
-  speed: -3
+  speed: -1.5
+  axis: Up
 --- !u!33 &7363077169536588695
 MeshFilter:
   m_ObjectHideFlags: 0

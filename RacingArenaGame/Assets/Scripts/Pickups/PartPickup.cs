@@ -68,7 +68,7 @@ public class PartPickup : BaseItem
 
     private void FixedUpdate()
     {
-        transform.Rotate(new Vector3(0, 1, 0), 1);
+        transform.Rotate(new Vector3(0, 1, 0), 0.75f);
     }
 
     void RenderPart(string PN)

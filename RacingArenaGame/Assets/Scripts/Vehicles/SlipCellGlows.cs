@@ -15,7 +15,7 @@ public class SlipCellGlows : MonoBehaviour
         speed = parentVehicle.GetComponent<Rigidbody>().velocity.magnitude;
         for(int i=0; i < glows.Length; i++)
         {
-            glows[i].speed = speed/2;
+            glows[i].speed = speed/4;
         }
     }
 }
