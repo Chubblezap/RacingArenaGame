@@ -39,7 +39,7 @@ public class CamFollow : MonoBehaviour
             {
                 Debug.Log("Unknown camtarget tag");
             }
-            speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 7.5f;
+            speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 30f;
             transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
             transform.LookAt(curTransform.position + new Vector3(0f, 0.75f, 0f));
         }

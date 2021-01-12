@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseTopSpeed: 8
-  BaseAcceleration: 8
-  BaseTurn: 8
+  BaseTopSpeed: 13
+  BaseAcceleration: 10
+  BaseTurn: 5
   BaseBoost: 8
   BaseArmor: 8
   BaseOffense: 8

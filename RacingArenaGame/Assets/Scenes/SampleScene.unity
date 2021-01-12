@@ -500,16 +500,6 @@ PrefabInstance:
       propertyPath: myPlayer
       value: 
       objectReference: {fileID: 8220741401901630220}
-    - target: {fileID: 844173187424776327, guid: f995a9314430f7945b5898d0a2971ed6,
-        type: 3}
-      propertyPath: BaseTopSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 844173187424776327, guid: f995a9314430f7945b5898d0a2971ed6,
-        type: 3}
-      propertyPath: BaseAcceleration
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 844173187424776381, guid: f995a9314430f7945b5898d0a2971ed6,
         type: 3}
       propertyPath: m_Name

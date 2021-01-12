@@ -58,8 +58,7 @@ public class MineProjectile : BasicProjectile
         float timer = 0;
         while (timer < 1)
         {
-            float t = timer / 1;
-            GetComponent<SphereCollider>().radius = 5 * Mathf.Sin(t * Mathf.PI * 0.5f);
+            GetComponent<SphereCollider>().radius = 5 * Mathf.Sin(timer * Mathf.PI * 0.5f);
             DetectField.transform.localScale = new Vector3(GetComponent<SphereCollider>().radius * 2, GetComponent<SphereCollider>().radius * 2, GetComponent<SphereCollider>().radius * 2);
             timer += Time.deltaTime;
             yield return null;

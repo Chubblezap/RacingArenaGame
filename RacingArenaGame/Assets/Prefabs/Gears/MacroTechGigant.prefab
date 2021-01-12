@@ -9857,9 +9857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53405762c1727ae4ea5e7a301588d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseTopSpeed: 10
-  BaseAcceleration: 3
-  BaseTurn: 15
+  BaseTopSpeed: 12
+  BaseAcceleration: 10
+  BaseTurn: 10
   BaseBoost: 8
   BaseArmor: 15
   BaseOffense: 10

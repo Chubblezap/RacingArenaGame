@@ -285,12 +285,12 @@ public class BaseVehicle : MonoBehaviour
 
     void Turn(float direction, float bTurn, float mTurn) //direction is a value between -1 and 1
     {
-        body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction / 2);
+        body.AddTorque(Vector3.up * (bTurn + (TurnMultiplier * mTurn)) * direction);
     }
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower) / 2);
+        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower));
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
@@ -299,7 +299,7 @@ public class BaseVehicle : MonoBehaviour
         float tmpchg = charge;
         if(tmpchg >= 1) { tmpchg = 1; }
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= Mathf.Lerp(0.95f, 0.1f, tmpchg); // lower sideways speed
+        localVelocity.x *= Mathf.Lerp(0.94f, 0.1f, tmpchg); // lower sideways speed
         localVelocity.z = body.velocity.magnitude;
         body.velocity = body.transform.TransformDirection(localVelocity);
     }
@@ -339,7 +339,7 @@ public class BaseVehicle : MonoBehaviour
         // Top Speed failsafe (slipcell, etc)
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
-            body.velocity *= .97f;
+            body.velocity *= .96f;
         }
     }
 
@@ -402,11 +402,11 @@ public class BaseVehicle : MonoBehaviour
     void Aim(float direction, float bAir, float mAir)
     {
         bool held = true;
-        if(lastdir > Mathf.Abs(direction) || direction == 0)
+        if(Mathf.Abs(lastdir) > Mathf.Abs(direction) || direction == 0)
         {
             held = false;
         }
-        lastdir = Mathf.Abs(direction);
+        lastdir = direction;
         float rotationUpperBound = -75;
         float rotationLowerBound = 75;
         Vector3 currentRotation = transform.localRotation.eulerAngles;
@@ -417,12 +417,12 @@ public class BaseVehicle : MonoBehaviour
 
         if (((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound)) && held)
         {
-            rotationModel.transform.Rotate(Vector3.right * direction * Mathf.Lerp(4, 0.2f, Mathf.Abs(NR)/75) / 2);
+            rotationModel.transform.Rotate(0.5f * Vector3.right * Mathf.Sign(direction) * Mathf.Lerp(4, 0.2f, (Mathf.Sign(direction) == Mathf.Sign(NR) ? Mathf.Abs(NR)/75 : 0)));
             //body.AddRelativeTorque(Vector3.right * direction * 5);
         }
         else if(!held) // Button not held, return to neutral
         {
-            rotationModel.transform.Rotate(Vector3.right * -Mathf.Sign(NR) * Mathf.Lerp(0.1f, 4, Mathf.Abs(NR) / 75) / 2);
+            rotationModel.transform.Rotate(0.5f * Vector3.right * -Mathf.Sign(NR) * Mathf.Lerp(0.2f, 4, Mathf.Abs(NR) / 75));
         }
         
         if (NR < 0) // vehicle is pointing up, NR is negative
@@ -439,7 +439,6 @@ public class BaseVehicle : MonoBehaviour
             flightSpeedMultiplier = 1.3f;
         }
 
-        
         body.velocity = body.transform.TransformDirection(localVelocity);
     }
 
