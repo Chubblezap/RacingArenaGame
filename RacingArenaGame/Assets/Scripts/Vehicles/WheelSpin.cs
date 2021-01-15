@@ -7,6 +7,7 @@ public class WheelSpin : MonoBehaviour
     private GameObject trackedObject;
     public float multiplier = 1;
     private Rigidbody vehicleBody;
+    public string type = "Wheel";
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,17 @@ public class WheelSpin : MonoBehaviour
         if(trackedObject.GetComponent<BaseVehicle>().flying == false)
         {
             float rotationAmount = vehicleBody.transform.InverseTransformDirection(vehicleBody.velocity).z * multiplier;
-            transform.Rotate(rotationAmount, 0, 0);
+            switch (type)
+            {
+                case "Wheel":
+                    transform.Rotate(rotationAmount, 0, 0);
+                    break;
+                case "Drill":
+                    transform.Rotate(0, rotationAmount, 0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

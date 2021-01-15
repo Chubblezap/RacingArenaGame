@@ -37,6 +37,8 @@ public class BaseVehicle : MonoBehaviour
     // Stat modifiers
     [HideInInspector]
     public float curHP;
+    public float groundSearchDist = 1.5f;
+    public float groundSetDist = 0.6f;
     public float camsize = 1; // for camera
     public float gunhoverdist = 1; //for held guns
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
@@ -362,11 +364,11 @@ public class BaseVehicle : MonoBehaviour
     {
         if(!flying)
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 1.5f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, groundSearchDist, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
-                transform.position = rayhit.point + new Vector3(0, 0.6f, 0);
+                transform.position = rayhit.point + new Vector3(0, groundSetDist, 0);
                 rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
@@ -607,7 +609,7 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, 0.7f, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, groundSearchDist, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 flying = false;
