@@ -9804,6 +9804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
+  type: Wheel
 --- !u!1 &1462588543972721415
 GameObject:
   m_ObjectHideFlags: 0
@@ -9876,9 +9877,13 @@ MonoBehaviour:
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
   curHP: 0
+  groundSearchDist: 1.5
+  groundSetDist: 0.6
   camsize: 1.5
+  camheight: 1.25
   gunhoverdist: 2
   boostPower: 0
+  currentCharge: 0
   myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
@@ -10020,6 +10025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: R2
+  tread: 0
 --- !u!1 &3171703125955812141
 GameObject:
   m_ObjectHideFlags: 0
@@ -10194,6 +10200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
+  type: Wheel
 --- !u!1 &3868519432813875565
 GameObject:
   m_ObjectHideFlags: 0
@@ -10287,6 +10294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
+  type: Wheel
 --- !u!1 &4693409152213376081
 GameObject:
   m_ObjectHideFlags: 0
@@ -10332,6 +10340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: L2
+  tread: 0
 --- !u!1 &5015894832815251333
 GameObject:
   m_ObjectHideFlags: 0
@@ -10409,6 +10418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: L1
+  tread: 0
 --- !u!1 &5356030920457395451
 GameObject:
   m_ObjectHideFlags: 0
@@ -10734,6 +10744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
+  type: Wheel
 --- !u!1 &8129253500868157099
 GameObject:
   m_ObjectHideFlags: 0
@@ -10779,6 +10790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: R1
+  tread: 0
 --- !u!1 &8901491109396154592
 GameObject:
   m_ObjectHideFlags: 0

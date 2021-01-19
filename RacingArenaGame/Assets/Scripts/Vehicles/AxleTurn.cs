@@ -5,6 +5,7 @@ using UnityEngine;
 public class AxleTurn : MonoBehaviour
 {
     public string position;
+    public bool tread = false;
     private Transform rotationObject;
     private GameObject trackedObject;
 
@@ -26,7 +27,8 @@ public class AxleTurn : MonoBehaviour
         float turnRate = trackedObject.GetComponent<BaseVehicle>().turnAmount; // between -1 and 1
         if (position == "R1" || position == "L1")
         {
-            finalY = 45 * turnRate;
+            
+            finalY = (tread ? 15 : 45) * turnRate;
         }
         else if (position == "R2" || position == "L2")
         {

@@ -320,9 +320,13 @@ MonoBehaviour:
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
   curHP: 0
+  groundSearchDist: 1.5
+  groundSetDist: 0.6
   camsize: 1
+  camheight: 0.9
   gunhoverdist: 1
   boostPower: 0
+  currentCharge: 0
   myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}

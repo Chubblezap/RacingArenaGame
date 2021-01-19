@@ -33,13 +33,13 @@ public class BaseVehicle : MonoBehaviour
     [HideInInspector]
     public GameObject WeaponBarR;
     private GameObject Speedometer;
+    private string speedString = "0:00";
 
     // Stat modifiers
     [HideInInspector]
     public float curHP;
-    public float groundSearchDist = 1.5f;
-    public float groundSetDist = 0.6f;
     public float camsize = 1; // for camera
+    public float camheight = 0.75f;
     public float gunhoverdist = 1; //for held guns
     private float TopSpeedMultiplier, AccelerationMultiplier, TurnMultiplier, BoostMultiplier, ArmorMultiplier, OffenseMultiplier, AirMultiplier;
     [HideInInspector]
@@ -48,7 +48,8 @@ public class BaseVehicle : MonoBehaviour
     // Utilities
     private GameObject gameMaster;
     private float isHolding;
-    private float currentCharge;
+    [HideInInspector]
+    public float currentCharge;
     //private Collider myCollider;
     Rigidbody body;
     private GunHandler gunScript;
@@ -98,10 +99,8 @@ public class BaseVehicle : MonoBehaviour
             isHolding = Input.GetAxis(myPlayer.chargeInput);
             ChargeBarFill.GetComponent<Image>().fillAmount = Mathf.Lerp(0.235f, 0.81f, currentCharge);
             ChargeBarFill.GetComponent<Image>().color = Color.Lerp(new Color(1,0,0,1), new Color(0,1,0,1), currentCharge);
-            
-            string tmptex = string.Format("{0:00.0}", body.velocity.magnitude);
 
-            Speedometer.GetComponent<Text>().text = tmptex;
+            Speedometer.GetComponent<Text>().text = speedString;
 
             HealthBarFill.GetComponent<Image>().fillAmount = curHP/MaxHP;
             if(WeaponBarL.activeSelf)
@@ -120,6 +119,8 @@ public class BaseVehicle : MonoBehaviour
         GroundAlign();
         if (myPlayer != null && hasControl)
         {
+            speedString = string.Format("{0:00.0}", new Vector3(body.velocity.x, (flying ? body.velocity.y : 0), body.velocity.z).magnitude);
+
             turnAmount = Input.GetAxis(myPlayer.horizontalInput);
             Turn(turnAmount, BaseTurn, myPlayer.Turn);
             if (isHolding == 1) // player is holding Space or A
@@ -364,11 +365,11 @@ public class BaseVehicle : MonoBehaviour
     {
         if(!flying)
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, groundSearchDist, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             //Debug.Log(Vector3.Angle(rayhit.normal, Vector3.up));
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
-                transform.position = rayhit.point + new Vector3(0, groundSetDist, 0);
+                transform.position = rayhit.point + new Vector3(0, GetComponent<SphereCollider>().radius + 0.05f, 0) - GetComponent<SphereCollider>().center;
                 rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
                 rotationModel.transform.Rotate(transform.rotation.eulerAngles);
             }
@@ -609,7 +610,7 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, groundSearchDist, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 flying = false;

@@ -24,11 +24,13 @@ public class CamFollow : MonoBehaviour
         if(mode == "Standard")
         {
             curObject = myPlayer.currentVehicle;
+            float height = 0.75f;
             if (curObject.tag == "Vehicle")
             {
                 curTransform = curObject.GetComponent<BaseVehicle>().rotationModel.transform;
                 float camdist = (-2.5f - (curObject.GetComponent<BaseVehicle>().boostPower / 5));
                 moveTo = curTransform.position + (Vector3.up * 1.5f + new Vector3(curTransform.forward.x * camdist, 0, curTransform.forward.z * camdist)) * curObject.GetComponent<BaseVehicle>().camsize;
+                height = curObject.GetComponent<BaseVehicle>().camheight;
             }
             else if (curObject.tag == "Player")
             {
@@ -41,7 +43,7 @@ public class CamFollow : MonoBehaviour
             }
             speed = Vector3.Distance(transform.position, moveTo) * Time.deltaTime * 30f;
             transform.position = Vector3.MoveTowards(transform.position, moveTo, speed);
-            transform.LookAt(curTransform.position + new Vector3(0f, 0.75f, 0f));
+            transform.LookAt(curTransform.position + new Vector3(0f, height, 0f));
         }
         else if(mode == "StatScreen")
         {

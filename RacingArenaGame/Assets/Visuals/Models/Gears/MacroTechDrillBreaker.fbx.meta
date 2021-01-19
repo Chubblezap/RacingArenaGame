@@ -44,6 +44,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Silver
     second: {fileID: 2100000, guid: a644102319ff57b4fa942e137cf4b374, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tread
+    second: {fileID: 2100000, guid: 55c28238ab417224292391c7c789c147, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
