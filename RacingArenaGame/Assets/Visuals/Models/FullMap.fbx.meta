@@ -12,8 +12,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Path
+    second: {fileID: 2100000, guid: d9c58b37003bcfa4cb4c6de6ebbd6afc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Pave
     second: {fileID: 2100000, guid: 4709e005e0614c842ada9d819a3629e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: beach
+    second: {fileID: 2100000, guid: a535e987e68285949afdfd56bb8d71e7, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

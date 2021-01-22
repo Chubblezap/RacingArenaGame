@@ -50,6 +50,8 @@ public class BaseVehicle : MonoBehaviour
     private float isHolding;
     [HideInInspector]
     public float currentCharge;
+    [HideInInspector]
+    public float boostCamModifier = 0;
     //private Collider myCollider;
     Rigidbody body;
     private GunHandler gunScript;
@@ -64,6 +66,7 @@ public class BaseVehicle : MonoBehaviour
     public bool grounded = false;
     public bool halfBoosts = false; // Megabooster
     public bool disarmed = false; // Used in FiringHandler
+    public bool bulkFuel = false; // Uses 'fuel' instead of charge
     
     // flight
     [HideInInspector]
@@ -143,14 +146,21 @@ public class BaseVehicle : MonoBehaviour
             }
             else
             {
-                if (currentCharge > 0)
+                if (currentCharge > 0 && boostPower <= 0)
                 {
                     AlignVelocity(currentCharge);
                     StartCoroutine("Boost");
                 }
+                if (!bulkFuel)
+                {
+                    currentCharge = 0;
+                    Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
+                }
+                else if(bulkFuel && currentCharge > 0)
+                {
+                    Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
+                }
                 ejectTimer = 0;
-                currentCharge = 0;
-                Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
             }
             if(usesDrag)
             {
@@ -312,25 +322,47 @@ public class BaseVehicle : MonoBehaviour
         float boostTime = 0;
         float curBoostTime = 0;
         float MaxBoostPower = 0;
-
-        if (currentCharge >= 1 || halfBoosts)
+        if(!bulkFuel)
         {
-            body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * myPlayer.Boost)) * 25);
-            MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
-            boostPower = MaxBoostPower;
-            boostTime = 0.5f + (BaseBoost + (BoostMultiplier * myPlayer.Boost)) / 10;
-            curBoostTime = boostTime;
-        }
-        while (curBoostTime > 0)
-        {
-            curBoostTime -= Time.deltaTime;
-            if(isHolding == 1) // Cut boost if the player is braking
+            if (currentCharge >= 1 || halfBoosts)
             {
-                curBoostTime = 0;
+                body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * myPlayer.Boost)) * 25);
+                MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
+                boostPower = MaxBoostPower;
+                boostTime = 0.5f + (BaseBoost + (BoostMultiplier * myPlayer.Boost)) / 10;
+                curBoostTime = boostTime;
             }
-            boostPower = MaxBoostPower * (curBoostTime / boostTime);
-            yield return new WaitForFixedUpdate();
+            while (curBoostTime > 0)
+            {
+                curBoostTime -= Time.deltaTime;
+                boostCamModifier += Time.deltaTime;
+                boostCamModifier = Mathf.Min(boostCamModifier, 3);
+                if (isHolding == 1) // Cut boost if the player is braking
+                {
+                    curBoostTime = 0;
+                }
+                boostPower = MaxBoostPower * (curBoostTime / boostTime);
+                yield return new WaitForFixedUpdate();
+            }
         }
+        else
+        {
+            MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
+            while (currentCharge > 0)
+            {
+                currentCharge -= 0.001f;
+                boostCamModifier += Time.deltaTime;
+                boostCamModifier = Mathf.Min(boostCamModifier, 2);
+                if (isHolding == 1) // Cut boost if the player is braking
+                {
+                    break;
+                }
+                boostPower = MaxBoostPower;
+                yield return new WaitForFixedUpdate();
+            }
+        }
+        boostCamModifier = 0;
+        boostPower = 0;
         yield return null;
     }
 
@@ -339,6 +371,7 @@ public class BaseVehicle : MonoBehaviour
         float weightmult = 0.0015f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
         body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), (flying ? -20f : body.velocity.y), body.velocity.z * (1f - weightmult) );
         currentCharge += 0.00075f * (bBoost + (BoostMultiplier * mBoost));
+        currentCharge = Mathf.Min(currentCharge, 1);
         // Top Speed failsafe (slipcell, etc)
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
         {
