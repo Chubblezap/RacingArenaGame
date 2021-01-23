@@ -52,8 +52,9 @@ public class BaseVehicle : MonoBehaviour
     public float currentCharge;
     [HideInInspector]
     public float boostCamModifier = 0;
-    //private Collider myCollider;
-    Rigidbody body;
+    [HideInInspector]
+    public float currentSpeed;
+    private Rigidbody body;
     private GunHandler gunScript;
     private PartHandler partScript;
     private float ejectTimer;
@@ -122,7 +123,8 @@ public class BaseVehicle : MonoBehaviour
         GroundAlign();
         if (myPlayer != null && hasControl)
         {
-            speedString = string.Format("{0:00.0}", new Vector3(body.velocity.x, (flying ? body.velocity.y : 0), body.velocity.z).magnitude);
+            currentSpeed = new Vector3(body.velocity.x, (flying ? body.velocity.y : 0), body.velocity.z).magnitude;
+            speedString = string.Format("{0:00.0}", currentSpeed);
 
             turnAmount = Input.GetAxis(myPlayer.horizontalInput);
             Turn(turnAmount, BaseTurn, myPlayer.Turn);
@@ -161,6 +163,10 @@ public class BaseVehicle : MonoBehaviour
                     Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
                 }
                 ejectTimer = 0;
+            }
+            if(boostPower <= 0 && boostCamModifier > 0)
+            {
+                boostCamModifier -= 0.01f;
             }
             if(usesDrag)
             {
@@ -361,7 +367,6 @@ public class BaseVehicle : MonoBehaviour
                 yield return new WaitForFixedUpdate();
             }
         }
-        boostCamModifier = 0;
         boostPower = 0;
         yield return null;
     }
@@ -635,6 +640,36 @@ public class BaseVehicle : MonoBehaviour
         if (collidedObject.GetComponent<BombProjectileExplosion>() != null && collidedObject.GetComponent<BombProjectileExplosion>().owner != transform) // trigger collision is an enemy explosion
         {
             takeForceHit(collidedObject.GetComponent<BombProjectileExplosion>().force, collidedObject.GetComponent<BombProjectileExplosion>().damage, Vector3.Normalize(transform.position - collidedObject.transform.position));
+        }
+        if(collidedObject.GetComponent<BaseVehicle>() != null && collidedObject.GetComponent<BaseVehicle>().myPlayer != null && GetComponent<BaseVehicle>().myPlayer != null) // Collision between two active vehicles
+        {
+            RamDamage(collidedObject);
+        }
+    }
+
+    private void RamDamage(GameObject otherVehicle)
+    {
+        BaseVehicle otherData = otherVehicle.GetComponent<BaseVehicle>();
+        float relativeVelocity = (currentSpeed * transform.forward - otherData.currentSpeed * otherVehicle.transform.forward).magnitude;
+        if (relativeVelocity < 5) // Not enough speed difference for collision
+        {
+            return;
+        }
+        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
+        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
+        float myMomentumModifier = (currentSpeed / 4) + (myArmor/2);
+        float theirOffense = otherData.BaseOffense = (otherData.OffenseMultiplier * otherData.myPlayer.Offense);
+        float theirArmor = otherData.BaseArmor = (otherData.ArmorMultiplier * otherData.myPlayer.Armor);
+        float theirMomentumModifier = (otherData.currentSpeed / 4) + (theirArmor/2);
+        //This vehicle lost the exchange
+        if (myMomentumModifier + myOffense < theirMomentumModifier + theirOffense)
+        {
+            takeForceHit(theirMomentumModifier, (Mathf.Max(1, relativeVelocity / otherData.currentSpeed) + theirOffense) - myArmor, otherVehicle.transform.forward);
+            return; 
+        }
+        else
+        {
+            return;
         }
     }
 

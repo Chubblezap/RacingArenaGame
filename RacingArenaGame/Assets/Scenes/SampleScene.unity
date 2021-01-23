@@ -387,6 +387,7 @@ MonoBehaviour:
   boostPower: 0
   currentCharge: 0
   boostCamModifier: 0
+  currentSpeed: 0
   myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
     type: 3}
@@ -803,7 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeeea3c07ed91cd4b89e001342640e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {fileID: 1004872430062931059}
+  center: {fileID: 69588348}
   speed: 0.5
   axis: Up
 --- !u!4 &213901252
@@ -15561,7 +15562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeeea3c07ed91cd4b89e001342640e28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  center: {fileID: 1004872430062931059}
+  center: {fileID: 69588348}
   speed: 0.5
   axis: Up
 --- !u!4 &773139342
