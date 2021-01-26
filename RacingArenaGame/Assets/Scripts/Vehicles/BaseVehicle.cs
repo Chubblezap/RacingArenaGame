@@ -658,8 +658,8 @@ public class BaseVehicle : MonoBehaviour
         float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
         float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
         float myMomentumModifier = (currentSpeed / 4) + (myArmor/2);
-        float theirOffense = otherData.BaseOffense = (otherData.OffenseMultiplier * otherData.myPlayer.Offense);
-        float theirArmor = otherData.BaseArmor = (otherData.ArmorMultiplier * otherData.myPlayer.Armor);
+        float theirOffense = otherData.BaseOffense + (otherData.OffenseMultiplier * otherData.myPlayer.Offense);
+        float theirArmor = otherData.BaseArmor + (otherData.ArmorMultiplier * otherData.myPlayer.Armor);
         float theirMomentumModifier = (otherData.currentSpeed / 4) + (theirArmor/2);
         //This vehicle lost the exchange
         if (myMomentumModifier + myOffense < theirMomentumModifier + theirOffense)
