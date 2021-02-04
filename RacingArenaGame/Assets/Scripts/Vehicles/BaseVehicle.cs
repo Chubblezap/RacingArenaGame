@@ -51,13 +51,15 @@ public class BaseVehicle : MonoBehaviour
     [HideInInspector]
     public float currentCharge;
     [HideInInspector]
-    public float boostCamModifier = 0;
-    [HideInInspector]
     public float currentSpeed;
+    private float horizSpeed;
+    private float vertSpeed;
     private Rigidbody body;
     private GunHandler gunScript;
     private PartHandler partScript;
     private float ejectTimer;
+    private GameObject myBoostWhoosh;
+    public GameObject boostWhooshPrefab;
     public Player myPlayer;
     public GameObject playerCharacter;
     public GameObject rotationModel;
@@ -123,8 +125,10 @@ public class BaseVehicle : MonoBehaviour
         GroundAlign();
         if (myPlayer != null && hasControl)
         {
-            currentSpeed = new Vector3(body.velocity.x, (flying ? body.velocity.y : 0), body.velocity.z).magnitude;
-            speedString = string.Format("{0:00.0}", currentSpeed);
+            currentSpeed = body.velocity.magnitude;
+            horizSpeed = new Vector3(body.velocity.x, 0, body.velocity.z).magnitude;
+            vertSpeed = body.velocity.y;
+            speedString = string.Format("{0:00.0}", (flying ? currentSpeed : horizSpeed));
 
             turnAmount = Input.GetAxis(myPlayer.horizontalInput);
             Turn(turnAmount, BaseTurn, myPlayer.Turn);
@@ -163,10 +167,6 @@ public class BaseVehicle : MonoBehaviour
                     Accelerate(BaseAcceleration, myPlayer.Acceleration, BaseTopSpeed, myPlayer.TopSpeed);
                 }
                 ejectTimer = 0;
-            }
-            if(boostPower <= 0 && boostCamModifier > 0)
-            {
-                boostCamModifier -= 0.01f;
             }
             if(usesDrag)
             {
@@ -309,7 +309,23 @@ public class BaseVehicle : MonoBehaviour
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        body.AddForce(rotationModel.transform.forward * (bAcceleration + (AccelerationMultiplier * mAcceleration) + boostPower));
+        float hAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration)) * Mathf.Lerp(0, 1, 1 - horizSpeed / (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)));
+        float vAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration));
+        Vector3 totalforce = new Vector3(rotationModel.transform.forward.x * hAcc, rotationModel.transform.forward.y * vAcc, rotationModel.transform.forward.z * hAcc);
+        if (horizSpeed < (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier) // Base horizontal acceleration
+        {
+            body.AddForce(new Vector3(totalforce.x, 0, totalforce.z));
+        }
+        // Vertical acceleration depends on rotation and flight state
+        float NR = GetNormalizedRotation(rotationModel.transform);
+        if (flying && NR > 0 && vertSpeed > -20) // Flying + facing down.
+        {
+            body.AddForce(new Vector3(0, totalforce.y, 0));
+        }
+        else if (flying && NR < 0) // Flying + facing up
+        {
+            body.AddForce(new Vector3(0, totalforce.y * Mathf.Max(flightTimer / totalFlightTime, 0.2f), 0));
+        }
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
 
@@ -332,7 +348,8 @@ public class BaseVehicle : MonoBehaviour
         {
             if (currentCharge >= 1 || halfBoosts)
             {
-                body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * myPlayer.Boost)) * 25);
+                myBoostWhoosh = Instantiate(boostWhooshPrefab, transform);
+                body.AddForce(rotationModel.transform.forward * (BaseBoost + (BoostMultiplier * myPlayer.Boost)), ForceMode.Impulse);
                 MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
                 boostPower = MaxBoostPower;
                 boostTime = 0.5f + (BaseBoost + (BoostMultiplier * myPlayer.Boost)) / 10;
@@ -341,8 +358,6 @@ public class BaseVehicle : MonoBehaviour
             while (curBoostTime > 0)
             {
                 curBoostTime -= Time.deltaTime;
-                boostCamModifier += Time.deltaTime;
-                boostCamModifier = Mathf.Min(boostCamModifier, 3);
                 if (isHolding == 1) // Cut boost if the player is braking
                 {
                     curBoostTime = 0;
@@ -354,11 +369,10 @@ public class BaseVehicle : MonoBehaviour
         else
         {
             MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
+            myBoostWhoosh = Instantiate(boostWhooshPrefab, transform);
             while (currentCharge > 0)
             {
                 currentCharge -= 0.001f;
-                boostCamModifier += Time.deltaTime;
-                boostCamModifier = Mathf.Min(boostCamModifier, 2);
                 if (isHolding == 1) // Cut boost if the player is braking
                 {
                     break;
@@ -366,6 +380,13 @@ public class BaseVehicle : MonoBehaviour
                 boostPower = MaxBoostPower;
                 yield return new WaitForFixedUpdate();
             }
+        }
+        if (myBoostWhoosh != null)
+        {
+            myBoostWhoosh.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+            myBoostWhoosh.transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
+            Destroy(myBoostWhoosh, 0.25f);
+            myBoostWhoosh = null;
         }
         boostPower = 0;
         yield return null;
@@ -386,7 +407,7 @@ public class BaseVehicle : MonoBehaviour
 
     void HorizontalSpeedCheck(float bTopSpeed, float mTopSpeed)
     {
-        if (Mathf.Abs(body.velocity.x) + Mathf.Abs(body.velocity.z) > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
+        if (horizSpeed > 1.1f * (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
             body.velocity = new Vector3(body.velocity.x * 0.96f, body.velocity.y, body.velocity.z * 0.96f);
         }
@@ -395,7 +416,7 @@ public class BaseVehicle : MonoBehaviour
     void DoDrag(float bArmor, float mArmor)
     {
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 1f - (0.001f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.7f : 0f); // lower sideways speed
+        localVelocity.x *= 1f - (0.002f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.7f : 0f); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
@@ -468,16 +489,16 @@ public class BaseVehicle : MonoBehaviour
         
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
-            flightSpeedMultiplier = 1.3f - (Mathf.Abs(NR / 75) * 0.4f);
+            flightSpeedMultiplier = 1.2f - (Mathf.Abs(NR / 75) * 0.6f);
             localVelocity.y *= 1 - (0.04f * Mathf.Abs(NR / 75)); // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
-            flightSpeedMultiplier = 1.3f + (Mathf.Abs(NR / 75) * 0.7f);
+            flightSpeedMultiplier = 1.2f + (Mathf.Abs(NR / 75) * 0.7f);
         }
         else
         {
-            flightSpeedMultiplier = 1.3f;
+            flightSpeedMultiplier = 1.2f;
         }
 
         body.velocity = body.transform.TransformDirection(localVelocity);
@@ -487,7 +508,7 @@ public class BaseVehicle : MonoBehaviour
     {
         flightTimer -= Time.deltaTime;
 
-        if(!stableFlight)
+        if(!stableFlight && vertSpeed > -20)
         {
             body.AddForce(2.5f * Vector3.up * (flightTimer / totalFlightTime));
         }
@@ -678,7 +699,7 @@ public class BaseVehicle : MonoBehaviour
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
         {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -1f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            var ray = Physics.Raycast(transform.position, Vector3.up * -2f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 flying = false;
@@ -687,6 +708,11 @@ public class BaseVehicle : MonoBehaviour
                 body.angularVelocity = Vector3.zero;
             }
         }
+    }
+
+    public float GetMaxSpeed()
+    {
+        return (BaseTopSpeed + (TopSpeedMultiplier * myPlayer.TopSpeed));
     }
 
     void PurgeCarriedObjects()

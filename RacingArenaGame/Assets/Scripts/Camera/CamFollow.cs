@@ -28,7 +28,7 @@ public class CamFollow : MonoBehaviour
             if (curObject.tag == "Vehicle")
             {
                 curTransform = curObject.GetComponent<BaseVehicle>().rotationModel.transform;
-                float camdist = (-2.5f - curObject.GetComponent<BaseVehicle>().boostCamModifier);
+                float camdist = -2f - (2 * curObject.GetComponent<BaseVehicle>().currentSpeed / curObject.GetComponent<BaseVehicle>().GetMaxSpeed());
                 moveTo = curTransform.position + (Vector3.up * 1.5f + new Vector3(curTransform.forward.x * camdist, 0, curTransform.forward.z * camdist)) * curObject.GetComponent<BaseVehicle>().camsize;
                 height = curObject.GetComponent<BaseVehicle>().camheight;
             }
