@@ -309,6 +309,7 @@ public class BaseVehicle : MonoBehaviour
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
+        if(grounded && flying) { return; }
         float hAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration)) * Mathf.Lerp(0, 1, 1 - horizSpeed / (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)));
         float vAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration));
         Vector3 totalforce = new Vector3(rotationModel.transform.forward.x * hAcc, rotationModel.transform.forward.y * vAcc, rotationModel.transform.forward.z * hAcc);
@@ -369,7 +370,6 @@ public class BaseVehicle : MonoBehaviour
         else
         {
             MaxBoostPower = BaseBoost + (BoostMultiplier * myPlayer.Boost) * 2;
-            myBoostWhoosh = Instantiate(boostWhooshPrefab, transform);
             while (currentCharge > 0)
             {
                 currentCharge -= 0.001f;
@@ -409,12 +409,13 @@ public class BaseVehicle : MonoBehaviour
     {
         if (horizSpeed > 1.1f * (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier)
         {
-            body.velocity = new Vector3(body.velocity.x * 0.96f, body.velocity.y, body.velocity.z * 0.96f);
+            body.velocity = new Vector3(body.velocity.x * 0.99f, body.velocity.y, body.velocity.z * 0.99f);
         }
     }
 
     void DoDrag(float bArmor, float mArmor)
     {
+        if (grounded && flying) { return; }
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
         localVelocity.x *= 1f - (0.002f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.7f : 0f); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
@@ -458,7 +459,7 @@ public class BaseVehicle : MonoBehaviour
         localVelocity.y *= 0.15f; // cut vertical speed before launching
         body.velocity = body.transform.TransformDirection(localVelocity);
 
-        body.AddForce((transform.up + transform.forward) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
+        body.AddForce((transform.up * (grounded ? 5f : 1.25f) + transform.forward * 0.75f) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
     }
 
     void Aim(float direction, float bAir, float mAir)
@@ -510,10 +511,17 @@ public class BaseVehicle : MonoBehaviour
 
         if(!stableFlight && vertSpeed > -20)
         {
-            body.AddForce(2.5f * Vector3.up * (flightTimer / totalFlightTime));
+            if(!grounded || flightTimer < 0)
+            {
+                body.AddForce(2.5f * Vector3.up * (flightTimer / totalFlightTime));
+            }
+            else
+            {
+                body.AddForce(-2.5f * Vector3.up);
+            }
         }
 
-        if(flightTimer <= 0 && stableFlight == true)
+        if((grounded || flightTimer <= 0 && stableFlight == true))
         {
             stableFlight = false;
         }

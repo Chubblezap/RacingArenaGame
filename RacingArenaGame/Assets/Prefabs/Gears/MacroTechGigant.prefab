@@ -9881,7 +9881,7 @@ MonoBehaviour:
   boostPower: 0
   currentCharge: 0
   currentSpeed: 0
-  boostWhooshPrefab: {fileID: 2058582236248677875, guid: d99734233a8cbfb44b400da3179f484e,
+  boostWhooshPrefab: {fileID: 2058582236248677875, guid: bf4b3a8f318d7d24a984899266e3ec5f,
     type: 3}
   myPlayer: {fileID: 0}
   playerCharacter: {fileID: 4930876436514930606, guid: bcacd83a04c7b96438679ebb9a8a0466,
