@@ -39,7 +39,7 @@ public class Crate : BaseItem
         curHP = maxHP;
     }
 
-    void DoHit(Vector3 force, float damage)
+    public void DoHit(Vector3 force, float damage)
     {
         GetComponent<Rigidbody>().AddForce(force, ForceMode.Impulse);
         GetComponent<Rigidbody>().AddForce(transform.up, ForceMode.Impulse);

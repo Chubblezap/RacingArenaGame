@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4808417052429593922}
   - component: {fileID: 571505989316952879}
   - component: {fileID: 844173187424776325}
+  - component: {fileID: 8298088561070700400}
   - component: {fileID: 844173187424776378}
   m_Layer: 12
   m_Name: NeurolinkSlipcell
@@ -146,6 +147,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!135 &8298088561070700400
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844173187424776381}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &844173187424776378
 Rigidbody:
   m_ObjectHideFlags: 0

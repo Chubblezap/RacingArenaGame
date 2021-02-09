@@ -9818,8 +9818,8 @@ GameObject:
   - component: {fileID: 6719896587623931640}
   - component: {fileID: 1735387969095659669}
   - component: {fileID: 1208095874172502482}
-  - component: {fileID: 1462588543972721408}
   - component: {fileID: 1582943740056032860}
+  - component: {fileID: 1462588543972721408}
   m_Layer: 12
   m_Name: MacroTechGigant
   m_TagString: Vehicle
@@ -9951,6 +9951,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.8
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!65 &1582943740056032860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462588543972721415}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.3, y: 1.5, z: 2.5}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!54 &1462588543972721408
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9967,19 +9980,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1582943740056032860
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462588543972721415}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.3, y: 1.5, z: 2.5}
-  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &2976742089670547634
 GameObject:
   m_ObjectHideFlags: 0

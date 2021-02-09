@@ -309,23 +309,22 @@ public class BaseVehicle : MonoBehaviour
 
     void Accelerate(float bAcceleration, float mAcceleration, float bTopSpeed, float mTopSpeed)
     {
-        if(grounded && flying) { return; }
         float hAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration)) * Mathf.Lerp(0, 1, 1 - horizSpeed / (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)));
         float vAcc = boostPower + (bAcceleration + (AccelerationMultiplier * mAcceleration));
         Vector3 totalforce = new Vector3(rotationModel.transform.forward.x * hAcc, rotationModel.transform.forward.y * vAcc, rotationModel.transform.forward.z * hAcc);
         if (horizSpeed < (bTopSpeed + (TopSpeedMultiplier * mTopSpeed) + boostPower) * flightSpeedMultiplier) // Base horizontal acceleration
         {
-            body.AddForce(new Vector3(totalforce.x, 0, totalforce.z));
+            body.AddForce(new Vector3(totalforce.x, 0, totalforce.z) * (grounded && flying ? 0.1f : 1));
         }
         // Vertical acceleration depends on rotation and flight state
         float NR = GetNormalizedRotation(rotationModel.transform);
         if (flying && NR > 0 && vertSpeed > -20) // Flying + facing down.
         {
-            body.AddForce(new Vector3(0, totalforce.y, 0));
+            body.AddForce(new Vector3(0, totalforce.y, 0) * (grounded && flying ? 0.1f : 1));
         }
         else if (flying && NR < 0) // Flying + facing up
         {
-            body.AddForce(new Vector3(0, totalforce.y * Mathf.Max(flightTimer / totalFlightTime, 0.2f), 0));
+            body.AddForce(new Vector3(0, totalforce.y * 0.5f, 0) * (grounded && flying ? 0.1f : 1));
         }
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
@@ -450,7 +449,7 @@ public class BaseVehicle : MonoBehaviour
     void Launch(float bAir, float mAir)
     {
         rotationModel.transform.rotation = (transform.rotation);
-        flightTimer = 0.5f * (bAir + (AirMultiplier * mAir));
+        flightTimer = 0.35f * (bAir + (AirMultiplier * mAir));
         totalFlightTime = flightTimer;
         flying = true;
         stableFlight = true;
@@ -459,7 +458,7 @@ public class BaseVehicle : MonoBehaviour
         localVelocity.y *= 0.15f; // cut vertical speed before launching
         body.velocity = body.transform.TransformDirection(localVelocity);
 
-        body.AddForce((transform.up * (grounded ? 5f : 1.25f) + transform.forward * 0.75f) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
+        body.AddForce((transform.up * Mathf.Max(-2 * Input.GetAxis(myPlayer.verticalInput) * (grounded ? 5f : 1f), 0) + transform.forward * 0.75f) * (bAir + (AirMultiplier * mAir)) / 6, ForceMode.Impulse);
     }
 
     void Aim(float direction, float bAir, float mAir)
@@ -674,6 +673,10 @@ public class BaseVehicle : MonoBehaviour
         {
             RamDamage(collidedObject);
         }
+        if(collidedObject.GetComponent<Crate>() != null)
+        {
+            RamCrate(collidedObject);
+        }
     }
 
     private void RamDamage(GameObject otherVehicle)
@@ -700,6 +703,20 @@ public class BaseVehicle : MonoBehaviour
         {
             return;
         }
+    }
+
+    private void RamCrate(GameObject crateObj)
+    {
+        Crate crate = crateObj.GetComponent<Crate>();
+        if (currentSpeed < 3) // Not enough speed to damage crate
+        {
+            return;
+        }
+        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
+        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
+        float myMomentumModifier = (currentSpeed / 4) + (myArmor / 2);
+        crate.DoHit(transform.forward * myMomentumModifier/2, currentSpeed/2 + myOffense);
+        body.AddForce(rotationModel.transform.forward * -5f, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
