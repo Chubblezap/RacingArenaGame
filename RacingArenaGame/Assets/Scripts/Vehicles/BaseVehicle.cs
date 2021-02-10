@@ -74,7 +74,6 @@ public class BaseVehicle : MonoBehaviour
     // flight
     [HideInInspector]
     public bool flying = false;
-    private bool stableFlight = true;
     private float totalFlightTime;
     private float flightTimer;
     private float flightSpeedMultiplier;
@@ -322,9 +321,16 @@ public class BaseVehicle : MonoBehaviour
         {
             body.AddForce(new Vector3(0, totalforce.y, 0) * (grounded && flying ? 0.1f : 1));
         }
-        else if (flying && NR < 0) // Flying + facing up
+        else if (flying && NR <= 0) // Flying + facing up
         {
-            body.AddForce(new Vector3(0, totalforce.y * 0.5f, 0) * (grounded && flying ? 0.1f : 1));
+            body.AddForce(new Vector3(0, totalforce.y * (1 - Mathf.Min(1, (flightTimer*flightTimer)/totalFlightTime/totalFlightTime)), 0) * (grounded && flying ? 0.1f : 1));
+
+            Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
+            if (localVelocity.y > 0)
+            {
+                localVelocity.y *= 0.96f + (0.02f * Mathf.Abs(NR / 75));
+            }
+            body.velocity = body.transform.TransformDirection(localVelocity);
         }
         HorizontalSpeedCheck(bTopSpeed, mTopSpeed);
     }
@@ -449,10 +455,9 @@ public class BaseVehicle : MonoBehaviour
     void Launch(float bAir, float mAir)
     {
         rotationModel.transform.rotation = (transform.rotation);
-        flightTimer = 0.35f * (bAir + (AirMultiplier * mAir));
-        totalFlightTime = flightTimer;
+        flightTimer = 0;
+        totalFlightTime = 0.35f * (bAir + (AirMultiplier * mAir));
         flying = true;
-        stableFlight = true;
 
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
         localVelocity.y *= 0.15f; // cut vertical speed before launching
@@ -490,7 +495,6 @@ public class BaseVehicle : MonoBehaviour
         if (NR < 0) // vehicle is pointing up, NR is negative
         {
             flightSpeedMultiplier = 1.2f - (Mathf.Abs(NR / 75) * 0.6f);
-            localVelocity.y *= 1 - (0.04f * Mathf.Abs(NR / 75)); // dampen vertical speed
         }
         else if (NR > 0) // vehicle is pointing down, NR is positive
         {
@@ -506,23 +510,21 @@ public class BaseVehicle : MonoBehaviour
 
     void DoFlightGravity()
     {
-        flightTimer -= Time.deltaTime;
-
-        if(!stableFlight && vertSpeed > -20)
+        if(flightTimer < totalFlightTime)
         {
-            if(!grounded || flightTimer < 0)
+            flightTimer += Time.deltaTime;
+        }
+
+        if(vertSpeed > -20)
+        {
+            if (!grounded)
             {
-                body.AddForce(2.5f * Vector3.up * (flightTimer / totalFlightTime));
+                body.AddForce(2.5f * Vector3.up * (-(flightTimer * flightTimer) / totalFlightTime) / totalFlightTime);
             }
             else
             {
                 body.AddForce(-2.5f * Vector3.up);
             }
-        }
-
-        if((grounded || flightTimer <= 0 && stableFlight == true))
-        {
-            stableFlight = false;
         }
     }
 
@@ -723,6 +725,22 @@ public class BaseVehicle : MonoBehaviour
     {
         GameObject collidedObject = collision.gameObject;
         if(flying && collidedObject.tag == "Environment")
+        {
+            var ray = Physics.Raycast(transform.position, Vector3.up * -2f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
+            {
+                flying = false;
+                flightSpeedMultiplier = 1f;
+                transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+                body.angularVelocity = Vector3.zero;
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if (flying && collidedObject.tag == "Environment")
         {
             var ray = Physics.Raycast(transform.position, Vector3.up * -2f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
