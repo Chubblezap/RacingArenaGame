@@ -20,7 +20,7 @@ public class GunPickup : BaseItem
 
     public void Init()
     {
-        int typeDecider = Random.Range(1, 8);
+        int typeDecider = Random.Range(1, 9);
         switch (typeDecider)
         {
             case 1:
@@ -43,6 +43,9 @@ public class GunPickup : BaseItem
                 break;
             case 7:
                 gunType = "Boost Jumper";
+                break;
+            case 8:
+                gunType = "Slicing Edge Beam Cannon";
                 break;
             default:
                 Debug.Log("Wacky case");

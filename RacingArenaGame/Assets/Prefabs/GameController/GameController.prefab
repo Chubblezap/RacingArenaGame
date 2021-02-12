@@ -120,14 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22234699d832ebd4db07b78c39c4b4a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunMeshes:
-  - {fileID: -5495902117074765545, guid: 57dd40677ba18ec4f8bcffae142bd449, type: 3}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   gunProjectiles:
   - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
   - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
@@ -136,12 +128,14 @@ MonoBehaviour:
   - {fileID: 5094337208973054754, guid: eead3725e7ae144439f87ddd686302ad, type: 3}
   - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
   - {fileID: 5094337208973054754, guid: 4a58b107e241bd940b586af745070858, type: 3}
+  - {fileID: 7825599877259399536, guid: 68f334137415a98428ecb95dd3437320, type: 3}
   gunBurst:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 3165099685154342721, guid: 6fe841e47ccfac84aaa6ffa04696b79e, type: 3}
   - {fileID: 0}
   - {fileID: 3165099685154342721, guid: 4b5ef97884393434d9331d019f1582d2, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   gunFireRates:
@@ -152,7 +146,8 @@ MonoBehaviour:
   - 1
   - 0.6
   - 1
-  gunMaxAmmo: 00000000000000000500000000000000000000000000000000000000
+  - 1
+  gunMaxAmmo: 0000000000000000050000000000000000000000000000000000000001000000
   gunReloadSpeed:
   - 0
   - 0
@@ -161,6 +156,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 10
   gunChargeTime:
   - 0
   - 0
@@ -169,6 +165,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  - 10
   partMeshes:
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

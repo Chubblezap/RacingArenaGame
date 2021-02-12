@@ -5,7 +5,6 @@ using UnityEngine;
 public class InfoDump : MonoBehaviour
 {
     // gun info
-    public Mesh[] gunMeshes;
     public GameObject[] gunProjectiles;
     public GameObject[] gunBurst;
     public float[] gunFireRates;
@@ -28,29 +27,6 @@ public class InfoDump : MonoBehaviour
         
     }
 
-    /*public Mesh GetGunMesh(string gunType)
-    {
-        switch (gunType)
-        {
-            case "Allgear Basic":
-                return gunMeshes[0];
-            case "Flamethrower":
-                return gunMeshes[1];
-            case "Bomb Cannon":
-                return gunMeshes[2];
-            case "Mine Layer":
-                return gunMeshes[3];
-            case "Viral Spiral":
-                return gunMeshes[4];
-            case "Gearblade Launcher":
-                return gunMeshes[5];
-            case "Boost Jumper":
-                return gunMeshes[6];
-            default:
-                return null;
-        }
-    }*/
-
     public GameObject GetGunProjectile(string gunType)
     {
         switch (gunType)
@@ -69,6 +45,8 @@ public class InfoDump : MonoBehaviour
                 return gunProjectiles[5];
             case "Boost Jumper":
                 return gunProjectiles[6];
+            case "Slicing Edge Beam Cannon":
+                return gunProjectiles[7];
             default:
                 return null;
         }
@@ -92,6 +70,8 @@ public class InfoDump : MonoBehaviour
                 return gunBurst[5];
             case "Boost Jumper":
                 return gunBurst[6];
+            case "Slicing Edge Beam Cannon":
+                return gunBurst[7];
             default:
                 return null;
         }
@@ -115,6 +95,8 @@ public class InfoDump : MonoBehaviour
                 return gunFireRates[5];
             case "Boost Jumper":
                 return gunFireRates[6];
+            case "Slicing Edge Beam Cannon":
+                return gunFireRates[7];
             default:
                 return 0;
         }
@@ -138,6 +120,8 @@ public class InfoDump : MonoBehaviour
                 return gunMaxAmmo[5];
             case "Boost Jumper":
                 return gunMaxAmmo[6];
+            case "Slicing Edge Beam Cannon":
+                return gunMaxAmmo[7];
             default:
                 return 0;
         }
@@ -161,6 +145,8 @@ public class InfoDump : MonoBehaviour
                 return gunChargeTime[5];
             case "Boost Jumper":
                 return gunChargeTime[6];
+            case "Slicing Edge Beam Cannon":
+                return gunChargeTime[7];
             default:
                 return 0;
         }
@@ -184,6 +170,8 @@ public class InfoDump : MonoBehaviour
                 return gunReloadSpeed[5];
             case "Boost Jumper":
                 return gunReloadSpeed[6];
+            case "Slicing Edge Beam Cannon":
+                return gunReloadSpeed[7];
             default:
                 return 0;
         }
