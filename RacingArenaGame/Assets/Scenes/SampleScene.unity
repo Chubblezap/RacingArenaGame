@@ -386,6 +386,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
+    - target: {fileID: 5843494342152803480, guid: aea6e418af6efb24f8d49d770209aa24,
+        type: 3}
+      propertyPath: gunChargeTime.Array.data[7]
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5843494342152803482, guid: aea6e418af6efb24f8d49d770209aa24,
         type: 3}
       propertyPath: active
@@ -425,6 +430,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 844173187424776325, guid: f995a9314430f7945b5898d0a2971ed6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 844173187424776326, guid: f995a9314430f7945b5898d0a2971ed6,
         type: 3}
       propertyPath: m_LocalPosition.x

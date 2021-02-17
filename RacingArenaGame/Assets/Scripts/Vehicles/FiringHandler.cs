@@ -48,7 +48,7 @@ public class FiringHandler : MonoBehaviour
         {
             if (active)  // active
             {
-                if (curChargeTime <= chargeTime)
+                if (curChargeTime < chargeTime)
                 {
                     curChargeTime += Time.deltaTime;
                 }
@@ -59,7 +59,7 @@ public class FiringHandler : MonoBehaviour
             }
             else // inactive
             {
-                if (curChargeTime == chargeTime)
+                if (curChargeTime >= chargeTime)
                 {
                     Fire();
                 }
@@ -100,7 +100,14 @@ public class FiringHandler : MonoBehaviour
                 Instantiate(burstParticleType, transform.position + transform.up * 0.25f, transform.rotation, transform);
             }
             firedProjectile.GetComponent<BasicProjectile>().owner = GetComponent<HeldGun>().owner;
-            firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.root.GetComponent<Rigidbody>().velocity.magnitude);
+            if(!firedProjectile.GetComponent<BasicProjectile>().sticky)
+            {
+                firedProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * transform.root.GetComponent<Rigidbody>().velocity.magnitude);
+            }
+            else
+            {
+                firedProjectile.transform.SetParent(transform);
+            }
             rofTimer = fireRate;
             if (hasAmmo)
             {

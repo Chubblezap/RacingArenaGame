@@ -59,6 +59,7 @@ public class BaseVehicle : MonoBehaviour
     private PartHandler partScript;
     private float ejectTimer;
     private GameObject myBoostWhoosh;
+    private float continuousHitTimer = 0;
     public GameObject boostWhooshPrefab;
     public Player myPlayer;
     public GameObject playerCharacter;
@@ -116,6 +117,10 @@ public class BaseVehicle : MonoBehaviour
             {
                 WeaponBarR.transform.GetChild(0).GetComponent<Image>().fillAmount = GetComponent<GunHandler>().rightGun.GetComponent<FiringHandler>().GetBarAmount();
             }
+        }
+        if(continuousHitTimer > 0)
+        {
+            continuousHitTimer -= Time.deltaTime;
         }
     }
 
@@ -652,6 +657,62 @@ public class BaseVehicle : MonoBehaviour
         curHP -= damage;
     }
 
+    private void RamCrate(GameObject crateObj)
+    {
+        Crate crate = crateObj.GetComponent<Crate>();
+        if (currentSpeed < 3) // Not enough speed to damage crate
+        {
+            return;
+        }
+        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
+        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
+        float myMomentumModifier = (currentSpeed / 4) + (myArmor / 2);
+        crate.DoHit(transform.forward * myMomentumModifier / 2, currentSpeed / 2 + myOffense);
+        body.AddForce(rotationModel.transform.forward * -5f, ForceMode.Impulse);
+    }
+
+    private void RamDamage(GameObject otherVehicle)
+    {
+        BaseVehicle otherData = otherVehicle.GetComponent<BaseVehicle>();
+        float relativeVelocity = (currentSpeed * transform.forward - otherData.currentSpeed * otherVehicle.transform.forward).magnitude;
+        if (relativeVelocity < 5) // Not enough speed difference for collision
+        {
+            return;
+        }
+        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
+        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
+        float myMomentumModifier = (currentSpeed / 4) + (myArmor / 2);
+        float theirOffense = otherData.BaseOffense + (otherData.OffenseMultiplier * otherData.myPlayer.Offense);
+        float theirArmor = otherData.BaseArmor + (otherData.ArmorMultiplier * otherData.myPlayer.Armor);
+        float theirMomentumModifier = (otherData.currentSpeed / 4) + (theirArmor / 2);
+        //This vehicle lost the exchange
+        if (myMomentumModifier + myOffense < theirMomentumModifier + theirOffense)
+        {
+            takeForceHit(theirMomentumModifier, (Mathf.Max(1, relativeVelocity / otherData.currentSpeed) + theirOffense) - myArmor, otherVehicle.transform.forward);
+            return;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if (flying && collidedObject.tag == "Environment")
+        {
+            var ray = Physics.Raycast(transform.position, Vector3.up * -2f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
+            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
+            {
+                flying = false;
+                flightSpeedMultiplier = 1f;
+                transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+                body.angularVelocity = Vector3.zero;
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collidedObject = collision.gameObject;
@@ -664,8 +725,16 @@ public class BaseVehicle : MonoBehaviour
         }
         if (collidedObject.GetComponent<BasicProjectile>() != null && collidedObject.GetComponent<BasicProjectile>().owner != transform) // trigger collision is an enemy projectile
         {
-            takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.forward);
-            collidedObject.GetComponent<BasicProjectile>().Detonate();
+            if(!collidedObject.GetComponent<BasicProjectile>().sticky)
+            {
+                takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.forward);
+                collidedObject.GetComponent<BasicProjectile>().Detonate();
+            }
+            else if (collidedObject.GetComponent<BasicProjectile>().sticky && continuousHitTimer <= 0)
+            {
+                takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.parent.forward);
+                continuousHitTimer = 0.2f;
+            }
         }
         if (collidedObject.GetComponent<BombProjectileExplosion>() != null && collidedObject.GetComponent<BombProjectileExplosion>().owner != transform) // trigger collision is an enemy explosion
         {
@@ -681,62 +750,6 @@ public class BaseVehicle : MonoBehaviour
         }
     }
 
-    private void RamDamage(GameObject otherVehicle)
-    {
-        BaseVehicle otherData = otherVehicle.GetComponent<BaseVehicle>();
-        float relativeVelocity = (currentSpeed * transform.forward - otherData.currentSpeed * otherVehicle.transform.forward).magnitude;
-        if (relativeVelocity < 5) // Not enough speed difference for collision
-        {
-            return;
-        }
-        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
-        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
-        float myMomentumModifier = (currentSpeed / 4) + (myArmor/2);
-        float theirOffense = otherData.BaseOffense + (otherData.OffenseMultiplier * otherData.myPlayer.Offense);
-        float theirArmor = otherData.BaseArmor + (otherData.ArmorMultiplier * otherData.myPlayer.Armor);
-        float theirMomentumModifier = (otherData.currentSpeed / 4) + (theirArmor/2);
-        //This vehicle lost the exchange
-        if (myMomentumModifier + myOffense < theirMomentumModifier + theirOffense)
-        {
-            takeForceHit(theirMomentumModifier, (Mathf.Max(1, relativeVelocity / otherData.currentSpeed) + theirOffense) - myArmor, otherVehicle.transform.forward);
-            return; 
-        }
-        else
-        {
-            return;
-        }
-    }
-
-    private void RamCrate(GameObject crateObj)
-    {
-        Crate crate = crateObj.GetComponent<Crate>();
-        if (currentSpeed < 3) // Not enough speed to damage crate
-        {
-            return;
-        }
-        float myOffense = BaseOffense + (OffenseMultiplier * myPlayer.Offense);
-        float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
-        float myMomentumModifier = (currentSpeed / 4) + (myArmor / 2);
-        crate.DoHit(transform.forward * myMomentumModifier/2, currentSpeed/2 + myOffense);
-        body.AddForce(rotationModel.transform.forward * -5f, ForceMode.Impulse);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        GameObject collidedObject = collision.gameObject;
-        if(flying && collidedObject.tag == "Environment")
-        {
-            var ray = Physics.Raycast(transform.position, Vector3.up * -2f, out RaycastHit rayhit, GetComponent<SphereCollider>().radius * 2, LayerMask.GetMask("Environment"), QueryTriggerInteraction.Ignore);
-            if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
-            {
-                flying = false;
-                flightSpeedMultiplier = 1f;
-                transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
-                body.angularVelocity = Vector3.zero;
-            }
-        }
-    }
-
     private void OnCollisionStay(Collision collision)
     {
         GameObject collidedObject = collision.gameObject;
@@ -749,6 +762,25 @@ public class BaseVehicle : MonoBehaviour
                 flightSpeedMultiplier = 1f;
                 transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
                 body.angularVelocity = Vector3.zero;
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+
+        if (collidedObject.GetComponent<BasicProjectile>() != null && collidedObject.GetComponent<BasicProjectile>().owner != transform) // trigger collision is an enemy projectile
+        {
+            if (!collidedObject.GetComponent<BasicProjectile>().sticky)
+            {
+                takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.forward);
+                collidedObject.GetComponent<BasicProjectile>().Detonate();
+            }
+            else if (collidedObject.GetComponent<BasicProjectile>().sticky && continuousHitTimer <= 0)
+            {
+                takeForceHit(collidedObject.GetComponent<BasicProjectile>().force, collidedObject.GetComponent<BasicProjectile>().damage, collidedObject.transform.parent.forward);
+                continuousHitTimer = 0.2f;
             }
         }
     }

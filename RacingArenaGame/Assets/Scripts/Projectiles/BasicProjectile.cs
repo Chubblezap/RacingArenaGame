@@ -10,6 +10,7 @@ public class BasicProjectile : MonoBehaviour
     public float force;
     public float lifetime;
     public GameObject particles; // child object containing particles
+    public bool sticky = false; // true if the projectile "sticks" to the parent (beams, etc)
     protected Rigidbody body;
 
     // Start is called before the first frame update
@@ -30,12 +31,15 @@ public class BasicProjectile : MonoBehaviour
 
     public virtual void Detonate()
     {
-        particles.transform.SetParent(null);
-        if(particles.GetComponent<ParticleSystem>() != null)
+        if(particles != null)
         {
-            particles.GetComponent<ParticleSystem>().Stop();
+            particles.transform.SetParent(null);
+            if (particles.GetComponent<ParticleSystem>() != null)
+            {
+                particles.GetComponent<ParticleSystem>().Stop();
+            }
+            particles.GetComponent<ProjectileParticle>().StartCoroutine("Destroy");
         }
-        particles.GetComponent<ProjectileParticle>().StartCoroutine("Destroy");
         Destroy(this.gameObject);
     }
 

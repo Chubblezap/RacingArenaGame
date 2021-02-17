@@ -11,6 +11,7 @@ public class Crate : BaseItem
     public float curHP;
     public GameObject breakLayer;
     public Texture2D[] cracks;
+    private float continuousHitTimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,14 @@ public class Crate : BaseItem
         }
         maxHP = Random.Range(20, 50);
         curHP = maxHP;
+    }
+
+    private void Update()
+    {
+        if(continuousHitTimer > 0)
+        {
+            continuousHitTimer -= Time.deltaTime;
+        }
     }
 
     public void DoHit(Vector3 force, float damage)
@@ -101,12 +110,36 @@ public class Crate : BaseItem
         {
             if(collidedObject.GetComponent<BasicProjectile>())
             {
-                DoHit(collidedObject.GetComponent<BasicProjectile>().force * Vector3.Normalize(collidedObject.transform.forward), collidedObject.GetComponent<BasicProjectile>().damage);
-                collidedObject.GetComponent<BasicProjectile>().Detonate();
+                if(!collidedObject.GetComponent<BasicProjectile>().sticky)
+                {
+                    DoHit(collidedObject.GetComponent<BasicProjectile>().force * collidedObject.transform.forward, collidedObject.GetComponent<BasicProjectile>().damage);
+                    collidedObject.GetComponent<BasicProjectile>().Detonate();
+                }
+                else if (collidedObject.GetComponent<BasicProjectile>().sticky && continuousHitTimer <= 0)
+                {
+                    DoHit(collidedObject.GetComponent<BasicProjectile>().force * collidedObject.transform.parent.forward, collidedObject.GetComponent<BasicProjectile>().damage);
+                    continuousHitTimer = 0.2f;
+                }
             }
             else if(collidedObject.GetComponent<BombProjectileExplosion>())
             {
                 DoHit(collidedObject.GetComponent<BombProjectileExplosion>().force * Vector3.Normalize(transform.position - collidedObject.transform.position), collidedObject.GetComponent<BombProjectileExplosion>().damage);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        GameObject collidedObject = collision.gameObject;
+        if (collidedObject.tag == "Projectile")
+        {
+            if (collidedObject.GetComponent<BasicProjectile>())
+            {
+                if (collidedObject.GetComponent<BasicProjectile>().sticky && continuousHitTimer <= 0)
+                {
+                    DoHit(collidedObject.GetComponent<BasicProjectile>().force * collidedObject.transform.parent.forward, collidedObject.GetComponent<BasicProjectile>().damage);
+                    continuousHitTimer = 0.2f;
+                }
             }
         }
     }

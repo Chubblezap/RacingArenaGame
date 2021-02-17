@@ -46,7 +46,6 @@ public class GunHandler : MonoBehaviour
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
-                    Debug.Log(rightGunPosition.transform.localPosition);
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
