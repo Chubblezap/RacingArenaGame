@@ -73,7 +73,7 @@ public class BaseVehicle : MonoBehaviour
     public bool bulkFuel = false; // Uses 'fuel' instead of charge
     
     // flight
-    [HideInInspector]
+    //[HideInInspector]
     public bool flying = false;
     private float totalFlightTime;
     private float flightTimer;
@@ -185,6 +185,10 @@ public class BaseVehicle : MonoBehaviour
         else
         {
             body.velocity = new Vector3(body.velocity.x * 0.95f, body.velocity.y, body.velocity.z * 0.95f);
+            if(flying)
+            {
+                DoFlightGravity();
+            }
         }
     }
 
@@ -448,6 +452,12 @@ public class BaseVehicle : MonoBehaviour
                 if(myPlayer != null && hasControl)
                 {
                     Launch(BaseAir, myPlayer.Air);
+                }
+                else
+                {
+                    flying = true;
+                    flightTimer = 0;
+                    totalFlightTime = 0.1f;
                 }
             }
         }
