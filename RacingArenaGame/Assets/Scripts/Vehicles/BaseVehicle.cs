@@ -52,7 +52,7 @@ public class BaseVehicle : MonoBehaviour
     public float currentCharge;
     [HideInInspector]
     public float currentSpeed;
-    private float horizSpeed;
+    public float horizSpeed;
     private float vertSpeed;
     private Rigidbody body;
     private GunHandler gunScript;
@@ -73,8 +73,9 @@ public class BaseVehicle : MonoBehaviour
     public bool bulkFuel = false; // Uses 'fuel' instead of charge
     
     // flight
-    //[HideInInspector]
+    [HideInInspector]
     public bool flying = false;
+    private bool forceFall = false;
     private float totalFlightTime;
     private float flightTimer;
     private float flightSpeedMultiplier;
@@ -180,6 +181,11 @@ public class BaseVehicle : MonoBehaviour
             {
                 Aim(Input.GetAxis(myPlayer.verticalInput), BaseAir, myPlayer.Air);
                 DoFlightGravity();
+                if (isHolding == 1 && forceFall == false)
+                {
+                    forceFall = true;
+                    StartCoroutine("ForceFall");
+                }
             }
         }
         else
@@ -409,7 +415,7 @@ public class BaseVehicle : MonoBehaviour
     void Charge(float bArmor, float mArmor, float bBoost, float mBoost, float bTopSpeed, float mTopSpeed)
     {
         float weightmult = 0.0015f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
-        body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), (flying ? -20f : body.velocity.y), body.velocity.z * (1f - weightmult) );
+        body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), body.velocity.y, body.velocity.z * (1f - weightmult) );
         currentCharge += 0.00075f * (bBoost + (BoostMultiplier * mBoost));
         currentCharge = Mathf.Min(currentCharge, 1);
         // Top Speed failsafe (slipcell, etc)
@@ -417,6 +423,26 @@ public class BaseVehicle : MonoBehaviour
         {
             body.velocity *= .96f;
         }
+    }
+
+    private IEnumerator ForceFall()
+    {
+        float oldY = body.velocity.y;
+        while(flying)
+        {
+            if(isHolding > 0)
+            {
+                body.velocity = new Vector3(body.velocity.x, -20f, body.velocity.z);
+            }
+            else
+            {
+                body.velocity = new Vector3(body.velocity.x, oldY, body.velocity.z);
+                break;
+            }
+            yield return null;
+        }
+        forceFall = false;
+        yield return null;
     }
 
     void HorizontalSpeedCheck(float bTopSpeed, float mTopSpeed)
@@ -678,7 +704,7 @@ public class BaseVehicle : MonoBehaviour
         float myArmor = BaseArmor + (ArmorMultiplier * myPlayer.Armor);
         float myMomentumModifier = (currentSpeed / 4) + (myArmor / 2);
         crate.DoHit(transform.forward * myMomentumModifier / 2, currentSpeed / 2 + myOffense);
-        body.AddForce(rotationModel.transform.forward * -5f, ForceMode.Impulse);
+        Bump();
     }
 
     private void RamDamage(GameObject otherVehicle)
@@ -705,6 +731,12 @@ public class BaseVehicle : MonoBehaviour
         {
             return;
         }
+    }
+
+    private void Bump()
+    {
+        body.velocity = new Vector3(body.velocity.x * 0.7f, body.velocity.y, body.velocity.z * 0.7f);
+        body.AddForce(-rotationModel.transform.forward * (2f + currentSpeed/4f), ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
