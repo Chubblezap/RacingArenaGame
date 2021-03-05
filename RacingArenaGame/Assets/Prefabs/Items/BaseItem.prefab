@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9059163690671624269}
   - component: {fileID: 2790921840091782059}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 8618922148597535925}
   - component: {fileID: 8583344879234814217}
   - component: {fileID: 5448480694457584710}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: BaseItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 
   despawnTimer: 60
+  pickupTimer: 1
   doingTimer: 1
 --- !u!135 &8583344879234814217
 SphereCollider:

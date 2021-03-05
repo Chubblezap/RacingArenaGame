@@ -26,12 +26,6 @@
         },
         {
             "typeInfo": {
-                "fullName": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty"
-            },
-            "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"597992e7-a78a-4f9b-9e2a-1aac7bdd8ed4\"\n    },\n    \"m_Name\": \"AlphaStrength\",\n    \"m_DefaultReferenceName\": \"Vector1_6A42F889\",\n    \"m_OverrideReferenceName\": \"_AlphaStrength\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": 1.0,\n    \"m_FloatType\": 0,\n    \"m_RangeValues\": {\n        \"x\": 0.0,\n        \"y\": 1.0\n    }\n}"
-        },
-        {
-            "typeInfo": {
                 "fullName": "UnityEditor.ShaderGraph.Internal.Vector2ShaderProperty"
             },
             "JSONnodeData": "{\n    \"m_Guid\": {\n        \"m_GuidSerialized\": \"e0bbaf1e-1418-4c40-a317-da7e01f61e18\"\n    },\n    \"m_Name\": \"TexSize\",\n    \"m_DefaultReferenceName\": \"Vector2_B2E65CD7\",\n    \"m_OverrideReferenceName\": \"_TexSize\",\n    \"m_GeneratePropertyBlock\": true,\n    \"m_Precision\": 0,\n    \"m_GPUInstanced\": false,\n    \"m_Hidden\": false,\n    \"m_Value\": {\n        \"x\": 1.0,\n        \"y\": 1.0,\n        \"z\": 0.0,\n        \"w\": 0.0\n    }\n}"

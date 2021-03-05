@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7206705956863556336}
   - component: {fileID: 491069072164653056}
   - component: {fileID: 8626038912024897985}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NeurolinkMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 3305077996954214618}
   - component: {fileID: 1162544652322449521}
   - component: {fileID: 4042767243329618769}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Casing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 174164728605477024}
   - component: {fileID: 1075883575516152695}
   - component: {fileID: 788725112665583892}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gear2Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 2781569728496324730}
   - component: {fileID: 3214951099516654963}
   - component: {fileID: 7565746226609173041}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 6612518361958671594}
   - component: {fileID: 6843737001829700956}
   - component: {fileID: 3919376749945744564}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GearOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 2703287283130564245}
   - component: {fileID: 5380765423679528503}
   - component: {fileID: 6719530450624202850}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PipeOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 2711669298056708850}
   - component: {fileID: 2711669298056708861}
   - component: {fileID: 8426782487613627208}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: PartPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +746,7 @@ GameObject:
   - component: {fileID: 2528515052012105974}
   - component: {fileID: 7870338045999403487}
   - component: {fileID: 48026802553810537}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MundaniumChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +839,7 @@ GameObject:
   - component: {fileID: 6337469315502291679}
   - component: {fileID: 6548094968311385455}
   - component: {fileID: 7147884640623630542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769287362774785412}
   - component: {fileID: 8517641801201963350}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MacrotechMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -965,7 +965,7 @@ GameObject:
   - component: {fileID: 1568245981194504373}
   - component: {fileID: 2289048495844855228}
   - component: {fileID: 6604378894172826366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Core
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1045,7 +1045,7 @@ GameObject:
   - component: {fileID: 2198996223831242773}
   - component: {fileID: 2556823807675150526}
   - component: {fileID: 811583497544653726}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Casing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 1624717365554780679}
   - component: {fileID: 5588018342013616156}
   - component: {fileID: 5301003073372238463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gear2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1222,7 +1222,7 @@ GameObject:
   - component: {fileID: 1718340347285271151}
   - component: {fileID: 4864957094788835157}
   - component: {fileID: 7729599888596021928}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PartOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1302,7 +1302,7 @@ GameObject:
   - component: {fileID: 559816305953085765}
   - component: {fileID: 2133362556042352183}
   - component: {fileID: 8432571497192058847}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1397,7 +1397,7 @@ GameObject:
   - component: {fileID: 7414875572567047678}
   - component: {fileID: 706712055496367452}
   - component: {fileID: 2171436706088602377}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pipe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1477,7 +1477,7 @@ GameObject:
   - component: {fileID: 4782729404867559955}
   - component: {fileID: 7825923523806492508}
   - component: {fileID: 352183372662049980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PartOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1560,7 +1560,7 @@ GameObject:
   - component: {fileID: 7755426063901925254}
   - component: {fileID: 3406543488501489367}
   - component: {fileID: 8406999119237397612}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SlicingEdgeMaterial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6389,7 +6389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7991117947722171014}
   - component: {fileID: 7749512311644094751}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6434,7 +6434,7 @@ GameObject:
   - component: {fileID: 7328615789746145858}
   - component: {fileID: 1350683520694128774}
   - component: {fileID: 4055847443303595987}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PartOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6512,7 +6512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5214232986757368046}
   - component: {fileID: 1302635185169210061}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BillionvoltCapacitor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

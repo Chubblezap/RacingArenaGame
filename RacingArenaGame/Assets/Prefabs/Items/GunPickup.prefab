@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8601838579960454471}
   - component: {fileID: 8830505273604834970}
   - component: {fileID: 3300170668206235239}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3606701671809789883}
   - component: {fileID: 8124652163728298567}
   - component: {fileID: 6940333381626434998}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EdgeBeamCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 7288305847452127355}
   - component: {fileID: 5017402447597816329}
   - component: {fileID: 1713711640413963170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 6526755861576881057}
   - component: {fileID: 1052466052650301363}
   - component: {fileID: 3583550486676715939}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EdgeBeamCannonOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 350103001209903273}
   - component: {fileID: 4720717135509684374}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MacrotechBombCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 2711669298056708850}
   - component: {fileID: 2711669298056708861}
   - component: {fileID: 912325214691121329}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: GunPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 6448780554752481657}
   - component: {fileID: 8150272339809799450}
   - component: {fileID: 8719363977451918623}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 6770070129167550614}
   - component: {fileID: 1433282879530404450}
   - component: {fileID: 2049511650505650076}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 1811106104878119800}
   - component: {fileID: 4382367122484116216}
   - component: {fileID: 5807022179014301814}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -877,7 +877,7 @@ GameObject:
   - component: {fileID: 6191517349162768291}
   - component: {fileID: 4768363643617735828}
   - component: {fileID: 7054303751105681074}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NeurolinkViralSpiral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5693,7 +5693,7 @@ GameObject:
   - component: {fileID: 6482474249207492687}
   - component: {fileID: 399632788006490021}
   - component: {fileID: 3088143259434231730}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SquareGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5772,7 +5772,7 @@ GameObject:
   - component: {fileID: 4111663756561155679}
   - component: {fileID: 8910764140193013996}
   - component: {fileID: 8086013593024017698}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5854,7 +5854,7 @@ GameObject:
   - component: {fileID: 3585163587299886031}
   - component: {fileID: 5410427020220019363}
   - component: {fileID: 9134100674372067090}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GunOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5934,7 +5934,7 @@ GameObject:
   - component: {fileID: 9212713040208934106}
   - component: {fileID: 4224465849160225786}
   - component: {fileID: 7966777475713769736}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6017,7 +6017,7 @@ GameObject:
   - component: {fileID: 3155007231652265248}
   - component: {fileID: 405681750908685094}
   - component: {fileID: 5802024967163667919}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Band
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6113,7 +6113,7 @@ GameObject:
   - component: {fileID: 1781688850560558875}
   - component: {fileID: 7604985150606616809}
   - component: {fileID: 5678047529250053017}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EdgeFirewall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6207,7 +6207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7991117947722171014}
   - component: {fileID: 7749512311644094751}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6253,7 +6253,7 @@ GameObject:
   - component: {fileID: 5916622338788594242}
   - component: {fileID: 7732752640473786905}
   - component: {fileID: 5606053643767582575}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AllgearBasic
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,6 +12,7 @@ public class FiringHandler : MonoBehaviour
     public bool active = false;
 
     // special conditions
+    public bool needsInit = false;
 
     // ammo
     public bool hasAmmo = false;
@@ -24,6 +25,14 @@ public class FiringHandler : MonoBehaviour
     public bool hasCharge = false;
     private float chargeTime;
     private float curChargeTime = 0;
+
+    private void Start()
+    {
+        if(needsInit)
+        {
+            GetGunStats();
+        }
+    }
 
     private void FixedUpdate()
     {

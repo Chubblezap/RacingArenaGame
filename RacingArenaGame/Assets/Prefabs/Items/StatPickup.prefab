@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9037869833422106100}
   - component: {fileID: 12199214059098031}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4175470100146542377}
   - component: {fileID: 5981462642718037456}
   - component: {fileID: 7965774063534782303}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: StatPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 
   despawnTimer: 60
+  pickupTimer: 1
   doingTimer: 1
   statType: 
   pickupColor: {r: 0, g: 0, b: 0, a: 0}

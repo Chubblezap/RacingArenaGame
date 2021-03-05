@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2894453229978903850}
   - component: {fileID: 5797748724188225118}
   - component: {fileID: 7851871318008185617}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: PowerPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 
   despawnTimer: 60
+  pickupTimer: 1
   doingTimer: 1
   powerType: 
 --- !u!135 &5797748724188225118
@@ -89,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3546489062809186724}
   - component: {fileID: 128075187655425857}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: EnvironmentCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class HeldGun : MonoBehaviour
 {
-    public Transform owner;
+    public Transform owner; // Parent vehicle
     public GameObject moveTarget;
     public string gunType;
     private float curSpeed = 0;
-    private bool movingToPlayer = true;
+    public bool movingToPlayer = true;
     private int renderedGunIndex = -1;
 
     //flags
     public string flag = "Picked Up";
     public string side = "None";
+    public bool replacable = true;
 
     void Update()
     {

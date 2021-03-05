@@ -42,14 +42,14 @@ public class GunHandler : MonoBehaviour
         {
             if(carriedGun.GetComponent<HeldGun>().flag == "Hovering") // player has an overhead gun
             {
-                if (Input.GetButtonDown(vehicleScript.myPlayer.fireRightInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireRightInput) >= .3)
+                if ((Input.GetButtonDown(vehicleScript.myPlayer.fireRightInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireRightInput) >= .3) && (rightGun == null || rightGun.GetComponent<HeldGun>().replacable))
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = rightGunPosition;
                     carriedGun.GetComponent<HeldGun>().flag = "Slotted";
                     carriedGun.GetComponent<HeldGun>().side = "Right";
                 }
-                else if (Input.GetButtonDown(vehicleScript.myPlayer.fireLeftInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireLeftInput) >= .3)
+                else if ((Input.GetButtonDown(vehicleScript.myPlayer.fireLeftInput) || Input.GetAxisRaw(vehicleScript.myPlayer.fireLeftInput) >= .3) && (leftGun == null || leftGun.GetComponent<HeldGun>().replacable))
                 {
                     carriedGun.transform.rotation = transform.rotation;
                     carriedGun.GetComponent<HeldGun>().moveTarget = leftGunPosition;

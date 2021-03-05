@@ -327,6 +327,7 @@ MonoBehaviour:
   boostPower: 0
   currentCharge: 0
   currentSpeed: 0
+  horizSpeed: 0
   boostWhooshPrefab: {fileID: 2058582236248677875, guid: d99734233a8cbfb44b400da3179f484e,
     type: 3}
   myPlayer: {fileID: 0}
@@ -424,7 +425,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!1 &1391309347928060743
 GameObject:
