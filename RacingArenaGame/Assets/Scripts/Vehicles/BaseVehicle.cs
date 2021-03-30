@@ -69,8 +69,9 @@ public class BaseVehicle : MonoBehaviour
     public bool usesDrag = true; // Slipcell
     public bool grounded = false;
     public bool halfBoosts = false; // Megabooster
-    public bool disarmed = false; // Used in FiringHandler
+    public bool disarmed = false; // Used in GunHandler. TEMPORARY disarm.
     public bool bulkFuel = false; // Uses 'fuel' instead of charge
+    public bool gunsDisabled = false; // True for vehicles that can't interact with guns. (Pod, Pulse)
     
     // flight
     [HideInInspector]
@@ -127,7 +128,6 @@ public class BaseVehicle : MonoBehaviour
 
     void FixedUpdate() //put movement/physics stuff here
     {
-        GroundAlign();
         if (myPlayer != null && hasControl)
         {
             currentSpeed = body.velocity.magnitude;
@@ -137,6 +137,7 @@ public class BaseVehicle : MonoBehaviour
 
             turnAmount = Input.GetAxis(myPlayer.horizontalInput);
             Turn(turnAmount, BaseTurn, myPlayer.Turn);
+            GroundAlign(turnAmount);
             if (isHolding == 1) // player is holding Space or A
             {
                 Charge(BaseArmor, myPlayer.Armor, BaseBoost, myPlayer.Boost, BaseTopSpeed, myPlayer.TopSpeed);
@@ -331,7 +332,7 @@ public class BaseVehicle : MonoBehaviour
             body.AddForce(new Vector3(totalforce.x, 0, totalforce.z) * (grounded && flying ? 0.1f : 1));
         }
         // Vertical acceleration depends on rotation and flight state
-        float NR = GetNormalizedRotation(rotationModel.transform);
+        float NR = GetNormalizedRotation(rotationModel.transform, "X");
         if (flying && NR > 0 && vertSpeed > -20) // Flying + facing down.
         {
             body.AddForce(new Vector3(0, totalforce.y, 0) * (grounded && flying ? 0.1f : 1));
@@ -457,11 +458,11 @@ public class BaseVehicle : MonoBehaviour
     {
         if (grounded && flying) { return; }
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
-        localVelocity.x *= 1f - (0.002f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.7f : 0f); // lower sideways speed
+        localVelocity.x *= 1f - (0.002f*(bArmor + (ArmorMultiplier * mArmor))) - (grounded ? 0.4f : 0f); // lower sideways speed
         body.velocity =  body.transform.TransformDirection(localVelocity);
     }
 
-    void GroundAlign() // Merged with old CheckFlight code
+    void GroundAlign(float direction) // Merged with old CheckFlight code
     {
         if(!flying)
         {
@@ -470,21 +471,12 @@ public class BaseVehicle : MonoBehaviour
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 transform.position = rayhit.point + new Vector3(0, GetComponent<SphereCollider>().radius + 0.05f, 0) - GetComponent<SphereCollider>().center;
-                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal) * 0.2f;
-                rotationModel.transform.Rotate(transform.rotation.eulerAngles);
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal + (transform.right * -turnAmount * 2) * 0.2f);
+                rotationModel.transform.Rotate(new Vector3(0, transform.rotation.eulerAngles.y, 0));
             }
             else
             {
-                if(myPlayer != null && hasControl)
-                {
-                    Launch(BaseAir, myPlayer.Air);
-                }
-                else
-                {
-                    flying = true;
-                    flightTimer = 0;
-                    totalFlightTime = 0.1f;
-                }
+                Launch(BaseAir, myPlayer.Air);
             }
         }
         else
@@ -521,7 +513,7 @@ public class BaseVehicle : MonoBehaviour
 
         Vector3 localVelocity = body.transform.InverseTransformDirection(body.velocity);
 
-        float NR = GetNormalizedRotation(rotationModel.transform);
+        float NR = GetNormalizedRotation(rotationModel.transform, "X");
 
         if (((direction < 0 && NR > rotationUpperBound) || (direction > 0 && NR < rotationLowerBound)) && held)
         {
@@ -619,18 +611,43 @@ public class BaseVehicle : MonoBehaviour
         hasControl = true;
     }
 
-    private float GetNormalizedRotation(Transform T)
+    private float GetNormalizedRotation(Transform T, string type)
     {
         Vector3 myRotation = T.localRotation.eulerAngles;
+        float normalizedRotation = 0;
 
-        float normalizedRotation;
-        if (myRotation.x > 180)
+        if(type == "X")
         {
-            normalizedRotation = -360 + myRotation.x;
+            if (myRotation.x > 180)
+            {
+                normalizedRotation = -360 + myRotation.x;
+            }
+            else
+            {
+                normalizedRotation = myRotation.x;
+            }
         }
-        else
+        else if(type == "Y")
         {
-            normalizedRotation = myRotation.x;
+            if (myRotation.y > 180)
+            {
+                normalizedRotation = -360 + myRotation.y;
+            }
+            else
+            {
+                normalizedRotation = myRotation.y;
+            }
+        }
+        else if(type == "Z")
+        {
+            if (myRotation.z > 180)
+            {
+                normalizedRotation = -360 + myRotation.z;
+            }
+            else
+            {
+                normalizedRotation = myRotation.z;
+            }
         }
         return normalizedRotation;
     }
@@ -666,6 +683,7 @@ public class BaseVehicle : MonoBehaviour
                     Debug.Log("Got an invalid stat! Yay!");
                     break;
             }
+            Destroy(item);
         }
         else if (item.GetComponent<BaseItem>().itemType == "Power Pickup")
         {
@@ -675,16 +693,18 @@ public class BaseVehicle : MonoBehaviour
                     Debug.Log("Picked up a power");
                     break;
             }
+            Destroy(item);
         }
-        else if (item.GetComponent<BaseItem>().itemType == "Gun Pickup")
+        else if (item.GetComponent<BaseItem>().itemType == "Gun Pickup" && !gunsDisabled)
         {
             gunScript.PickupGun(item);
+            Destroy(item);
         }
         else if (item.GetComponent<BaseItem>().itemType == "Part Pickup")
         {
             partScript.PickupPart(item);
+            Destroy(item);
         }
-        Destroy(item);
     }
 
     void takeForceHit(float force, float damage, Vector3 forcedirection)

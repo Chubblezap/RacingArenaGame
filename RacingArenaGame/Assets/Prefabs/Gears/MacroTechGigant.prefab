@@ -9865,7 +9865,7 @@ MonoBehaviour:
   BaseAir: 2
   MaxHP: 50
   PercentTopSpeedPerMod: 0.1
-  PercentAccelerationPerMod: 0.5
+  PercentAccelerationPerMod: 0.2
   PercentTurnPerMod: 0.1
   PercentBoostPerMod: 0.1
   PercentArmorPerMod: 0.1
@@ -9893,6 +9893,7 @@ MonoBehaviour:
   halfBoosts: 0
   disarmed: 0
   bulkFuel: 0
+  gunsDisabled: 0
   flying: 0
   hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}
