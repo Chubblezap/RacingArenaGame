@@ -15625,6 +15625,8 @@ MonoBehaviour:
   halfBoosts: 0
   disarmed: 0
   bulkFuel: 1
+  gunsDisabled: 0
+  turnTilts: 0
   flying: 0
   hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}

@@ -72,6 +72,7 @@ public class BaseVehicle : MonoBehaviour
     public bool disarmed = false; // Used in GunHandler. TEMPORARY disarm.
     public bool bulkFuel = false; // Uses 'fuel' instead of charge
     public bool gunsDisabled = false; // True for vehicles that can't interact with guns. (Pod, Pulse)
+    public bool turnTilts = true; // Used in GroundAlign
     
     // flight
     [HideInInspector]
@@ -471,7 +472,7 @@ public class BaseVehicle : MonoBehaviour
             if (ray && Vector3.Angle(rayhit.normal, Vector3.up) < 45f)
             {
                 transform.position = rayhit.point + new Vector3(0, GetComponent<SphereCollider>().radius + 0.05f, 0) - GetComponent<SphereCollider>().center;
-                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal + (transform.right * -turnAmount * 2) * 0.2f);
+                rotationModel.transform.up -= (rotationModel.transform.up - rayhit.normal + (transform.right * -turnAmount * (turnTilts ? 0.25f : 0f))) * 0.2f;
                 rotationModel.transform.Rotate(new Vector3(0, transform.rotation.eulerAngles.y, 0));
             }
             else
