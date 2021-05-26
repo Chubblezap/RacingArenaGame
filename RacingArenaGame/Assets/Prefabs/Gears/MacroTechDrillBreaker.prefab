@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.1
-  type: Drill
+  type: Y
 --- !u!1 &4284066490280836353
 GameObject:
   m_ObjectHideFlags: 0
@@ -15596,13 +15596,14 @@ MonoBehaviour:
   BaseOffense: 15
   BaseAir: 2
   MaxHP: 50
-  PercentTopSpeedPerMod: 0.2
-  PercentAccelerationPerMod: 0.5
-  PercentTurnPerMod: 0.1
-  PercentBoostPerMod: 0.2
-  PercentArmorPerMod: 0.1
-  PercentOffensePerMod: 0.1
-  PercentAirPerMod: 0.5
+  MaxTopSpeed: 74
+  MaxAcceleration: 46
+  MaxTurn: 28
+  MaxBoost: 23
+  MaxArmor: 42
+  MaxOffense: 42
+  MaxAir: 20
+  chargeTime: 4
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}

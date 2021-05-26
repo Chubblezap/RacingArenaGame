@@ -9804,7 +9804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
-  type: Wheel
+  type: X
 --- !u!1 &1462588543972721415
 GameObject:
   m_ObjectHideFlags: 0
@@ -9871,6 +9871,13 @@ MonoBehaviour:
   PercentArmorPerMod: 0.1
   PercentOffensePerMod: 0.1
   PercentAirPerMod: 0.5
+  MaxTopSpeed: 33.6
+  MaxAcceleration: 46
+  MaxTurn: 28
+  MaxBoost: 22.4
+  MaxArmor: 42
+  MaxOffense: 28
+  MaxAir: 20
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
@@ -10203,7 +10210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
-  type: Wheel
+  type: X
 --- !u!1 &3868519432813875565
 GameObject:
   m_ObjectHideFlags: 0
@@ -10297,7 +10304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
-  type: Wheel
+  type: X
 --- !u!1 &4693409152213376081
 GameObject:
   m_ObjectHideFlags: 0
@@ -10749,7 +10756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
-  type: Wheel
+  type: X
 --- !u!1 &8129253500868157099
 GameObject:
   m_ObjectHideFlags: 0

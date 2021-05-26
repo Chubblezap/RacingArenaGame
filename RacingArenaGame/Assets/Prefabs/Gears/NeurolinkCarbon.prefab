@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplier: 0.2
-  type: Wheel
+  type: X
 --- !u!1 &4556574179319556314
 GameObject:
   m_ObjectHideFlags: 0
@@ -10174,6 +10174,7 @@ GameObject:
   - component: {fileID: 3710004409379539875}
   - component: {fileID: 8514087138247222734}
   - component: {fileID: 9149431832657695881}
+  - component: {fileID: 342439726971873144}
   - component: {fileID: 8822942569094747739}
   m_Layer: 12
   m_Name: NeurolinkCarbon
@@ -10219,13 +10220,13 @@ MonoBehaviour:
   BaseOffense: 10
   BaseAir: 3
   MaxHP: 40
-  PercentTopSpeedPerMod: 0.1
-  PercentAccelerationPerMod: 0.1
-  PercentTurnPerMod: 0.1
-  PercentBoostPerMod: 0.3
-  PercentArmorPerMod: 0.2
-  PercentOffensePerMod: 0.1
-  PercentAirPerMod: 0.5
+  MaxTopSpeed: 28
+  MaxAcceleration: 28
+  MaxTurn: 28
+  MaxBoost: 38.4
+  MaxArmor: 23
+  MaxOffense: 28
+  MaxAir: 30
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
@@ -10308,6 +10309,19 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.7
+  m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!135 &342439726971873144
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8822942569094747740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!54 &8822942569094747739
 Rigidbody:

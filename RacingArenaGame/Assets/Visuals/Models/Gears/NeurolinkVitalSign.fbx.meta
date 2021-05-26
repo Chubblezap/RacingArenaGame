@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 16ab77cde640a804bb351867bd4894d2
+guid: 56a096f2f845305448053a3618262bcc
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: eye1
-    second: {fileID: 2100000, guid: 11d2ac692f7020743ae6f65c7ef17bb3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: eye2
-    second: {fileID: 2100000, guid: ed9761208daa6dc4196bd866328d9dda, type: 2}
+      name: ball
+    second: {fileID: 2100000, guid: 572bc2192b6c8324fa242445ae31f8c3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -22,23 +17,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: greencrystal
-    second: {fileID: 2100000, guid: 0828c61fea4f5c846b4105f2c65d868a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: meat
+      name: main
     second: {fileID: 2100000, guid: 9da2b11998c01344e963d7a45341a526, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: meat2
-    second: {fileID: 2100000, guid: 07ee70944ede5284ca35e51cdd1d1300, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: pupil
-    second: {fileID: 2100000, guid: e7615d65c0a535f48a81a288f6c9f53d, type: 2}
+      name: sivler
+    second: {fileID: 2100000, guid: a644102319ff57b4fa942e137cf4b374, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -69,7 +54,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.25
+    globalScale: 35
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -115,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 0.35
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

@@ -24,11 +24,14 @@ public class WheelSpin : MonoBehaviour
             float rotationAmount = vehicleBody.transform.InverseTransformDirection(vehicleBody.velocity).z * multiplier;
             switch (type)
             {
-                case "Wheel":
+                case "X":
                     transform.Rotate(rotationAmount, 0, 0);
                     break;
-                case "Drill":
+                case "Y":
                     transform.Rotate(0, rotationAmount, 0);
+                    break;
+                case "Z":
+                    transform.Rotate(0, 0, rotationAmount);
                     break;
                 default:
                     break;

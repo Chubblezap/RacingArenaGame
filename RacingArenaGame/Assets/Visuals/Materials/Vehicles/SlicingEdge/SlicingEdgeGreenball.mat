@@ -69,6 +69,8 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _EnvironmentReflections: 1
+    - _FresnelNoise: 0
+    - _FresnelNoisePower: 50
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0

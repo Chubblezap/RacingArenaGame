@@ -1012,6 +1012,13 @@ MonoBehaviour:
   PercentArmorPerMod: 0.1
   PercentOffensePerMod: 0.2
   PercentAirPerMod: 0.1
+  MaxTopSpeed: 46
+  MaxAcceleration: 38.4
+  MaxTurn: 23
+  MaxBoost: 23
+  MaxArmor: 39.2
+  MaxOffense: 27.6
+  MaxAir: 22.4
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
@@ -1034,6 +1041,8 @@ MonoBehaviour:
   halfBoosts: 0
   disarmed: 0
   bulkFuel: 0
+  gunsDisabled: 0
+  turnTilts: 1
   flying: 0
   hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}
@@ -1094,6 +1103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droneObj: {fileID: 7316173897188923787, guid: 1d7cf8cc917bae945a398bfed32cf607,
     type: 3}
+  searchRadius: 10
 --- !u!135 &4549338099777860271
 SphereCollider:
   m_ObjectHideFlags: 0

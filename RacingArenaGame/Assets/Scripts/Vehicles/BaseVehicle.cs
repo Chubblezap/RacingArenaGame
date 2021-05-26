@@ -14,13 +14,15 @@ public class BaseVehicle : MonoBehaviour
     public float BaseOffense;
     public float BaseAir;
     public float MaxHP;
-    public float PercentTopSpeedPerMod;
-    public float PercentAccelerationPerMod;
-    public float PercentTurnPerMod;
-    public float PercentBoostPerMod; 
-    public float PercentArmorPerMod;
-    public float PercentOffensePerMod;
-    public float PercentAirPerMod;
+    public float MaxTopSpeed;
+    public float MaxAcceleration;
+    public float MaxTurn;
+    public float MaxBoost;
+    public float MaxArmor;
+    public float MaxOffense;
+    public float MaxAir;
+
+    public float chargeTime = 2f;
 
     // UI Elements
     public GameObject UI;
@@ -92,7 +94,7 @@ public class BaseVehicle : MonoBehaviour
 
     // Controls
     [HideInInspector]
-    public float turnAmount;
+    public float turnAmount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -129,6 +131,7 @@ public class BaseVehicle : MonoBehaviour
 
     void FixedUpdate() //put movement/physics stuff here
     {
+        GroundAlign(turnAmount);
         if (myPlayer != null && hasControl)
         {
             currentSpeed = body.velocity.magnitude;
@@ -138,7 +141,6 @@ public class BaseVehicle : MonoBehaviour
 
             turnAmount = Input.GetAxis(myPlayer.horizontalInput);
             Turn(turnAmount, BaseTurn, myPlayer.Turn);
-            GroundAlign(turnAmount);
             if (isHolding == 1) // player is holding Space or A
             {
                 Charge(BaseArmor, myPlayer.Armor, BaseBoost, myPlayer.Boost, BaseTopSpeed, myPlayer.TopSpeed);
@@ -218,13 +220,13 @@ public class BaseVehicle : MonoBehaviour
             WeaponBarR.SetActive(false);
         }
         // stat modifiers
-        TopSpeedMultiplier = BaseTopSpeed * PercentTopSpeedPerMod;
-        AccelerationMultiplier = BaseAcceleration * PercentAccelerationPerMod;
-        TurnMultiplier = BaseTurn * PercentTurnPerMod;
-        BoostMultiplier = BaseBoost * PercentBoostPerMod;
-        ArmorMultiplier = BaseArmor * PercentArmorPerMod;
-        OffenseMultiplier = BaseOffense * PercentOffensePerMod;
-        AirMultiplier = BaseAir * PercentAirPerMod;
+        TopSpeedMultiplier = (MaxTopSpeed - BaseTopSpeed) / 18;
+        AccelerationMultiplier = (MaxAcceleration - BaseAcceleration) / 18;
+        TurnMultiplier = (MaxTurn - BaseTurn) / 18;
+        BoostMultiplier = (MaxBoost - BaseBoost) / 18;
+        ArmorMultiplier = (MaxArmor - BaseArmor) / 18;
+        OffenseMultiplier = (MaxOffense - BaseOffense) / 18;
+        AirMultiplier = (MaxAir - BaseAir) / 18;
         curHP = MaxHP;
         flightSpeedMultiplier = 1;
         flightTimer = 0;
@@ -418,7 +420,7 @@ public class BaseVehicle : MonoBehaviour
     {
         float weightmult = 0.0015f * (bArmor + (ArmorMultiplier * mArmor)) * (usesDrag ? 1 : 0 );
         body.velocity = new Vector3 ( body.velocity.x * (1f - weightmult), body.velocity.y, body.velocity.z * (1f - weightmult) );
-        currentCharge += 0.00075f * (bBoost + (BoostMultiplier * mBoost));
+        currentCharge += Time.deltaTime / chargeTime;
         currentCharge = Mathf.Min(currentCharge, 1);
         // Top Speed failsafe (slipcell, etc)
         if (body.velocity.magnitude > (bTopSpeed + (TopSpeedMultiplier * mTopSpeed)) * flightSpeedMultiplier)
@@ -567,6 +569,7 @@ public class BaseVehicle : MonoBehaviour
         flying = false;
         flightSpeedMultiplier = 1f;
         transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.eulerAngles.y, 0));
+        turnAmount = 0;
 
         GameObject newplayerobject = Instantiate(playerCharacter, transform.position + transform.up*0.5f, transform.rotation);
         newplayerobject.GetComponent<PlayerCharacter>().myPlayer = myPlayer;
@@ -779,7 +782,7 @@ public class BaseVehicle : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         GameObject collidedObject = collision.gameObject;
-        if(collidedObject.GetComponent<BaseItem>() != null && collidedObject.layer != 11) // trigger collision is an item and NOT in the crate layer
+        if(collidedObject.GetComponent<BaseItem>() != null && collidedObject.layer != 11 && myPlayer != null) // trigger collision is an item and NOT in the crate layer
         {
             if(collidedObject.GetComponent<BaseItem>().pickupTimer <= 0)
             {

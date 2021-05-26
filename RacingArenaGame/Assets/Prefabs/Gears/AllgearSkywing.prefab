@@ -464,6 +464,13 @@ MonoBehaviour:
   PercentArmorPerMod: 0.2
   PercentOffensePerMod: 0.2
   PercentAirPerMod: 0.12
+  MaxTopSpeed: 26.82
+  MaxAcceleration: 28
+  MaxTurn: 16.8
+  MaxBoost: 22.12
+  MaxArmor: 23
+  MaxOffense: 23
+  MaxAir: 63.2
   UI: {fileID: 0}
   WeaponBarL: {fileID: 0}
   WeaponBarR: {fileID: 0}
@@ -486,6 +493,8 @@ MonoBehaviour:
   halfBoosts: 0
   disarmed: 0
   bulkFuel: 0
+  gunsDisabled: 0
+  turnTilts: 1
   flying: 0
   hasControl: 1
   bpadstart: {x: 0, y: 0, z: 0}
